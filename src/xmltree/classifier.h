@@ -137,4 +137,4 @@ EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_expect_assign(wc
 } // extern "C"
 #endif
 
-#endif // XMLTREE_LEX
+#endif // XMLTREE_CLASSIFIER
