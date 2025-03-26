@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef XMLTREE_LEX
-#define XMLTREE_LEX
+#ifndef XMLTREE_CLASSIFIER
+#define XMLTREE_CLASSIFIER
 
 #ifdef __cplusplus
 extern "C" {
