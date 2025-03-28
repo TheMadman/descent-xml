@@ -1,5 +1,13 @@
-add_library(xmltree SHARED classifier.c)
-add_library(xmltreestatic STATIC classifier.c)
+set(SOURCES classifier.c lex.c)
+
+add_library(xmltreeobj OBJECT ${SOURCES})
+set_property(TARGET xmltreeobj PROPERTY POSITION_INDEPENDENT_CODE 1)
+
+add_library(xmltree SHARED)
+target_link_libraries(xmltree xmltreeobj adt)
+
+add_library(xmltreestatic STATIC)
+target_link_libraries(xmltreestatic xmltreeobj)
 
 # hate
 target_include_directories(xmltree
