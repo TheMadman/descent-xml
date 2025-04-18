@@ -167,7 +167,9 @@ XMLTREE_EXPORT vfn *xmltree_classifier_element(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_EMARK:
-			// do this properly sometime
+			// do comments properly sometime?
+		case CCLASS_QMARK:
+			// this one too?
 		case CCLASS_NAME_START:
 			return (vfn*)xmltree_classifier_element_name;
 		case CCLASS_SLASH:
@@ -252,6 +254,8 @@ XMLTREE_EXPORT vfn *xmltree_classifier_element_name(wchar_t input)
 			return (vfn*)xmltree_classifier_element_space;
 		case CCLASS_CBRACKET:
 			return (vfn*)xmltree_classifier_element_end;
+		case CCLASS_SLASH:
+			return (vfn*)xmltree_classifier_element_empty;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
 	}
