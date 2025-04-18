@@ -104,7 +104,7 @@ static CHARACTER_CLASS get_cclass(wchar_t c)
 		return CCLASS_NAME_START;
 
 	const bool is_name
-		= in(c, L"-.")
+		= c == '.'
 		|| iswdigit((wint_t)c)
 		// more magic numbers
 		// #xB7 | [#x0300-#x036F] | [#x203F-#x2040]
@@ -166,12 +166,41 @@ XMLTREE_EXPORT vfn *xmltree_classifier_start(wchar_t input)
 XMLTREE_EXPORT vfn *xmltree_classifier_element(wchar_t input)
 {
 	switch (get_cclass(input)) {
+		case CCLASS_EMARK:
+			// do this properly sometime
 		case CCLASS_NAME_START:
 			return (vfn*)xmltree_classifier_element_name;
 		case CCLASS_SLASH:
 			return (vfn*)xmltree_classifier_element_close;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
+	}
+}
+
+XMLTREE_EXPORT vfn *xmltree_classifier_element_empty(wchar_t input)
+{
+	switch (get_cclass(input)) {
+		case CCLASS_CBRACKET:
+			return (vfn*)xmltree_classifier_element_end;
+		default:
+			return (vfn*)xmltree_classifier_unexpected;
+	}
+}
+
+XMLTREE_EXPORT vfn *xmltree_classifier_element_end(wchar_t input)
+{
+	switch (get_cclass(input)) {
+		case CCLASS_EOF:
+			return (vfn*)xmltree_classifier_eof;
+		case CCLASS_OBRACKET:
+			return (vfn*)xmltree_classifier_element;
+		case CCLASS_CBRACKET:
+			return (vfn*)xmltree_classifier_unexpected;
+		case CCLASS_REF_START:
+		case CCLASS_ENTITY_START:
+			return (vfn*)xmltree_classifier_text_entity_start;
+		default:
+			return (vfn*)xmltree_classifier_text;
 	}
 }
 
@@ -194,7 +223,7 @@ XMLTREE_EXPORT vfn *xmltree_classifier_element_close_name(wchar_t input)
 		case CCLASS_SPACE:
 			return (vfn*)xmltree_classifier_element_close_space;
 		case CCLASS_CBRACKET:
-			return (vfn*)xmltree_classifier_text;
+			return (vfn*)xmltree_classifier_element_end;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
 	}
@@ -206,7 +235,7 @@ XMLTREE_EXPORT vfn *xmltree_classifier_element_close_space(wchar_t input)
 		case CCLASS_SPACE:
 			return (vfn*)xmltree_classifier_element_close_space;
 		case CCLASS_CBRACKET:
-			return (vfn*)xmltree_classifier_text;
+			return (vfn*)xmltree_classifier_element_end;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
 	}
@@ -217,11 +246,12 @@ XMLTREE_EXPORT vfn *xmltree_classifier_element_name(wchar_t input)
 	switch (get_cclass(input)) {
 		case CCLASS_NAME_START:
 		case CCLASS_NAME:
+		case CCLASS_DASH:
 			return (vfn*)xmltree_classifier_element_name;
 		case CCLASS_SPACE:
 			return (vfn*)xmltree_classifier_element_space;
 		case CCLASS_CBRACKET:
-			return (vfn*)xmltree_classifier_text;
+			return (vfn*)xmltree_classifier_element_end;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
 	}
@@ -235,7 +265,9 @@ XMLTREE_EXPORT vfn *xmltree_classifier_element_space(wchar_t input)
 		case CCLASS_SPACE:
 			return (vfn*)xmltree_classifier_element_space;
 		case CCLASS_CBRACKET:
-			return (vfn*)xmltree_classifier_text;
+			return (vfn*)xmltree_classifier_element_end;
+		case CCLASS_SLASH:
+			return (vfn*)xmltree_classifier_element_empty;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
 	}
@@ -274,12 +306,20 @@ XMLTREE_EXPORT vfn *xmltree_classifier_attribute_assign(wchar_t input)
 		case CCLASS_SPACE:
 			return (vfn*)xmltree_classifier_attribute_assign;
 		case CCLASS_SQUOTE:
-			return (vfn*)xmltree_classifier_attribute_value_single_quote;
+			return (vfn*)xmltree_classifier_attribute_value_single_quote_start;
 		case CCLASS_DQUOTE:
-			return (vfn*)xmltree_classifier_attribute_value_double_quote;
+			return (vfn*)xmltree_classifier_attribute_value_double_quote_start;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
 	}
+}
+
+XMLTREE_EXPORT vfn *xmltree_classifier_attribute_value_single_quote_start(wchar_t input)
+{
+	// has all the same behaviour as a value, but is a
+	// different state to differentiate the single quote "'"
+	// from the value
+	return xmltree_classifier_attribute_value_single_quote(input);
 }
 
 XMLTREE_EXPORT vfn *xmltree_classifier_attribute_value_single_quote(wchar_t input)
@@ -327,12 +367,21 @@ XMLTREE_EXPORT vfn *xmltree_classifier_attribute_value_single_quote_end(
 {
 	switch (get_cclass(input)) {
 		case CCLASS_CBRACKET:
-			return (vfn*)xmltree_classifier_text;
+			return (vfn*)xmltree_classifier_element_end;
 		case CCLASS_SPACE:
 			return (vfn*)xmltree_classifier_element_space;
+		case CCLASS_SLASH:
+			return (vfn*)xmltree_classifier_element_empty;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
 	}
+}
+
+XMLTREE_EXPORT vfn *xmltree_classifier_attribute_value_double_quote_start(
+	wchar_t input
+)
+{
+	return xmltree_classifier_attribute_value_double_quote(input);
 }
 
 XMLTREE_EXPORT vfn *xmltree_classifier_attribute_value_double_quote(
@@ -380,9 +429,11 @@ XMLTREE_EXPORT vfn *xmltree_classifier_attribute_value_double_quote_end(
 {
 	switch (get_cclass(input)) {
 		case CCLASS_CBRACKET:
-			return (vfn*)xmltree_classifier_text;
+			return (vfn*)xmltree_classifier_element_end;
 		case CCLASS_SPACE:
 			return (vfn*)xmltree_classifier_element_space;
+		case CCLASS_SLASH:
+			return (vfn*)xmltree_classifier_element_empty;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
 	}

@@ -98,7 +98,7 @@ void test_xmltree_classifier_element_close_name(void)
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_text,
+		xmltree_classifier_element_end,
 		xmltree_classifier_element_close_name,
 		'>'
 	));
@@ -117,7 +117,7 @@ void test_xmltree_classifier_element_close_space(void)
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_text,
+		xmltree_classifier_element_end,
 		xmltree_classifier_element_close_space,
 		'>'
 	));
@@ -141,7 +141,7 @@ void test_xmltree_classifier_element_name(void)
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_text,
+		xmltree_classifier_element_end,
 		xmltree_classifier_element_name,
 		'>'
 	));
@@ -165,7 +165,7 @@ void test_xmltree_classifier_element_space(void)
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_text,
+		xmltree_classifier_element_end,
 		xmltree_classifier_element_space,
 		'>'
 	));
@@ -203,12 +203,12 @@ void test_xmltree_classifier_attribute_assign(void)
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_single_quote,
+		xmltree_classifier_attribute_value_single_quote_start,
 		xmltree_classifier_attribute_assign,
 		'\''
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_double_quote,
+		xmltree_classifier_attribute_value_double_quote_start,
 		xmltree_classifier_attribute_assign,
 		'"'
 	));
@@ -284,7 +284,7 @@ void test_xmltree_classifier_attribute_value_single_quote_entity(void)
 void test_xmltree_classifier_attribute_value_single_quote_end(void)
 {
 	assert(expect(
-		xmltree_classifier_text,
+		xmltree_classifier_element_end,
 		xmltree_classifier_attribute_value_single_quote_end,
 		'>'
 	));
@@ -365,7 +365,7 @@ void test_xmltree_classifier_attribute_value_double_quote_entity(void)
 void test_xmltree_classifier_attribute_value_double_quote_end(void)
 {
 	assert(expect(
-		xmltree_classifier_text,
+		xmltree_classifier_element_end,
 		xmltree_classifier_attribute_value_double_quote_end,
 		'>'
 	));
@@ -463,6 +463,40 @@ void test_xmltree_classifier_text_entity(void)
 	));
 }
 
+void test_xmltree_classifier_element_end(void)
+{
+	assert(expect(
+		xmltree_classifier_text,
+		xmltree_classifier_element_end,
+		'a'
+	));
+	assert(expect(
+		xmltree_classifier_unexpected,
+		xmltree_classifier_element_end,
+		'>'
+	));
+	assert(expect(
+		xmltree_classifier_element,
+		xmltree_classifier_element_end,
+		'<'
+	));
+	assert(expect(
+		xmltree_classifier_eof,
+		xmltree_classifier_element_end,
+		WEOF
+	));
+	assert(expect(
+		xmltree_classifier_text_entity_start,
+		xmltree_classifier_element_end,
+		'%'
+	));
+	assert(expect(
+		xmltree_classifier_text_entity_start,
+		xmltree_classifier_element_end,
+		'&'
+	));
+}
+
 int main()
 {
 	test_xmltree_classifier_start();
@@ -472,6 +506,7 @@ int main()
 	test_xmltree_classifier_element_close_space();
 	test_xmltree_classifier_element_name();
 	test_xmltree_classifier_element_space();
+	test_xmltree_classifier_element_end();
 	test_xmltree_classifier_attribute_expect_assign();
 	test_xmltree_classifier_attribute_assign();
 	test_xmltree_classifier_attribute_value_single_quote();

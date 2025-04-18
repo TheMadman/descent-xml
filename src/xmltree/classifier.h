@@ -103,6 +103,8 @@ XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_name(wch
 
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_assign(wchar_t input);
 
+XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_single_quote_start(wchar_t input);
+
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_single_quote(wchar_t input);
 
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_single_quote_end(wchar_t input);
@@ -110,6 +112,8 @@ XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_si
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_single_quote_entity_start(wchar_t input);
 
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_single_quote_entity(wchar_t input);
+
+XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_double_quote_start(wchar_t input);
 
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_double_quote(wchar_t input);
 
@@ -119,11 +123,15 @@ XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_do
 
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_attribute_value_double_quote_entity(wchar_t input);
 
+XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_element_empty(wchar_t input);
+
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_element_close(wchar_t input);
 
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_element_close_name(wchar_t input);
 
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_element_close_space(wchar_t input);
+
+XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_element_end(wchar_t input);
 
 XMLTREE_EXPORT xmltree_classifier_void_fn *xmltree_classifier_text_entity_start(wchar_t input);
 
