@@ -78,7 +78,7 @@ static bool between(const wchar_t start, const wchar_t c, const wchar_t end)
 
 static CHARACTER_CLASS get_cclass(wchar_t c)
 {
-	if (in(c, L"<>'\"&#=;!-%/"))
+	if (in(c, L"<>'\"&#=;!-%/?"))
 		return c;
 
 	const bool is_name_start
@@ -255,6 +255,7 @@ XMLTREE_EXPORT vfn *xmltree_classifier_element_name(wchar_t input)
 		case CCLASS_CBRACKET:
 			return (vfn*)xmltree_classifier_element_end;
 		case CCLASS_SLASH:
+		case CCLASS_QMARK:
 			return (vfn*)xmltree_classifier_element_empty;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
@@ -271,6 +272,7 @@ XMLTREE_EXPORT vfn *xmltree_classifier_element_space(wchar_t input)
 		case CCLASS_CBRACKET:
 			return (vfn*)xmltree_classifier_element_end;
 		case CCLASS_SLASH:
+		case CCLASS_QMARK:
 			return (vfn*)xmltree_classifier_element_empty;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
@@ -375,6 +377,7 @@ XMLTREE_EXPORT vfn *xmltree_classifier_attribute_value_single_quote_end(
 		case CCLASS_SPACE:
 			return (vfn*)xmltree_classifier_element_space;
 		case CCLASS_SLASH:
+		case CCLASS_QMARK:
 			return (vfn*)xmltree_classifier_element_empty;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
@@ -437,6 +440,7 @@ XMLTREE_EXPORT vfn *xmltree_classifier_attribute_value_double_quote_end(
 		case CCLASS_SPACE:
 			return (vfn*)xmltree_classifier_element_space;
 		case CCLASS_SLASH:
+		case CCLASS_QMARK:
 			return (vfn*)xmltree_classifier_element_empty;
 		default:
 			return (vfn*)xmltree_classifier_unexpected;
