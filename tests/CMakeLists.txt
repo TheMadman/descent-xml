@@ -6,3 +6,4 @@ endfunction()
 
 testcase(xmltree_classifier)
 testcase(xmltree_lex)
+testcase(xmltree_parse)
