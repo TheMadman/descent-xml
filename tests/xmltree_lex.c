@@ -1,17 +1,17 @@
 /*
  * Project Name - Project Description
  * Copyright (C) 2025
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
@@ -104,7 +104,7 @@ void test_xmltree_lex_next_raw(void)
 	token = xmltree_lex_next_raw(token);
 	assert(token.type == xmltree_classifier_element_end);
 	assert(token.value.length == 1);
-	
+
 	token = xmltree_lex_next_raw(token);
 	assert(token.type == xmltree_classifier_eof);
 	assert(token.value.length == 0);
