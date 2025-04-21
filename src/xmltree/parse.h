@@ -37,6 +37,32 @@ extern "C" {
  * \file
  */
 
+
+/**
+ * \brief Type signature for a user-passed element parsing function.
+ * 	Used by xmltree_parse().
+ *
+ * \param token The last token encountered by the parser. This can
+ * 	be returned directly, iterated over with xmltree_lex_next_raw(),
+ * 	or passed to a recursive call to xmltree_parse().
+ * \param element_name An libadt_const_lptr to the byte array of the
+ * 	element name. element_name.length contains the number of
+ * 	bytes for the name and the pointer can be retrieved with
+ * 	libadt_const_lptr_raw(element_name).
+ * \param attributes An libadt_const_lptr of libadt_const_lptrs to
+ * 	attribute strings. attributes.length contains the number of
+ * 	strings. The zeroth string will be the zeroth attribute name,
+ * 	the first string will be its value; the second string will be
+ * 	the first attribute name, the third its value, and so on.
+ * \param empty True if the element is an empty element, of the format
+ * 	`<element-name />`. False if the element is terminated with a
+ * 	closing tag.
+ * \param context The pointer provided to xmltree_parse() by the user.
+ *
+ * \returns The last token processed. This can be the token passed
+ * 	in as an argument, or a token generated as a result of further
+ * 	processing inside the function.
+ */
 typedef struct xmltree_lex xmltree_parse_element_fn(
 	struct xmltree_lex token,
 	struct libadt_const_lptr element_name,
@@ -45,6 +71,19 @@ typedef struct xmltree_lex xmltree_parse_element_fn(
 	void *context
 );
 
+/**
+ * \brief Type signature for a user-passed text node parsing function.
+ *
+ * \param token The last token encountered by the parser. This can
+ * 	be returned directly, iterated over with xmltree_lex_next_raw(),
+ * 	or passed to a recursive call to xmltree_parse().
+ * \param text A length-pointer containing the text.
+ * \param context The pointer passed by the user to xmltree_parse().
+ *
+ * \returns The last token processed. This can be the token passed
+ * 	in as an argument, or a token generated as a result of further
+ * 	processing inside the function.
+ */
 typedef struct xmltree_lex xmltree_parse_text_fn(
 	struct xmltree_lex token,
 	struct libadt_const_lptr text,
