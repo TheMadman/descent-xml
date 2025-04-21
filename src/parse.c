@@ -7,7 +7,7 @@ struct xmltree_lex _xmltree_handle_element(
 	void *context
 );
 struct xmltree_lex xmltree_parse(
-	struct libadt_const_lptr xml,
+	struct xmltree_lex xml,
 	xmltree_parse_element_fn *element_handler,
 	xmltree_parse_text_fn *text_handler,
 	void *context

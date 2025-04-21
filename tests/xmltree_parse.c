@@ -21,14 +21,25 @@
 #include <string.h>
 #include "xmltree/parse.h"
 
+#include "xmltree/lex.h"
+
 #include <libadt/str.h>
 
 typedef struct xmltree_lex lex_t;
 typedef struct libadt_const_lptr lptr_t;
 
+#define lex xmltree_lex_init
 #define lit libadt_str_literal
 #define raw libadt_const_lptr_raw
 #define index libadt_const_lptr_index
+#define eof xmltree_classifier_eof
+#define err xmltree_classifier_unexpected
+
+static bool stop_token(lex_t token)
+{
+	return token.type == eof
+		|| token.type == err;
+}
 
 lex_t empty_callback(
 	lex_t token,
@@ -48,17 +59,21 @@ lex_t empty_callback(
 void test_empty_element_no_attributes(void)
 {
 	{
-		lptr_t xml = lit("<empty/>");
+		lex_t xml = lex(lit("<empty/>"));
 		bool ran = false;
-		xmltree_parse(xml, empty_callback, NULL, &ran);
+		while (!stop_token(xml))
+			xml = xmltree_parse(xml, empty_callback, NULL, &ran);
 		assert(ran);
+		assert(xml.type != err);
 	}
 
 	{
-		lptr_t xml = lit("<empty />");
+		lex_t xml = lex(lit("<empty />"));
 		bool ran = false;
-		xmltree_parse(xml, empty_callback, NULL, &ran);
+		while (!stop_token(xml))
+			xml = xmltree_parse(xml, empty_callback, NULL, &ran);
 		assert(ran);
+		assert(xml.type != err);
 	}
 }
 
@@ -119,17 +134,21 @@ lex_t element_callback(
 void test_element_attributes(void)
 {
 	{
-		lptr_t xml = lit("<?xml version=\"1.0\" ?>");
+		lex_t xml = lex(lit("<?xml version=\"1.0\" ?>"));
 		bool ran = false;
-		xmltree_parse(xml, prologue_callback, NULL, &ran);
+		while (!stop_token(xml))
+			xml = xmltree_parse(xml, prologue_callback, NULL, &ran);
 		assert(ran);
+		assert(xml.type != err);
 	}
 
 	{
-		lptr_t xml = lit("<element first='firstval' second = \"secondval\" third=''></element>");
+		lex_t xml = lex(lit("<element first='firstval' second = \"secondval\" third=''></element>"));
 		int run_times = 0;
-		xmltree_parse(xml, element_callback, NULL, &run_times);
+		while (!stop_token(xml))
+			xml = xmltree_parse(xml, element_callback, NULL, &run_times);
 		assert(run_times == 1);
+		assert(xml.type != err);
 	}
 }
 
@@ -147,10 +166,12 @@ lex_t text_callback(
 void test_text_node(void)
 {
 	{
-		lptr_t xml = lit("<text>Hello, world!</text>");
+		lex_t xml = lex(lit("<text>Hello, world!</text>"));
 		bool ran = false;
-		xmltree_parse(xml, NULL, text_callback, &ran);
+		while (!stop_token(xml))
+			xml = xmltree_parse(xml, NULL, text_callback, &ran);
 		assert(ran);
+		assert(xml.type != err);
 	}
 }
 
@@ -187,10 +208,12 @@ lex_t element_attribute_entity_callback(
 
 void test_attribute_entities(void)
 {
-	lptr_t xml = lit("<element attr='this &amp; that' attr2='&amp; the other'/>");
+	lex_t xml = lex(lit("<element attr='this &amp; that' attr2='&amp; the other'/>"));
 	bool ran = false;
-	xmltree_parse(xml, element_attribute_entity_callback, NULL, &ran);
+	while (!stop_token(xml))
+		xml = xmltree_parse(xml, element_attribute_entity_callback, NULL, &ran);
 	assert(ran);
+	assert(xml.type != err);
 }
 
 lex_t text_entity_callback(
@@ -206,10 +229,12 @@ lex_t text_entity_callback(
 
 void test_text_entities(void)
 {
-	lptr_t xml = lit("<element>this &amp; that</element>");
+	lex_t xml = lex(lit("<element>this &amp; that</element>"));
 	bool ran = false;
-	xmltree_parse(xml, NULL, text_entity_callback, &ran);
+	while (!stop_token(xml))
+		xml = xmltree_parse(xml, NULL, text_entity_callback, &ran);
 	assert(ran);
+	assert(xml.type != err);
 }
 
 int main()

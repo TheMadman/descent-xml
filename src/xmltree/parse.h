@@ -196,34 +196,62 @@ inline struct xmltree_lex _xmltree_handle_text(
 	return text_handler(result.token, result.value, context);
 }
 
+/**
+ * \brief Function for parsing an XML document.
+ *
+ * xmltree_parse() is the version of the parser that does not allocate
+ * new memory and does not copy strings. Instead, it uses the
+ * length-pointer implementation from libadt to point into the original
+ * XML file for the element names, attributes and text. This also means
+ * that entities are not converted, and the text passed to the callbacks
+ * is not null-terminated.
+ *
+ * This function will only parse a single entity. If the entity is an
+ * opening XML element, it will be parsed and passed to the given
+ * element_handler. If the entity is a text node, it will be parsed and
+ * passed to the text_handler. The return value will be the token
+ * returned by a handler if called, or the next token to process if
+ * neither were called.
+ *
+ * \param xml A token into an XML document. Can be created on a
+ * 	full XML document using xmltree_lex_init().
+ * \param element_handler A callback to call when encountering an
+ * 	opening element tag. Pass a NULL pointer to disable.
+ * \param text_handler A callback to call when encountering a
+ * 	text node. Pass a NULL pointer to disable.
+ * \param context A user-provided pointer that will be passed
+ * 	to the callbacks.
+ *
+ * \returns The last token encountered while parsing. If the
+ * 	return value's `type` property is `xmltree_classifier_unexpected`,
+ * 	an error was encountered. If the `type` property is
+ * 	`xmltree_classifier_eof`, then the end of the XML was encountered
+ * 	in an expected way.
+ */
 XMLTREE_EXPORT inline struct xmltree_lex xmltree_parse(
-	struct libadt_const_lptr xml,
+	struct xmltree_lex xml,
 	xmltree_parse_element_fn *element_handler,
 	xmltree_parse_text_fn *text_handler,
 	void *context
 )
 {
-	struct xmltree_lex token = xmltree_lex_init(xml);
+	xml = xmltree_lex_next_raw(xml);
 
-	while (!_xmltree_end_token(token)) {
-		token = xmltree_lex_next_raw(token);
-
-		if (token.type == xmltree_classifier_element && element_handler) {
-			token = _xmltree_handle_element(
-				xmltree_lex_next_raw(token),
-				element_handler,
-				context
-			);
-		} else if (_xmltree_is_text_type(token) && text_handler) {
-			token = _xmltree_handle_text(
-				token,
-				text_handler,
-				context
-			);
-		}
+	if (xml.type == xmltree_classifier_element && element_handler) {
+		xml = _xmltree_handle_element(
+			xmltree_lex_next_raw(xml),
+			element_handler,
+			context
+		);
+	} else if (_xmltree_is_text_type(xml) && text_handler) {
+		xml = _xmltree_handle_text(
+			xml,
+			text_handler,
+			context
+		);
 	}
 
-	return token;
+	return xml;
 }
 
 #ifdef __cplusplus
