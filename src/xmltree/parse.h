@@ -56,7 +56,8 @@ extern "C" {
  * 	the first attribute name, the third its value, and so on.
  * \param empty True if the element is an empty element, of the format
  * 	`<element-name />`. False if the element is terminated with a
- * 	closing tag.
+ * 	closing tag. Note that elements with no content between an opening
+ * 	and closing tag are _not_ considered empty elements.
  * \param context The pointer provided to xmltree_parse() by the user.
  *
  * \returns The last token processed. This can be the token passed
@@ -73,12 +74,13 @@ typedef struct xmltree_lex xmltree_parse_element_fn(
 
 /**
  * \brief Type signature for a user-passed text node parsing function.
+ * 	Used by xmltree_parse().
  *
  * \param token The last token encountered by the parser. This can
  * 	be returned directly, iterated over with xmltree_lex_next_raw(),
  * 	or passed to a recursive call to xmltree_parse().
  * \param text A length-pointer containing the text.
- * \param context The pointer passed by the user to xmltree_parse().
+ * \param context The pointer provided to xmltree_parse() by the user.
  *
  * \returns The last token processed. This can be the token passed
  * 	in as an argument, or a token generated as a result of further
