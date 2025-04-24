@@ -92,6 +92,49 @@ typedef struct xmltree_lex xmltree_parse_text_fn(
 	void *context
 );
 
+/**
+ * \brief Type signature for a user-passed element parsing function.
+ * 	Used by xmltree_parse_cstr().
+ *
+ * \param token The last token encountered by the parser. This can
+ * 	be returned directly, iterated over with xmltree_lex_next_raw(),
+ * 	or passed to a recursive call to xmltree_parse().
+ * \param element_name A null-terminated string containing the element
+ * 	name.
+ * \param attributes A null-terminated array of null-terminated strings.
+ * 	The zeroth string will be the zeroth attribute name, the first
+ * 	string will be its value; the second will be the first attribute
+ * 	name, the third its value, and so on.
+ * \param empty True if the element is an empty element, of the format
+ * 	`<element-name />`. False if the element is terminated with a
+ * 	closing tag. Note that elements with no content between an opening
+ * 	and closing tag are _not_ considered empty elements.
+ * \param context The pointer provided to xmltree_parse_cstr() by the user.
+ */
+typedef struct xmltree_lex xmltree_parse_element_cstr_fn(
+	struct xmltree_lex token,
+	char *element_name,
+	char **attributes,
+	bool empty,
+	void *context
+);
+
+/**
+ * \brief Type signature for a user-passed text node parsing function.
+ * 	Used by xmltree_parse().
+ *
+ * \param token The last token encountered by the parser. This can
+ * 	be returned directly, iterated over with xmltree_lex_next_raw(),
+ * 	or passed to a recursive call to xmltree_parse().
+ * \param text A pointer to a null-terminated string containing the text.
+ * \param context The pointer provided to xmltree_parse() by the user.
+ */
+typedef struct xmltree_lex xmltree_parse_text_cstr_fn(
+	struct xmltree_lex token,
+	char *text,
+	void *context
+);
+
 inline bool _xmltree_end_token(struct xmltree_lex token)
 {
 	return token.type == xmltree_classifier_eof
@@ -293,6 +336,117 @@ XMLTREE_EXPORT inline struct xmltree_lex xmltree_parse(
 	}
 
 	return xml;
+}
+
+typedef struct {
+	xmltree_parse_element_cstr_fn *element_handler;
+	xmltree_parse_text_cstr_fn *text_handler;
+	void *context;
+} _xmltree_parse_cstr_context;
+
+XMLTREE_EXPORT extern xmltree_classifier_void_fn *xmltree_parse_error(wchar_t);
+
+inline struct xmltree_lex _cstr_element_handler(
+	struct xmltree_lex xml,
+	struct libadt_const_lptr element_name,
+	struct libadt_const_lptr attributes,
+	bool empty,
+	void *context
+)
+{
+	// this function is why I hate c-strings
+	const _xmltree_parse_cstr_context *const cstr_context = context;
+	if (!cstr_context->element_handler)
+		return xml;
+
+	char *const cname = strndup(element_name.buffer, (size_t)element_name.length);
+	if (!cname)
+		goto error_return_xml;
+
+	char * *const cattr = calloc((size_t)(attributes.length + 1), sizeof(char*));
+	if (!cattr)
+		goto error_free_cname;
+
+	for (ssize_t i = 0; i < attributes.length; ++i) {
+		const struct libadt_const_lptr *const attarr = attributes.buffer;
+		const struct libadt_const_lptr *const attribute = &attarr[i];
+		cattr[i] = strndup(attribute->buffer, (size_t)attribute->length);
+		if (!cattr[i])
+			goto error_free_cattr;
+	}
+
+	xml = cstr_context->element_handler(
+		xml,
+		cname,
+		cattr,
+		empty,
+		cstr_context->context
+	);
+
+	for (char **attr = cattr; *attr; attr++) {
+		free(*attr);
+	}
+	free(cattr);
+	free(cname);
+
+	return xml;
+
+error_free_cattr:
+	for (char **attr = cattr; *attr; attr++) {
+		free(*attr);
+	}
+	free(cattr);
+error_free_cname:
+	free(cname);
+error_return_xml:
+	xml.type = xmltree_parse_error;
+	return xml;
+}
+
+inline struct xmltree_lex _cstr_text_handler(
+	struct xmltree_lex xml,
+	struct libadt_const_lptr text,
+	void *context
+)
+{
+	const _xmltree_parse_cstr_context *const cstr_context = context;
+	if (!cstr_context->text_handler)
+		return xml;
+
+	char *const ctext = strndup(text.buffer, (size_t)text.length);
+	if (!ctext) {
+		xml.type = xmltree_parse_error;
+		return xml;
+	}
+
+	xml = cstr_context->text_handler(
+		xml,
+		ctext,
+		cstr_context->context
+	);
+
+	free(ctext);
+	return xml;
+}
+
+XMLTREE_EXPORT inline struct xmltree_lex xmltree_parse_cstr(
+	struct xmltree_lex xml,
+	xmltree_parse_element_cstr_fn *element_handler,
+	xmltree_parse_text_cstr_fn *text_handler,
+	void *context
+)
+{
+	_xmltree_parse_cstr_context cstr_context = {
+		.element_handler = element_handler,
+		.text_handler = text_handler,
+		.context = context,
+	};
+	return xmltree_parse(
+		xml,
+		_cstr_element_handler,
+		_cstr_text_handler,
+		&cstr_context
+	);
 }
 
 #ifdef __cplusplus

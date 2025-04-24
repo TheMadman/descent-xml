@@ -237,10 +237,93 @@ void test_text_entities(void)
 	assert(xml.type != err);
 }
 
+lex_t cstr_empty_element_callback(
+	lex_t token,
+	char *name,
+	char **attributes,
+	bool empty,
+	void *context
+)
+{
+	*(bool*)context = true;
+	assert(strcmp(name, "empty") == 0);
+	assert(*attributes == NULL);
+	assert(empty);
+	return token;
+}
+
+void test_cstr_empty_element_no_attributes(void)
+{
+	lex_t xml = lex(lit("<empty/>"));
+	bool ran = false;
+	while (!stop_token(xml))
+		xml = xmltree_parse_cstr(xml, cstr_empty_element_callback, NULL, &ran);
+	assert(ran);
+	assert(xml.type != err);
+}
+
+lex_t cstr_element_attributes_callback(
+	lex_t token,
+	char *name,
+	char **attributes,
+	bool empty,
+	void *context
+)
+{
+	*(int*)context += 1;
+	assert(strcmp(name, "element") == 0);
+	assert(strcmp(attributes[0], "first") == 0);
+	assert(strcmp(attributes[1], "firstval") == 0);
+	assert(strcmp(attributes[2], "second") == 0);
+	assert(strcmp(attributes[3], "secondval") == 0);
+	assert(strcmp(attributes[4], "third") == 0);
+	assert(strcmp(attributes[5], "") == 0);
+	assert(!attributes[6]);
+	assert(!empty);
+	return token;
+}
+
+void test_cstr_element_attributes(void)
+{
+	{
+		lex_t xml = lex(lit("<element first='firstval' second = \"secondval\" third=''></element>"));
+		int run_times = 0;
+		while (!stop_token(xml))
+			xml = xmltree_parse_cstr(xml, cstr_element_attributes_callback, NULL, &run_times);
+		assert(run_times == 1);
+		assert(xml.type != err);
+	}
+}
+
+lex_t cstr_text_entity_callback(
+	lex_t xml,
+	char *text,
+	void *context
+)
+{
+	*(bool*)context = true;
+	assert(strcmp(text, "this &amp; that") == 0);
+	return xml;
+}
+
+void test_cstr_text_entities(void)
+{
+	lex_t xml = lex(lit("<element>this &amp; that</element>"));
+	bool ran = false;
+	while (!stop_token(xml))
+		xml = xmltree_parse_cstr(xml, NULL, cstr_text_entity_callback, &ran);
+	assert(ran);
+	assert(xml.type != err);
+}
+
 int main()
 {
 	test_empty_element_no_attributes();
 	test_element_attributes();
 	test_attribute_entities();
+	test_text_node();
 	test_text_entities();
+	test_cstr_empty_element_no_attributes();
+	test_cstr_element_attributes();
+	test_cstr_text_entities();
 }
