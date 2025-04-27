@@ -8,7 +8,7 @@ add_library(xmltree SHARED)
 target_link_libraries(xmltree xmltreeobj)
 
 add_library(xmltreestatic STATIC)
-target_link_libraries(xmltreestatic xmltreeobj)
+target_link_libraries(xmltreestatic xmltreeobj adtstatic)
 
 # hate
 target_include_directories(xmltree
