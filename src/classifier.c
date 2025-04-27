@@ -118,7 +118,7 @@ static CHARACTER_CLASS get_cclass(wchar_t c)
 	if (in(c, L" \t\r\n"))
 		return CCLASS_SPACE;
 
-	if (c == (wchar_t)WEOF)
+	if (c == (wchar_t)WEOF || c == 0)
 		return CCLASS_EOF;
 
 	return CCLASS_TEXT;
