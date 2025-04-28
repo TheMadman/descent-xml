@@ -2,8 +2,9 @@
 
 #include <stdlib.h>
 
-xmltree_classifier_void_fn *xmltree_parse_error(wchar_t)
+xmltree_classifier_void_fn *xmltree_parse_error(wchar_t c)
 {
+	(void)c;
 	abort();
 	return (xmltree_classifier_void_fn *)xmltree_parse_error;
 }
