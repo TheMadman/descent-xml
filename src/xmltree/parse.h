@@ -265,9 +265,10 @@ inline _xmltree_value_t _xmltree_text_value(
 	struct xmltree_lex next = xmltree_lex_next_raw(token);
 	while (_xmltree_is_text_type(next)) {
 		result.length += next.value.length;
+		token = next;
 		next = xmltree_lex_next_raw(next);
 	}
-	return (_xmltree_value_t) { result, next };
+	return (_xmltree_value_t) { result, token };
 }
 
 inline struct xmltree_lex _xmltree_handle_text(
