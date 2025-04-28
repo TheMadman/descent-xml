@@ -18,8 +18,8 @@ For debugging, defaults are fine:
 ```bash
 mkdir build
 cd build
-# Add other cmake command options to taste
-# -DBUILD_TESTING=True
+# Add other cmake command options to taste, e.g.
+# -DBUILD_TESTING=True -DBUILD_EXAMPLES=True
 cmake ..
 make install
 ```
@@ -35,4 +35,4 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 make install
 ```
 
-Link with `-lxml -ladt`.
+Link with `-lxmltree -ladt`. For static linking, use `-lxmltreestatic`.
