@@ -1,6 +1,4 @@
-\page tutorial-01 Tutorial 1
-
-\section hello-world Hello, World
+\page tutorial-01 First Tutorial: Make it Run
 
 This tutorial assumes you already have `xmltree` and `libadt` set up in your environment.
 
@@ -24,3 +22,5 @@ Otherwise, we've defined a few functions for convenience:
 - `is_error_type` checks if the token given is of one of two error types:
   - `xmltree_classifier_unexpected` means the lexer encountered a character in an unexpected location (for example, an end-of-file inside an element started with `<`)
   - `xmltree_parse_error` means that the parser encountered an error unrelated to the document. For example, the C-string parsing interface allocates memory to copy values, which can fail.
+
+Once you've gotten the program to compile and run, you can progress on to \ref tutorial-02.

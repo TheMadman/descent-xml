@@ -55,9 +55,9 @@ lex_t text_handler(
 int main()
 {
 	lex_t token = lex(str(
-		"<?xml version=\"1.0\"?>"
-		"<element attr=\"val\" attr2=\"val2\">"
-			"Hello, world!"
+		"<?xml version=\"1.0\"?>\n"
+		"<element attr=\"val\" attr2=\"\">\n"
+		"	Hello, world!\n"
 		"</element>"
 	));
 	while (!is_end_type(token)) {
