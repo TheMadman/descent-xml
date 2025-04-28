@@ -21,7 +21,7 @@ text node:
 
 element_name: element
 attribute: attr=val
-attribute: attr2=val2
+attribute: attr2=
 empty element (ends with /> or ?>): false
 text node:
         Hello, world!
