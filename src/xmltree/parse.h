@@ -311,6 +311,8 @@ inline struct xmltree_lex _xmltree_handle_text(
  * 	an error was encountered. If the `type` property is
  * 	`xmltree_classifier_eof`, then the end of the XML was encountered
  * 	in an expected way.
+ *
+ * \sa xmltree_parse_cstr() An interface for C-style strings.
  */
 XMLTREE_EXPORT inline struct xmltree_lex xmltree_parse(
 	struct xmltree_lex xml,
@@ -429,6 +431,42 @@ inline struct xmltree_lex _cstr_text_handler(
 	return xml;
 }
 
+/**
+ * \brief Function for parsing an XML document.
+ *
+ * xmltree_parse_cstr() is the version of the parser that allocates
+ * memory to copy values into. The strings are null-terminated
+ * char arrays, and are freed by the parser after the relevant callback
+ * is finished running.
+ *
+ * Entities are not converted.
+ *
+ * This function will only parse a single entity. If the entity is an
+ * opening XML element, it will be parsed and passed to the given
+ * element_handler. If the entity is a text node, it will be parsed
+ * and passed to text_handler. The return value will be the token returned
+ * by a handler if called, or the next token to process if neither were
+ * called.
+ *
+ * \param xml A token into an XML document. Can be created on a full
+ * 	XML document using xmltree_lex_init().
+ * \param element_handler A callback to call when encountering an opening
+ * 	element tag. Pass a NULL pointer to disable.
+ * \param text_handler A callback to call when encountering a text node.
+ * 	Pass a NULL pointer to disable.
+ * \param context A user-provided void pointer that will be passed to
+ * 	the callbacks.
+ *
+ * \returns The last token encountered while parsing. If the return value's
+ * 	`type` property is `xmltree_classifier_unexpected`, a lex error
+ * 	occurred. If the `type` property is
+ * 	`xmltree_parse_error`, there was an error allocating memory for
+ * 	a value. If the `type` property is `xmltree_classifier_eof`, the
+ * 	end of the XML was encountered in an expected way.
+ *
+ * \sa xmltree_parse() An interface using pointer-length structs,
+ * 	using no allocation or copying logic.
+ */
 XMLTREE_EXPORT inline struct xmltree_lex xmltree_parse_cstr(
 	struct xmltree_lex xml,
 	xmltree_parse_element_cstr_fn *element_handler,

@@ -1,6 +1,6 @@
 \page tutorial-01 Tutorial 1
 
-\section Hello, World
+\section hello-world Hello, World
 
 This tutorial assumes you already have `xmltree` and `libadt` set up in your environment.
 
