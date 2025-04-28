@@ -4,3 +4,4 @@ function(add_example name)
 endfunction()
 
 add_example(noop-example)
+add_example(print-example)
