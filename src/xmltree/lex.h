@@ -128,6 +128,10 @@ XMLTREE_EXPORT inline struct xmltree_lex xmltree_lex_init(
 /**
  * \brief Returns the next, raw token in the script referred to by
  * 	previous.
+ *
+ * \param previous The previous token from the script.
+ *
+ * \returns The next token.
  */
 XMLTREE_EXPORT inline struct xmltree_lex xmltree_lex_next_raw(
 	struct xmltree_lex previous
