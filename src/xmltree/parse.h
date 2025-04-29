@@ -121,13 +121,13 @@ typedef struct xmltree_lex xmltree_parse_element_cstr_fn(
 
 /**
  * \brief Type signature for a user-passed text node parsing function.
- * 	Used by xmltree_parse().
+ * 	Used by xmltree_parse_cstr().
  *
  * \param token The last token encountered by the parser. This can
  * 	be returned directly, iterated over with xmltree_lex_next_raw(),
- * 	or passed to a recursive call to xmltree_parse().
+ * 	or passed to a recursive call to xmltree_parse_cstr().
  * \param text A pointer to a null-terminated string containing the text.
- * \param context The pointer provided to xmltree_parse() by the user.
+ * \param context The pointer provided to xmltree_parse_cstr() by the user.
  */
 typedef struct xmltree_lex xmltree_parse_text_cstr_fn(
 	struct xmltree_lex token,
