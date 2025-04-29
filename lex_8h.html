@@ -126,21 +126,11 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a689c5ff120eed32607ca3421910c6460" id="r_a689c5ff120eed32607ca3421910c6460"><td class="memItemLeft" align="right" valign="top"><a id="a689c5ff120eed32607ca3421910c6460" name="a689c5ff120eed32607ca3421910c6460"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>_xmltree_mbrtowc</b> (wchar_t *result, struct libadt_const_lptr string, mbstate_t *_mbstate)</td></tr>
-<tr class="separator:a689c5ff120eed32607ca3421910c6460"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9122bf13636bc0667cfe04dedd984f44" id="r_a9122bf13636bc0667cfe04dedd984f44"><td class="memItemLeft" align="right" valign="top"><a id="a9122bf13636bc0667cfe04dedd984f44" name="a9122bf13636bc0667cfe04dedd984f44"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>_xmltree_read_error</b> (<a class="el" href="struct__xmltree__read__t.html">_xmltree_read_t</a> read)</td></tr>
-<tr class="separator:a9122bf13636bc0667cfe04dedd984f44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca7b8ca5bc5741c97d364c630fe42c47" id="r_aca7b8ca5bc5741c97d364c630fe42c47"><td class="memItemLeft" align="right" valign="top"><a id="aca7b8ca5bc5741c97d364c630fe42c47" name="aca7b8ca5bc5741c97d364c630fe42c47"></a>
-<a class="el" href="struct__xmltree__read__t.html">_xmltree_read_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>_xmltree_read</b> (struct libadt_const_lptr script, <a class="el" href="classifier_8h.html#a511f49b1866b4097361147428df6c5a5">xmltree_classifier_fn</a> *const previous)</td></tr>
-<tr class="separator:aca7b8ca5bc5741c97d364c630fe42c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8936cde3ec6c28401b24f0c1cec50eff" id="r_a8936cde3ec6c28401b24f0c1cec50eff"><td class="memItemLeft" align="right" valign="top">XMLTREE_EXPORT struct <a class="el" href="structxmltree__lex.html">xmltree_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lex_8h.html#a8936cde3ec6c28401b24f0c1cec50eff">xmltree_lex_init</a> (struct libadt_const_lptr script)</td></tr>
 <tr class="memdesc:a8936cde3ec6c28401b24f0c1cec50eff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a token object for use in xmltree_lex_next().  <br /></td></tr>
 <tr class="separator:a8936cde3ec6c28401b24f0c1cec50eff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a7b9c3c60328c6d5051310044728945" id="r_a9a7b9c3c60328c6d5051310044728945"><td class="memItemLeft" align="right" valign="top"><a id="a9a7b9c3c60328c6d5051310044728945" name="a9a7b9c3c60328c6d5051310044728945"></a>
-XMLTREE_EXPORT struct <a class="el" href="structxmltree__lex.html">xmltree_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><b>xmltree_lex_next_raw</b> (struct <a class="el" href="structxmltree__lex.html">xmltree_lex</a> previous)</td></tr>
-<tr class="memdesc:a9a7b9c3c60328c6d5051310044728945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the next, raw token in the script referred to by previous. <br /></td></tr>
+<tr class="memitem:a9a7b9c3c60328c6d5051310044728945" id="r_a9a7b9c3c60328c6d5051310044728945"><td class="memItemLeft" align="right" valign="top">XMLTREE_EXPORT struct <a class="el" href="structxmltree__lex.html">xmltree_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lex_8h.html#a9a7b9c3c60328c6d5051310044728945">xmltree_lex_next_raw</a> (struct <a class="el" href="structxmltree__lex.html">xmltree_lex</a> previous)</td></tr>
+<tr class="memdesc:a9a7b9c3c60328c6d5051310044728945"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the next, raw token in the script referred to by previous.  <br /></td></tr>
 <tr class="separator:a9a7b9c3c60328c6d5051310044728945"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
@@ -176,6 +166,41 @@ XMLTREE_EXPORT struct <a class="el" href="structxmltree__lex.html">xmltree_lex</
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A token, valid for passing to xmltree_lex_next(). </dd></dl>
+
+</div>
+</div>
+<a id="a9a7b9c3c60328c6d5051310044728945" name="a9a7b9c3c60328c6d5051310044728945"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a7b9c3c60328c6d5051310044728945">&#9670;&#160;</a></span>xmltree_lex_next_raw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">XMLTREE_EXPORT struct <a class="el" href="structxmltree__lex.html">xmltree_lex</a> xmltree_lex_next_raw </td>
+          <td>(</td>
+          <td class="paramtype">struct <a class="el" href="structxmltree__lex.html">xmltree_lex</a>&#160;</td>
+          <td class="paramname"><em>previous</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the next, raw token in the script referred to by previous. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">previous</td><td>The previous token from the script.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The next token. </dd></dl>
 
 </div>
 </div>
