@@ -144,29 +144,27 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    );</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>}</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="foldopen" id="foldopen00079" data-start="{" data-end="};">
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="struct__xmltree__read__t.html">   79</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordtype">size_t</span> amount;</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <a class="code hl_typedef" href="classifier_8h.html#a511f49b1866b4097361147428df6c5a5">xmltree_classifier_fn</a> *type;</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keyword">struct </span>libadt_const_lptr script;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>} <a class="code hl_struct" href="struct__xmltree__read__t.html">_xmltree_read_t</a>;</div>
-</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>} _xmltree_read_t;</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> _xmltree_read_error(<a class="code hl_struct" href="struct__xmltree__read__t.html">_xmltree_read_t</a> read)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="keyword">inline</span> <span class="keywordtype">bool</span> _xmltree_read_error(_xmltree_read_t read)</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>{</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keywordflow">return</span> read.amount == (size_t)-1</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        || read.amount == (<span class="keywordtype">size_t</span>)-2</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        || read.type == <a class="code hl_variable" href="classifier_8h.html#a59f66dc2454c9bf7d694ccc4fa4de806">xmltree_classifier_unexpected</a>;</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>}</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keyword">inline</span> <a class="code hl_struct" href="struct__xmltree__read__t.html">_xmltree_read_t</a> _xmltree_read(</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keyword">inline</span> _xmltree_read_t _xmltree_read(</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keyword">struct</span> libadt_const_lptr script,</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <a class="code hl_typedef" href="classifier_8h.html#a511f49b1866b4097361147428df6c5a5">xmltree_classifier_fn</a> *<span class="keyword">const</span> previous</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>)</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>{</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">wchar_t</span> c = 0;</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    mbstate_t mbs = { 0 };</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <a class="code hl_struct" href="struct__xmltree__read__t.html">_xmltree_read_t</a> result = { 0 };</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    _xmltree_read_t result = { 0 };</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    result.amount = _xmltree_mbrtowc(&amp;c, script, &amp;mbs);</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordflow">if</span> (_xmltree_read_error(result))</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        result.type = (<a class="code hl_typedef" href="classifier_8h.html#a511f49b1866b4097361147428df6c5a5">xmltree_classifier_fn</a>*)<a class="code hl_variable" href="classifier_8h.html#a59f66dc2454c9bf7d694ccc4fa4de806">xmltree_classifier_unexpected</a>;</div>
@@ -202,7 +200,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        value_offset + previous.value.length</div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    );</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <a class="code hl_struct" href="struct__xmltree__read__t.html">_xmltree_read_t</a></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    _xmltree_read_t</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        read = _xmltree_read(next, previous.type),</div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        previous_read = read;</div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
@@ -254,7 +252,6 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassifier_8h_html_ad6748fb13f43380a3b9f6ccb739c4fdc"><div class="ttname"><a href="classifier_8h.html#ad6748fb13f43380a3b9f6ccb739c4fdc">xmltree_classifier_eof</a></div><div class="ttdeci">XMLTREE_EXPORT xmltree_classifier_fn *const xmltree_classifier_eof</div></div>
 <div class="ttc" id="alex_8h_html_a8936cde3ec6c28401b24f0c1cec50eff"><div class="ttname"><a href="lex_8h.html#a8936cde3ec6c28401b24f0c1cec50eff">xmltree_lex_init</a></div><div class="ttdeci">XMLTREE_EXPORT struct xmltree_lex xmltree_lex_init(struct libadt_const_lptr script)</div><div class="ttdoc">Initializes a token object for use in xmltree_lex_next().</div><div class="ttdef"><b>Definition</b> lex.h:117</div></div>
 <div class="ttc" id="alex_8h_html_a9a7b9c3c60328c6d5051310044728945"><div class="ttname"><a href="lex_8h.html#a9a7b9c3c60328c6d5051310044728945">xmltree_lex_next_raw</a></div><div class="ttdeci">XMLTREE_EXPORT struct xmltree_lex xmltree_lex_next_raw(struct xmltree_lex previous)</div><div class="ttdoc">Returns the next, raw token in the script referred to by previous.</div><div class="ttdef"><b>Definition</b> lex.h:136</div></div>
-<div class="ttc" id="astruct__xmltree__read__t_html"><div class="ttname"><a href="struct__xmltree__read__t.html">_xmltree_read_t</a></div><div class="ttdef"><b>Definition</b> lex.h:79</div></div>
 <div class="ttc" id="astructxmltree__lex_html"><div class="ttname"><a href="structxmltree__lex.html">xmltree_lex</a></div><div class="ttdoc">Represents a single token.</div><div class="ttdef"><b>Definition</b> lex.h:41</div></div>
 <div class="ttc" id="astructxmltree__lex_html_aa5ba777fcb9c0ae63de32813383b2849"><div class="ttname"><a href="structxmltree__lex.html#aa5ba777fcb9c0ae63de32813383b2849">xmltree_lex::type</a></div><div class="ttdeci">xmltree_classifier_fn * type</div><div class="ttdoc">Represents the type of token classifiered.</div><div class="ttdef"><b>Definition</b> lex.h:45</div></div>
 <div class="ttc" id="astructxmltree__lex_html_ae9f70f990624735a2789f948dd0daa6f"><div class="ttname"><a href="structxmltree__lex.html#ae9f70f990624735a2789f948dd0daa6f">xmltree_lex::script</a></div><div class="ttdeci">struct libadt_const_lptr script</div><div class="ttdoc">A pointer to the full script.</div><div class="ttdef"><b>Definition</b> lex.h:50</div></div>

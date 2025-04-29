@@ -162,19 +162,17 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>}</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="foldopen" id="foldopen00155" data-start="{" data-end="};">
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="struct__xmltree__value__t.html">  155</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <span class="keyword">struct </span>libadt_const_lptr <a class="code hl_variable" href="structxmltree__lex.html#af6029dcb99267b7164d3b659c96a54fa">value</a>;</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keyword">struct </span><a class="code hl_struct" href="structxmltree__lex.html">xmltree_lex</a> token;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>} <a class="code hl_struct" href="struct__xmltree__value__t.html">_xmltree_value_t</a>;</div>
-</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>} _xmltree_value_t;</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="keyword">inline</span> <a class="code hl_struct" href="struct__xmltree__value__t.html">_xmltree_value_t</a> _xmltree_attribute_value(</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="keyword">inline</span> _xmltree_value_t _xmltree_attribute_value(</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keyword">struct</span> <a class="code hl_struct" href="structxmltree__lex.html">xmltree_lex</a> token</div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>)</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>{</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keywordflow">if</span> (!_xmltree_is_attribute_value_type(token))</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keywordflow">return</span> (<a class="code hl_struct" href="struct__xmltree__value__t.html">_xmltree_value_t</a>) {</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keywordflow">return</span> (_xmltree_value_t) {</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            libadt_const_lptr_truncate(token.<a class="code hl_variable" href="structxmltree__lex.html#af6029dcb99267b7164d3b659c96a54fa">value</a>, 0),</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            token</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        };</div>
@@ -185,7 +183,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        result.length += next.<a class="code hl_variable" href="structxmltree__lex.html#af6029dcb99267b7164d3b659c96a54fa">value</a>.length;</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        next = <a class="code hl_function" href="lex_8h.html#a9a7b9c3c60328c6d5051310044728945">xmltree_lex_next_raw</a>(next);</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    }</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordflow">return</span> (<a class="code hl_struct" href="struct__xmltree__value__t.html">_xmltree_value_t</a>) { result, next };</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="keywordflow">return</span> (_xmltree_value_t) { result, next };</div>
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>}</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="keyword">inline</span> <span class="keyword">struct </span><a class="code hl_struct" href="structxmltree__lex.html">xmltree_lex</a> _xmltree_handle_element(</div>
@@ -226,7 +224,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                <span class="keywordflow">if</span> (quote)</div>
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                    token = <a class="code hl_function" href="lex_8h.html#a9a7b9c3c60328c6d5051310044728945">xmltree_lex_next_raw</a>(token);</div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                <a class="code hl_struct" href="struct__xmltree__value__t.html">_xmltree_value_t</a> attr</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                _xmltree_value_t attr</div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                    = _xmltree_attribute_value(token);</div>
 <div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                attributes = libadt_vector_append(</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                    attributes,</div>
@@ -269,7 +267,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        || token.<a class="code hl_variable" href="structxmltree__lex.html#aa5ba777fcb9c0ae63de32813383b2849">type</a> == xmltree_classifier_text_entity;</div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>}</div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span><span class="keyword">inline</span> <a class="code hl_struct" href="struct__xmltree__value__t.html">_xmltree_value_t</a> _xmltree_text_value(</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span><span class="keyword">inline</span> _xmltree_value_t _xmltree_text_value(</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    <span class="keyword">struct</span> <a class="code hl_struct" href="structxmltree__lex.html">xmltree_lex</a> token</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>)</div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>{</div>
@@ -280,7 +278,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        token = next;</div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        next = <a class="code hl_function" href="lex_8h.html#a9a7b9c3c60328c6d5051310044728945">xmltree_lex_next_raw</a>(next);</div>
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    }</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    <span class="keywordflow">return</span> (<a class="code hl_struct" href="struct__xmltree__value__t.html">_xmltree_value_t</a>) { result, token };</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    <span class="keywordflow">return</span> (_xmltree_value_t) { result, token };</div>
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>}</div>
 <div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span><span class="keyword">inline</span> <span class="keyword">struct </span><a class="code hl_struct" href="structxmltree__lex.html">xmltree_lex</a> _xmltree_handle_text(</div>
@@ -289,7 +287,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <span class="keywordtype">void</span> *context</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>)</div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>{</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <a class="code hl_struct" href="struct__xmltree__value__t.html">_xmltree_value_t</a> result = _xmltree_text_value(token);</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    _xmltree_value_t result = _xmltree_text_value(token);</div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordflow">return</span> text_handler(result.token, result.value, context);</div>
 <div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>}</div>
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
@@ -321,13 +319,11 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>}</div>
 </div>
 <div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
-<div class="foldopen" id="foldopen00344" data-start="{" data-end="};">
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno"><a class="line" href="struct__xmltree__parse__cstr__context.html">  344</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
 <div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>    <a class="code hl_function" href="parse_8h.html#a5d1bfbd2736e4968c15832eb079bd0ef">xmltree_parse_element_cstr_fn</a> *element_handler;</div>
 <div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    <a class="code hl_function" href="parse_8h.html#a973b2c1ad5e67f3495bd124b952d8b09">xmltree_parse_text_cstr_fn</a> *text_handler;</div>
 <div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    <span class="keywordtype">void</span> *context;</div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>} <a class="code hl_struct" href="struct__xmltree__parse__cstr__context.html">_xmltree_parse_cstr_context</a>;</div>
-</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>} _xmltree_parse_cstr_context;</div>
 <div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span> </div>
 <div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>XMLTREE_EXPORT <span class="keyword">extern</span> <a class="code hl_typedef" href="classifier_8h.html#a531b2a1e893c96af58afb307640e2d30">xmltree_classifier_void_fn</a> *xmltree_parse_error(<span class="keywordtype">wchar_t</span>);</div>
 <div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span> </div>
@@ -340,7 +336,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>)</div>
 <div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>{</div>
 <div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    <span class="comment">// this function is why I hate c-strings</span></div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct__xmltree__parse__cstr__context.html">_xmltree_parse_cstr_context</a> *<span class="keyword">const</span> cstr_context = context;</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>    <span class="keyword">const</span> _xmltree_parse_cstr_context *<span class="keyword">const</span> cstr_context = context;</div>
 <div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>    <span class="keywordflow">if</span> (!cstr_context-&gt;element_handler)</div>
 <div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>        <span class="keywordflow">return</span> xml;</div>
 <div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span> </div>
@@ -394,7 +390,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    void *context</div>
 <div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>)</div>
 <div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>{</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>    <span class="keyword">const</span> <a class="code hl_struct" href="struct__xmltree__parse__cstr__context.html">_xmltree_parse_cstr_context</a> *<span class="keyword">const</span> cstr_context = context;</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>    <span class="keyword">const</span> _xmltree_parse_cstr_context *<span class="keyword">const</span> cstr_context = context;</div>
 <div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>    <span class="keywordflow">if</span> (!cstr_context-&gt;text_handler)</div>
 <div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>        <span class="keywordflow">return</span> xml;</div>
 <div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span> </div>
@@ -422,7 +418,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>    <span class="keywordtype">void</span> *context</div>
 <div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span>)</div>
 <div class="line"><a id="l00477" name="l00477"></a><span class="lineno">  477</span>{</div>
-<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span>    <a class="code hl_struct" href="struct__xmltree__parse__cstr__context.html">_xmltree_parse_cstr_context</a> cstr_context = {</div>
+<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span>    _xmltree_parse_cstr_context cstr_context = {</div>
 <div class="line"><a id="l00479" name="l00479"></a><span class="lineno">  479</span>        .element_handler = element_handler,</div>
 <div class="line"><a id="l00480" name="l00480"></a><span class="lineno">  480</span>        .text_handler = text_handler,</div>
 <div class="line"><a id="l00481" name="l00481"></a><span class="lineno">  481</span>        .context = context,</div>
@@ -452,8 +448,6 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aparse_8h_html_a973b2c1ad5e67f3495bd124b952d8b09"><div class="ttname"><a href="parse_8h.html#a973b2c1ad5e67f3495bd124b952d8b09">xmltree_parse_text_cstr_fn</a></div><div class="ttdeci">struct xmltree_lex xmltree_parse_text_cstr_fn(struct xmltree_lex token, char *text, void *context)</div><div class="ttdoc">Type signature for a user-passed text node parsing function. Used by xmltree_parse_cstr().</div></div>
 <div class="ttc" id="aparse_8h_html_ab2c1b92c3e2fb334a74f062badd705bb"><div class="ttname"><a href="parse_8h.html#ab2c1b92c3e2fb334a74f062badd705bb">xmltree_parse</a></div><div class="ttdeci">XMLTREE_EXPORT struct xmltree_lex xmltree_parse(struct xmltree_lex xml, xmltree_parse_element_fn *element_handler, xmltree_parse_text_fn *text_handler, void *context)</div><div class="ttdoc">Function for parsing an XML document.</div><div class="ttdef"><b>Definition</b> parse.h:318</div></div>
 <div class="ttc" id="aparse_8h_html_ab5471c9281425a99c74fc97cf023c995"><div class="ttname"><a href="parse_8h.html#ab5471c9281425a99c74fc97cf023c995">xmltree_parse_element_fn</a></div><div class="ttdeci">struct xmltree_lex xmltree_parse_element_fn(struct xmltree_lex token, struct libadt_const_lptr element_name, struct libadt_const_lptr attributes, bool empty, void *context)</div><div class="ttdoc">Type signature for a user-passed element parsing function. Used by xmltree_parse().</div></div>
-<div class="ttc" id="astruct__xmltree__parse__cstr__context_html"><div class="ttname"><a href="struct__xmltree__parse__cstr__context.html">_xmltree_parse_cstr_context</a></div><div class="ttdef"><b>Definition</b> parse.h:344</div></div>
-<div class="ttc" id="astruct__xmltree__value__t_html"><div class="ttname"><a href="struct__xmltree__value__t.html">_xmltree_value_t</a></div><div class="ttdef"><b>Definition</b> parse.h:155</div></div>
 <div class="ttc" id="astructxmltree__lex_html"><div class="ttname"><a href="structxmltree__lex.html">xmltree_lex</a></div><div class="ttdoc">Represents a single token.</div><div class="ttdef"><b>Definition</b> lex.h:41</div></div>
 <div class="ttc" id="astructxmltree__lex_html_aa5ba777fcb9c0ae63de32813383b2849"><div class="ttname"><a href="structxmltree__lex.html#aa5ba777fcb9c0ae63de32813383b2849">xmltree_lex::type</a></div><div class="ttdeci">xmltree_classifier_fn * type</div><div class="ttdoc">Represents the type of token classifiered.</div><div class="ttdef"><b>Definition</b> lex.h:45</div></div>
 <div class="ttc" id="astructxmltree__lex_html_af6029dcb99267b7164d3b659c96a54fa"><div class="ttname"><a href="structxmltree__lex.html#af6029dcb99267b7164d3b659c96a54fa">xmltree_lex::value</a></div><div class="ttdeci">struct libadt_const_lptr value</div><div class="ttdoc">A pointer to the classifiered value.</div><div class="ttdef"><b>Definition</b> lex.h:57</div></div>
