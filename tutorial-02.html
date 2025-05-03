@@ -167,8 +167,9 @@ $(function() {
 </div><!-- fragment --><p>This example reveals a few things:</p><ul>
 <li><a class="el" href="parse_8h.html#a3fecf1e5d9091f06aa014340666a19d2">xmltree_parse_cstr</a> doesn't do intelligent parsing: in XML, spaces between elements <em>are</em> Text nodes containing whitespace, and this is reflected in XMLTree. Similarly, XMLTree doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.</li>
 <li>The <code>attributes</code> array will always be a multiple of two, for each attribute=value pair, plus a null terminator. An attribute with an empty value will have an empty-string value.</li>
-<li>XMLTree does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags. </li>
+<li>XMLTree does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.</li>
 </ul>
+<p>XMLTree also doesn't perform structure validation: it is up to the <code>element_handler</code>s to validate structure, if at all. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->

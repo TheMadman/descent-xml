@@ -207,7 +207,13 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="ttc" id="aparse_8h_html"><div class="ttname"><a href="parse_8h.html">parse.h</a></div></div>
 <div class="ttc" id="astructxmltree__lex_html"><div class="ttname"><a href="structxmltree__lex.html">xmltree_lex</a></div><div class="ttdoc">Represents a single token.</div><div class="ttdef"><b>Definition</b> lex.h:41</div></div>
 <div class="ttc" id="astructxmltree__lex_html_aa5ba777fcb9c0ae63de32813383b2849"><div class="ttname"><a href="structxmltree__lex.html#aa5ba777fcb9c0ae63de32813383b2849">xmltree_lex::type</a></div><div class="ttdeci">xmltree_classifier_fn * type</div><div class="ttdoc">Represents the type of token classifiered.</div><div class="ttdef"><b>Definition</b> lex.h:45</div></div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><p>This example should print the result:</p>
+<div class="fragment"><div class="line">Author: Raymond E. Feist</div>
+<div class="line">Author: Anthony Horowitz</div>
+</div><!-- fragment --><p>In this example, each <code>element_handler</code> is responsible for its own closing tag. You will notice that the <code>element_handler</code>s each loop until they find a closing tag, then iterate the token once more with an empty call to <a class="el" href="parse_8h.html#a3fecf1e5d9091f06aa014340666a19d2" title="Function for parsing an XML document.">xmltree_parse_cstr()</a>. If the element handler didn't iterate again, it would return <em>a</em> closing tag token to the parent, which would then terminate the loop.</p>
+<p>This parser still doesn't do structure validation: each element handler just assumes that the next closing tag, <em>any</em> closing tag, is correct. You can test this by modifying one of the <code>&lt;/author&gt;</code>s to an invalid value, such as <code>&lt;/date&gt;</code>.</p>
+<p>This is fine if you know the XML you're parsing will always be valid, but if the XML comes from a system you don't control, validation must be performed. </p>
+</div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
