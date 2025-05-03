@@ -5,3 +5,4 @@ endfunction()
 
 add_example(noop-example)
 add_example(print-example)
+add_example(books-example)
