@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['first_20tutorial_3a_20make_20it_20run_0',['First Tutorial: Make it Run',['../tutorial-01.html',1,'']]]
+  ['a_20simple_20printer_0',['Second Tutorial: A Simple Printer',['../tutorial-02.html',1,'']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['a_20simple_20printer_0',['Second Tutorial: A Simple Printer',['../tutorial-02.html',1,'']]]
+  ['3_3a_20recursion_0',['Tutorial 3: Recursion',['../tutorial-03.html',1,'']]]
 ];

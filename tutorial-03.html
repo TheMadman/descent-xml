@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>XMLTree: Recursion</title>
+<title>XMLTree: Tutorial 3: Recursion</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -70,7 +70,7 @@ $(function() {
 
 </div><!-- top -->
 <div><div class="header">
-  <div class="headertitle"><div class="title">Recursion</div></div>
+  <div class="headertitle"><div class="title">Tutorial 3: Recursion</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>One approach to handling nested elements is using recursive calls to <a class="el" href="parse_8h.html#ab2c1b92c3e2fb334a74f062badd705bb" title="Function for parsing an XML document.">xmltree_parse()</a> or <a class="el" href="parse_8h.html#a3fecf1e5d9091f06aa014340666a19d2" title="Function for parsing an XML document.">xmltree_parse_cstr()</a>. For example, you can write an <code>element_handler</code> function for a parent element, and an <code>element_handler</code> for child elements, and have the parent <code>element_handler</code> call <a class="el" href="parse_8h.html#a3fecf1e5d9091f06aa014340666a19d2" title="Function for parsing an XML document.">xmltree_parse_cstr()</a> with the child <code>element_handler</code>. Alternatively, if you need to perform the same operation on every element, you can write one <code>element_handler</code> which calls <a class="el" href="parse_8h.html#a3fecf1e5d9091f06aa014340666a19d2" title="Function for parsing an XML document.">xmltree_parse_cstr()</a> on child elements, passing itself.</p>
