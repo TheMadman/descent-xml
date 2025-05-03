@@ -34,3 +34,5 @@ This example reveals a few things:
 - XMLTree does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.
 
 XMLTree also doesn't perform structure validation: it is up to the `element_handler`s to validate structure, if at all.
+
+Proceed to the next tutorial, \ref tutorial-03.
