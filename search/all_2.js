@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['first_20tutorial_3a_20make_20it_20run_0',['First Tutorial: Make it Run',['../tutorial-01.html',1,'']]]
+  ['example_20print_20authors_20of_20fictional_20works_0',['Parent/Child Example - Print Authors of Fictional Works',['../tutorial-03.html#autotoc_md0',1,'']]]
 ];
