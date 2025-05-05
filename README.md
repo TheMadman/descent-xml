@@ -35,4 +35,8 @@ cmake -DCMAKE_BUILD_TYPE=Release ..
 make install
 ```
 
-Link with `-lxmltree -ladt`. For static linking, use `-lxmltreestatic`.
+Link with `-lxmltree -ladt`. For static linking, use `-lxmltreestatic -ladtstatic`.
+
+# Documentation
+
+Tutorials and reference documentation can be found at https://themadman.github.io/xmltree/. Documentation can be built using `doxygen .`, which will generate a `html/index.html` that can be opened.
