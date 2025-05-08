@@ -76,12 +76,18 @@ lex_t author_handler(
 	(void)attributes;
 	if (!empty && equal(element_name, "author")) {
 		printf("Author: ");
-		while (token.type != close)
+		while (token.type != close) {
+			if (is_end_type(token) || is_error_type(token))
+				return token;
 			token = parse(token, NULL, text_printer, NULL);
+		}
 		printf("\n");
 	} else if (!empty) {
-		while (token.type != close)
+		while (token.type != close) {
+			if (is_end_type(token) || is_error_type(token))
+				return token;
 			token = parse(token, NULL, NULL, NULL);
+		}
 	}
 	token = parse(token, NULL, NULL, NULL);
 	return token;
@@ -105,6 +111,8 @@ lex_t book_handler(
 			&& equal(attributes[1], "fiction")
 		) {
 			while (token.type != close) {
+				if (is_end_type(token) || is_error_type(token))
+					return token;
 				token = parse(token, author_handler, NULL, NULL);
 			}
 			token = parse(token, NULL, NULL, NULL);
