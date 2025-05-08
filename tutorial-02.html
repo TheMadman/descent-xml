@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>XMLTree: Second Tutorial: A Simple Printer</title>
+<title>Descent XML: Second Tutorial: A Simple Printer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -21,7 +21,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">XMLTree
+   <div id="projectname">Descent XML
    </div>
    <div id="projectbrief">An XML Parser Helper Library</div>
   </td>
@@ -74,37 +74,37 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>The previous program worked, but wasn't very interesting. In this tutorial, we're going to use the C-string interface to write a parser that prints what it encounters.</p>
-<p>This involves using <a class="el" href="parse_8h.html#a3fecf1e5d9091f06aa014340666a19d2">xmltree_parse_cstr</a>, passing it an <code>element_handler</code> and a <code>text_handler</code>.</p>
-<p>The signature of an element handler function is given in <a class="el" href="parse_8h.html#a5d1bfbd2736e4968c15832eb079bd0ef">xmltree_parse_element_cstr_fn</a>, and the signature of a text handler is given in <a class="el" href="parse_8h.html#a973b2c1ad5e67f3495bd124b952d8b09">xmltree_parse_text_cstr_fn</a>. We're going to write an element handler that prints the element name and its attributes, and a text handler that prints the text content encountered.</p>
-<p>Save the following file as <code>print-example.c</code> and compile it with <code>cc -o print-example print-example.c -lxmltreestatic</code>.</p>
+<p>This involves using descent_xml_parse_cstr, passing it an <code>element_handler</code> and a <code>text_handler</code>.</p>
+<p>The signature of an element handler function is given in descent_xml_parse_element_cstr_fn, and the signature of a text handler is given in descent_xml_parse_text_cstr_fn. We're going to write an element handler that prints the element name and its attributes, and a text handler that prints the text content encountered.</p>
+<p>Save the following file as <code>print-example.c</code> and compile it with <code>cc -o print-example print-example.c -ldescent_xmlstatic</code>.</p>
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;libadt/str.h&gt;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="parse_8h.html">xmltree/parse.h</a>&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;descent_xml/parse.h&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structxmltree__lex.html">xmltree_lex</a> <a class="code hl_struct" href="structxmltree__lex.html">lex_t</a>;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">typedef</span> <span class="keyword">struct </span>descent_xml_lex lex_t;</div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#define str libadt_str_literal</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define lex xmltree_lex_init</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#define eof xmltree_classifier_eof</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#define unexpected xmltree_classifier_unexpected</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#define error xmltree_parse_error</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#define parse xmltree_parse_cstr</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define lex descent_xml_lex_init</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#define eof descent_xml_classifier_eof</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#define unexpected descent_xml_classifier_unexpected</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#define error descent_xml_parse_error</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#define parse descent_xml_parse_cstr</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">static</span> <span class="keywordtype">int</span> is_end_type(<a class="code hl_struct" href="structxmltree__lex.html">lex_t</a> token)</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">static</span> <span class="keywordtype">int</span> is_end_type(lex_t token)</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordflow">return</span> token.<a class="code hl_variable" href="structxmltree__lex.html#aa5ba777fcb9c0ae63de32813383b2849">type</a> == eof;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordflow">return</span> token.type == eof;</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">static</span> <span class="keywordtype">int</span> is_error_type(<a class="code hl_struct" href="structxmltree__lex.html">lex_t</a> token)</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">static</span> <span class="keywordtype">int</span> is_error_type(lex_t token)</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>{</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">return</span> token.<a class="code hl_variable" href="structxmltree__lex.html#aa5ba777fcb9c0ae63de32813383b2849">type</a> == unexpected</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        || token.<a class="code hl_variable" href="structxmltree__lex.html#aa5ba777fcb9c0ae63de32813383b2849">type</a> == error;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">return</span> token.type == unexpected</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        || token.type == error;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><a class="code hl_struct" href="structxmltree__lex.html">lex_t</a> element_handler(</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_struct" href="structxmltree__lex.html">lex_t</a> token,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>lex_t element_handler(</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    lex_t token,</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordtype">char</span> *element_name,</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordtype">char</span> **attributes,</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordtype">bool</span> empty,</div>
@@ -120,8 +120,8 @@ $(function() {
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">return</span> token;</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><a class="code hl_struct" href="structxmltree__lex.html">lex_t</a> text_handler(</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <a class="code hl_struct" href="structxmltree__lex.html">lex_t</a> token,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>lex_t text_handler(</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    lex_t token,</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordtype">char</span> *text,</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">void</span> *context</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>)</div>
@@ -133,7 +133,7 @@ $(function() {
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keywordtype">int</span> main()</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>{</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <a class="code hl_struct" href="structxmltree__lex.html">lex_t</a> token = lex(str(</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    lex_t token = lex(str(</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="stringliteral">&quot;&lt;?xml version=\&quot;1.0\&quot;?&gt;\n&quot;</span></div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="stringliteral">&quot;&lt;element attr=\&quot;val\&quot; attr2=\&quot;\&quot;&gt;\n&quot;</span></div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="stringliteral">&quot;   Hello, world!\n&quot;</span></div>
@@ -148,9 +148,6 @@ $(function() {
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        token = parse(token, element_handler, text_handler, NULL);</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    }</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>}</div>
-<div class="ttc" id="aparse_8h_html"><div class="ttname"><a href="parse_8h.html">parse.h</a></div></div>
-<div class="ttc" id="astructxmltree__lex_html"><div class="ttname"><a href="structxmltree__lex.html">xmltree_lex</a></div><div class="ttdoc">Represents a single token.</div><div class="ttdef"><b>Definition</b> lex.h:41</div></div>
-<div class="ttc" id="astructxmltree__lex_html_aa5ba777fcb9c0ae63de32813383b2849"><div class="ttname"><a href="structxmltree__lex.html#aa5ba777fcb9c0ae63de32813383b2849">xmltree_lex::type</a></div><div class="ttdeci">xmltree_classifier_fn * type</div><div class="ttdoc">Represents the type of token classifiered.</div><div class="ttdef"><b>Definition</b> lex.h:45</div></div>
 </div><!-- fragment --><p>Running this program will produce the following output:</p>
 <div class="fragment"><div class="line">$ ./print-example</div>
 <div class="line">element_name: ?xml</div>
@@ -165,7 +162,7 @@ $(function() {
 <div class="line">text node:</div>
 <div class="line">        Hello, world!</div>
 </div><!-- fragment --><p>This example reveals a few things:</p><ul>
-<li><a class="el" href="parse_8h.html#a3fecf1e5d9091f06aa014340666a19d2">xmltree_parse_cstr</a> doesn't do intelligent parsing: in XML, spaces between elements <em>are</em> Text nodes containing whitespace, and this is reflected in XMLTree. Similarly, XMLTree doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.</li>
+<li>descent_xml_parse_cstr doesn't do intelligent parsing: in XML, spaces between elements <em>are</em> Text nodes containing whitespace, and this is reflected in XMLTree. Similarly, XMLTree doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.</li>
 <li>The <code>attributes</code> array will always be a multiple of two, for each attribute=value pair, plus a null terminator. An attribute with an empty value will have an empty-string value.</li>
 <li>XMLTree does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.</li>
 </ul>
