@@ -43,10 +43,17 @@ inline struct descent_xml_lex _descent_xml_validate_element_handler(
 )
 {
 	(void)attributes;
+	bool *still_valid = context;
+	const struct libadt_const_lptr xmldecl = libadt_str_literal("?xml");
+
+	if (libadt_const_lptr_equal(element_name, xmldecl)) {
+		*still_valid = false;
+		return token;
+	}
+
 	if (empty)
 		return token;
 
-	bool *still_valid = context;
 	while (token.type != descent_xml_classifier_element_close_name) {
 		token = descent_xml_parse(
 			token,
@@ -76,6 +83,14 @@ inline struct descent_xml_lex _descent_xml_validate_element_handler(
 DESCENT_XML_EXPORT inline bool descent_xml_validate_element(struct descent_xml_lex token)
 {
 	bool valid = true;
+	while (token.type != descent_xml_classifier_element) {
+		if (
+			token.type == descent_xml_classifier_unexpected
+			|| token.type == descent_xml_classifier_eof
+		)
+			return false;
+		token = descent_xml_lex_next_raw(token);
+	}
 	token = descent_xml_parse(
 		token,
 		_descent_xml_validate_element_handler,
@@ -112,7 +127,7 @@ inline struct descent_xml_lex _descent_xml_validate_doctype(
 			return token;
 		}
 
-		while (*still_valid && token.type != descent_xml_classifier_eof) {
+		while (token.type != descent_xml_classifier_element) {
 			if (
 				token.type == descent_xml_classifier_eof
 				|| token.type == descent_xml_classifier_element_close
@@ -120,16 +135,15 @@ inline struct descent_xml_lex _descent_xml_validate_doctype(
 				*still_valid = false;
 				return token;
 			}
-
-			token = descent_xml_parse(
-				token,
-				_descent_xml_validate_element_handler,
-				NULL,
-				context
-			);
+			token = descent_xml_lex_next_raw(token);
 		}
 
-		return token;
+		return descent_xml_parse(
+			token,
+			_descent_xml_validate_element_handler,
+			NULL,
+			context
+		);
 	}
 
 	return _descent_xml_validate_element_handler(
@@ -158,21 +172,23 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 			return token;
 		}
 
-		while (token.type != descent_xml_classifier_eof) {
-			if (token.type == descent_xml_classifier_unexpected) {
+		while (token.type != descent_xml_classifier_element) {
+			if (
+				token.type == descent_xml_classifier_unexpected
+				|| token.type == descent_xml_classifier_eof
+			) {
 				*still_valid = false;
 				return token;
 			}
-
-			token = descent_xml_parse(
-				token,
-				_descent_xml_validate_doctype,
-				NULL,
-				context
-			);
+			token = descent_xml_lex_next_raw(token);
 		}
 
-		return token;
+		return descent_xml_parse(
+			token,
+			_descent_xml_validate_doctype,
+			NULL,
+			context
+		);
 	}
 
 	return _descent_xml_validate_doctype(
@@ -187,24 +203,35 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 DESCENT_XML_EXPORT inline bool descent_xml_validate_document(struct descent_xml_lex token)
 {
 	bool valid = true;
-	while (token.type != descent_xml_classifier_eof) {
-		if (token.type == descent_xml_classifier_unexpected)
+	while (token.type != descent_xml_classifier_element) {
+		if (
+			token.type == descent_xml_classifier_unexpected
+			|| token.type == descent_xml_classifier_eof
+		)
 			return false;
-
-		token = descent_xml_parse(
-			token,
-			_descent_xml_validate_xmldecl,
-			NULL,
-			&valid
-		);
+		token = descent_xml_lex_next_raw(token);
 	}
 
-	// We have to check for unexpected/eof here in case the
-	// element handler never runs
-	return
-		valid
-		&& token.type != descent_xml_classifier_unexpected;
+	token = descent_xml_parse(
+		token,
+		_descent_xml_validate_xmldecl,
+		NULL,
+		&valid
+	);
 
+	if (!valid)
+		return valid;
+
+	// check that there's only one element in the root
+	while (token.type != descent_xml_classifier_element) {
+		if (token.type == descent_xml_classifier_eof)
+			return true;
+		if (token.type == descent_xml_classifier_unexpected)
+			return false;
+		token = descent_xml_lex_next_raw(token);
+	}
+
+	return false;
 }
 
 #ifdef __cplusplus

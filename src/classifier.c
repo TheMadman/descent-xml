@@ -170,6 +170,7 @@ DESCENT_XML_EXPORT vfn *descent_xml_classifier_element(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_EMARK:
+			// TODO: doctypedecl
 			// do comments properly sometime?
 		case CCLASS_QMARK:
 			// this one too?

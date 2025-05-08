@@ -182,12 +182,6 @@ inline struct descent_xml_lex _descent_xml_handle_element(
 	void *context
 )
 {
-	// not keen on how long this function is getting
-	if (
-		token.type == descent_xml_classifier_unexpected
-		|| token.type == descent_xml_classifier_element_close
-	)
-		return token;
 	const struct libadt_const_lptr name = token.value;
 
 	token = descent_xml_lex_next_raw(token);
@@ -324,9 +318,9 @@ DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_parse(
 {
 	xml = descent_xml_lex_next_raw(xml);
 
-	if (xml.type == descent_xml_classifier_element && element_handler) {
+	if (xml.type == descent_xml_classifier_element_name && element_handler) {
 		xml = _descent_xml_handle_element(
-			descent_xml_lex_next_raw(xml),
+			xml,
 			element_handler,
 			context
 		);

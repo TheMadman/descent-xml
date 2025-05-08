@@ -33,11 +33,28 @@ void test_valid(void)
 	{
 		lex_t valid = lex(lit("<foo><foo></foo><bar></bar></foo>"));
 		assert(descent_xml_validate_element(valid));
+		assert(descent_xml_validate_document(valid));
 	}
 
 	{
 		lex_t valid = lex(lit("<foo />"));
 		assert(descent_xml_validate_element(valid));
+		assert(descent_xml_validate_document(valid));
+	}
+
+	{
+		lex_t valid = lex(lit("<?xml version=\"1.0\"?>\n<foo></foo>"));
+		assert(descent_xml_validate_document(valid));
+	}
+
+	{
+		lex_t valid = lex(lit("<!DOCTYPE html=\"\">\n<html></html>"));
+		assert(descent_xml_validate_document(valid));
+	}
+
+	{
+		lex_t valid = lex(lit("<?xml version=\"1.0\"?>\n<!DOCTYPE html=\"\">\n<html></html>"));
+		assert(descent_xml_validate_document(valid));
 	}
 }
 
@@ -56,6 +73,31 @@ void test_invalid(void)
 	{
 		lex_t invalid = lex(lit("<foo><bar></bar></bar>"));
 		assert(!descent_xml_validate_element(invalid));
+	}
+
+	{
+		lex_t invalid = lex(lit("<?xml version=\"1.0\"?>"));
+		assert(!descent_xml_validate_document(invalid));
+	}
+
+	{
+		lex_t invalid = lex(lit("<!DOCTYPE html=\"\">"));
+		assert(!descent_xml_validate_document(invalid));
+	}
+
+	{
+		lex_t invalid = lex(lit(""));
+		assert(!descent_xml_validate_document(invalid));
+	}
+
+	{
+		lex_t invalid = lex(lit("<!DOCTYPE html=\"\"><?xml?>"));
+		assert(!descent_xml_validate_document(invalid));
+	}
+
+	{
+		lex_t invalid = lex(lit("<foo></foo><bar></bar>"));
+		assert(!descent_xml_validate_document(invalid));
 	}
 }
 
