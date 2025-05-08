@@ -1,4 +1,4 @@
-set(SOURCES classifier.c lex.c parse.c)
+set(SOURCES classifier.c lex.c parse.c validate.c)
 
 add_library(xmltreeobj OBJECT ${SOURCES})
 
