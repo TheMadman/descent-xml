@@ -1,6 +1,6 @@
-# XMLTree - An XML Parser-Helper Library
+# Descent XML - An XML Parser-Helper Library
 
-XMLTree provides a tokenizer and helper functions
+Descent XML provides a tokenizer and helper functions
 for writing an XML parser.
 
 ## Building
@@ -11,7 +11,7 @@ for writing an XML parser.
 
 ### Configuration
 
-XMLTree and libadt will both build with default compiler options, but they tag external functions with `XMLTREE_EXPORT` and `EXPORT` macros, respectively.
+Descent XML and libadt will both build with default compiler options, but they tag external functions with `XMLTREE_EXPORT` and `EXPORT` macros, respectively.
 
 For debugging, defaults are fine:
 
@@ -43,5 +43,5 @@ Tutorials and reference documentation can be found at https://themadman.github.i
 
 # Bugs/Shortcomings
 
-- Currently, XMLTree just uses the application's encoding. It doesn't support reading the encoding provided in the XML and parsing it, separately from the application's `CTYPE` locale setting. This should be fixed in `lex.h`.
+- Currently, Descent XML just uses the application's encoding. It doesn't support reading the encoding provided in the XML and parsing it, separately from the application's `CTYPE` locale setting. This should be fixed in `lex.h`.
 - There isn't an easy interface to parse partial XML, for example from a partially-filled buffer.
