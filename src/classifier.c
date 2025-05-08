@@ -148,7 +148,7 @@ static cfn *entity_cont(wchar_t input, cfn *cont, cfn *end)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_start(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_start(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_OBRACKET:
@@ -163,7 +163,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_start(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_element(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_element(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_EMARK:
@@ -179,7 +179,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_element(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_element_empty(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_element_empty(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_CBRACKET:
@@ -189,7 +189,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_element_empty(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_element_end(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_element_end(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_EOF:
@@ -206,7 +206,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_element_end(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_element_close(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_element_close(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_NAME_START:
@@ -216,7 +216,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_element_close(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_element_close_name(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_element_close_name(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_NAME_START:
@@ -231,7 +231,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_element_close_name(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_element_close_space(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_element_close_space(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_SPACE:
@@ -243,7 +243,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_element_close_space(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_element_name(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_element_name(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_NAME_START:
@@ -262,7 +262,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_element_name(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_element_space(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_element_space(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_NAME_START:
@@ -279,7 +279,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_element_space(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_name(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_name(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_NAME_START:
@@ -294,7 +294,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_name(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_expect_assign(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_expect_assign(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_EQUALS:
@@ -306,7 +306,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_expect_assign(wchar_t input
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_assign(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_assign(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_SPACE:
@@ -320,7 +320,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_assign(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_start(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_start(wchar_t input)
 {
 	// has all the same behaviour as a value, but is a
 	// different state to differentiate the single quote "'"
@@ -328,7 +328,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_start(wc
 	return descent_xml_classifier_attribute_value_single_quote(input);
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		// dunno why the spec says
@@ -346,7 +346,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote(wchar_t 
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_entity_start(
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_entity_start(
 	wchar_t input
 )
 {
@@ -356,7 +356,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_entity_s
 	);
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_entity(
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_entity(
 	wchar_t input
 )
 {
@@ -367,7 +367,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_entity(
 	);
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_end(
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_end(
 	wchar_t input
 )
 {
@@ -384,14 +384,14 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_single_quote_end(
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_start(
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_start(
 	wchar_t input
 )
 {
 	return descent_xml_classifier_attribute_value_double_quote(input);
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote(
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote(
 	wchar_t input
 )
 {
@@ -409,7 +409,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote(
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_entity_start(
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_entity_start(
 	wchar_t input
 )
 {
@@ -419,7 +419,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_entity_s
 	);
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_entity(
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_entity(
 	wchar_t input
 )
 {
@@ -430,7 +430,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_entity(
 	);
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_end(
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_end(
 	wchar_t input
 )
 {
@@ -447,7 +447,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_attribute_value_double_quote_end(
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_text(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_text(wchar_t input)
 {
 	switch (get_cclass(input)) {
 		case CCLASS_OBRACKET:
@@ -464,7 +464,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_text(wchar_t input)
 	}
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_text_entity_start(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_text_entity_start(wchar_t input)
 {
 	return (vfn*)entity_start(
 		input,
@@ -472,7 +472,7 @@ XMLTREE_EXPORT vfn *descent_xml_classifier_text_entity_start(wchar_t input)
 	);
 }
 
-XMLTREE_EXPORT vfn *descent_xml_classifier_text_entity(wchar_t input)
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_text_entity(wchar_t input)
 {
 	return (vfn*)entity_cont(
 		input,

@@ -114,7 +114,7 @@ inline _descent_xml_read_t _descent_xml_read(
  *
  * \returns A token, valid for passing to descent_xml_lex_next().
  */
-XMLTREE_EXPORT inline struct descent_xml_lex descent_xml_lex_init(
+DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_lex_init(
 	struct libadt_const_lptr script
 )
 {
@@ -133,7 +133,7 @@ XMLTREE_EXPORT inline struct descent_xml_lex descent_xml_lex_init(
  *
  * \returns The next token.
  */
-XMLTREE_EXPORT inline struct descent_xml_lex descent_xml_lex_next_raw(
+DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_lex_next_raw(
 	struct descent_xml_lex previous
 )
 {

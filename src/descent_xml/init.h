@@ -29,9 +29,9 @@
 // the compiler defaults.
 //
 // For example: for GCC, set
-// CFLAGS+="-fvisibility=hidden -fvisibility-inline-hidden -DXMLTREE_EXPORT='"'__attribute__((visibility("default")))'"'"
-#ifndef XMLTREE_EXPORT
-#define XMLTREE_EXPORT
+// CFLAGS+="-fvisibility=hidden -fvisibility-inline-hidden -DDESCENT_XML_EXPORT='"'__attribute__((visibility("default")))'"'"
+#ifndef DESCENT_XML_EXPORT
+#define DESCENT_XML_EXPORT
 #endif
 
 #endif // XMLTREE_INIT

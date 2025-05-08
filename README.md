@@ -11,7 +11,7 @@ for writing an XML parser.
 
 ### Configuration
 
-Descent XML and libadt will both build with default compiler options, but they tag external functions with `XMLTREE_EXPORT` and `EXPORT` macros, respectively.
+Descent XML and libadt will both build with default compiler options, but they tag external functions with `DESCENT_XML_EXPORT` and `EXPORT` macros, respectively.
 
 For debugging, defaults are fine:
 
@@ -24,11 +24,11 @@ cmake ..
 make install
 ```
 
-For production shared objects, it is expected you configure your compiler to omit symbols not explicitly tagged with `XMLTREE_EXPORT` (and `EXPORT` for libadt):
+For production shared objects, it is expected you configure your compiler to omit symbols not explicitly tagged with `DESCENT_XML_EXPORT` (and `EXPORT` for libadt):
 
 ```bash
 # Example for GCC
-CFLAGS+="-fvisibility=hidden -fvisibility-inline-hidden -DXMLTREE_EXPORT='"'__attribute__((visibility("default")))'"' -DEXPORT=XMLTREE_EXPORT"
+CFLAGS+="-fvisibility=hidden -fvisibility-inline-hidden -DDESCENT_XML_EXPORT='"'__attribute__((visibility("default")))'"' -DEXPORT=DESCENT_XML_EXPORT"
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
