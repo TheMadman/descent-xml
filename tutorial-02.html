@@ -165,11 +165,11 @@ $(function() {
 <div class="line">text node:</div>
 <div class="line">        Hello, world!</div>
 </div><!-- fragment --><p>This example reveals a few things:</p><ul>
-<li><a class="el" href="parse_8h.html#a164f3b8e89e18906b1a65b99f25432b7">descent_xml_parse_cstr</a> doesn't do intelligent parsing: in XML, spaces between elements <em>are</em> Text nodes containing whitespace, and this is reflected in XMLTree. Similarly, XMLTree doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.</li>
+<li><a class="el" href="parse_8h.html#a164f3b8e89e18906b1a65b99f25432b7">descent_xml_parse_cstr</a> doesn't do intelligent parsing: in XML, spaces between elements <em>are</em> Text nodes containing whitespace, and this is reflected in Descent XML. Similarly, Descent XML doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.</li>
 <li>The <code>attributes</code> array will always be a multiple of two, for each attribute=value pair, plus a null terminator. An attribute with an empty value will have an empty-string value.</li>
-<li>XMLTree does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.</li>
+<li>Descent XML does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.</li>
 </ul>
-<p>XMLTree also doesn't perform structure validation: it is up to the <code>element_handler</code>s to validate structure, if at all.</p>
+<p>Descent XML also doesn't perform structure validation: it is up to the <code>element_handler</code>s to validate structure, if at all.</p>
 <p>Proceed to the next tutorial, <a class="el" href="tutorial-03.html">Tutorial 3: Recursion</a>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
