@@ -39,7 +39,7 @@ Link with `-lxmltree -ladt`. For static linking, use `-lxmltreestatic -ladtstati
 
 # Documentation
 
-Tutorials and reference documentation can be found at https://themadman.github.io/xmltree/. Documentation can be built using `doxygen .`, which will generate a `html/index.html` that can be opened.
+Tutorials and reference documentation can be found at https://themadman.github.io/xmltree/. Documentation can be built using `doxygen`, which will generate a `html/index.html` that can be opened.
 
 # Bugs/Shortcomings
 
