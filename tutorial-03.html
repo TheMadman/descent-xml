@@ -155,12 +155,18 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line">    (void)attributes;</div>
 <div class="line">    <span class="keywordflow">if</span> (!empty &amp;&amp; equal(element_name, <span class="stringliteral">&quot;author&quot;</span>)) {</div>
 <div class="line">        printf(<span class="stringliteral">&quot;Author: &quot;</span>);</div>
-<div class="line">        <span class="keywordflow">while</span> (token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> != close)</div>
+<div class="line">        <span class="keywordflow">while</span> (token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> != close) {</div>
+<div class="line">            <span class="keywordflow">if</span> (is_end_type(token) || is_error_type(token))</div>
+<div class="line">                <span class="keywordflow">return</span> token;</div>
 <div class="line">            token = parse(token, NULL, text_printer, NULL);</div>
+<div class="line">        }</div>
 <div class="line">        printf(<span class="stringliteral">&quot;\n&quot;</span>);</div>
 <div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!empty) {</div>
-<div class="line">        <span class="keywordflow">while</span> (token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> != close)</div>
+<div class="line">        <span class="keywordflow">while</span> (token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> != close) {</div>
+<div class="line">            <span class="keywordflow">if</span> (is_end_type(token) || is_error_type(token))</div>
+<div class="line">                <span class="keywordflow">return</span> token;</div>
 <div class="line">            token = parse(token, NULL, NULL, NULL);</div>
+<div class="line">        }</div>
 <div class="line">    }</div>
 <div class="line">    token = parse(token, NULL, NULL, NULL);</div>
 <div class="line">    <span class="keywordflow">return</span> token;</div>
@@ -184,6 +190,8 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line">            &amp;&amp; equal(attributes[1], <span class="stringliteral">&quot;fiction&quot;</span>)</div>
 <div class="line">        ) {</div>
 <div class="line">            <span class="keywordflow">while</span> (token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> != close) {</div>
+<div class="line">                <span class="keywordflow">if</span> (is_end_type(token) || is_error_type(token))</div>
+<div class="line">                    <span class="keywordflow">return</span> token;</div>
 <div class="line">                token = parse(token, author_handler, NULL, NULL);</div>
 <div class="line">            }</div>
 <div class="line">            token = parse(token, NULL, NULL, NULL);</div>
