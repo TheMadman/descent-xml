@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef XMLTREE_CLASSIFIER
-#define XMLTREE_CLASSIFIER
+#ifndef DESCENT_XML_CLASSIFIER
+#define DESCENT_XML_CLASSIFIER
 
 #ifdef __cplusplus
 extern "C" {
@@ -143,4 +143,4 @@ DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attrib
 } // extern "C"
 #endif
 
-#endif // XMLTREE_CLASSIFIER
+#endif // DESCENT_XML_CLASSIFIER

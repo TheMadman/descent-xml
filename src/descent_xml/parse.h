@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef XMLTREE_PARSE
-#define XMLTREE_PARSE
+#ifndef DESCENT_XML_PARSE
+#define DESCENT_XML_PARSE
 
 #ifdef __cplusplus
 extern "C" {
@@ -492,4 +492,4 @@ DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_parse_cstr(
 } // extern "C"
 #endif
 
-#endif // XMLTREE_PARSE
+#endif // DESCENT_XML_PARSE

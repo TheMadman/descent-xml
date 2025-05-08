@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef XMLTREE_LEX
-#define XMLTREE_LEX
+#ifndef DESCENT_XML_LEX
+#define DESCENT_XML_LEX
 
 #ifdef __cplusplus
 extern "C" {
@@ -187,4 +187,4 @@ DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_lex_next_raw(
 } // extern "C"
 #endif
 
-#endif // XMLTREE_LEX
+#endif // DESCENT_XML_LEX

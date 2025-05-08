@@ -16,8 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef XMLTREE_INIT
-#define XMLTREE_INIT
+#ifndef DESCENT_XML_INIT
+#define DESCENT_XML_INIT
 
 // Mark functions as external
 // We don't have compiler-specific flags
@@ -34,4 +34,4 @@
 #define DESCENT_XML_EXPORT
 #endif
 
-#endif // XMLTREE_INIT
+#endif // DESCENT_XML_INIT
