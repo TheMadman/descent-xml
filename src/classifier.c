@@ -150,6 +150,9 @@ static cfn *entity_cont(wchar_t input, cfn *cont, cfn *end)
 
 DESCENT_XML_EXPORT vfn *descent_xml_classifier_start(wchar_t input)
 {
+	// skip BOM
+	if (input == 0xFEFF)
+		return (vfn *)descent_xml_classifier_start;
 	switch (get_cclass(input)) {
 		case CCLASS_OBRACKET:
 			return (vfn *)descent_xml_classifier_element;
