@@ -105,6 +105,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <area shape="poly" title=" " alt="" coords="109,44,109,79,103,79,103,44"/>
 <area shape="rect" href="parse_8h.html" title=" " alt="" coords="16,152,196,177"/>
 <area shape="poly" title=" " alt="" coords="109,118,109,152,103,152,103,118"/>
+<area shape="rect" href="validate_8h.html" title=" " alt="" coords="7,225,205,251"/>
+<area shape="poly" title=" " alt="" coords="109,191,109,225,103,225,103,191"/>
 </map>
 </div>
 </div>
@@ -119,15 +121,15 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a051ef95bfe0e74d796ee66cd9f84f28e" id="r_a051ef95bfe0e74d796ee66cd9f84f28e"><td class="memItemLeft" align="right" valign="top">XMLTREE_EXPORT <a class="el" href="classifier_8h.html#a481f381235ec8d2f25d2336c12520f91">descent_xml_classifier_void_fn</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classifier_8h.html#a051ef95bfe0e74d796ee66cd9f84f28e">descent_xml_classifier_start</a> (wchar_t input)</td></tr>
-<tr class="separator:a051ef95bfe0e74d796ee66cd9f84f28e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5153e16643c2db0a6225e21b83acd3c7" id="r_a5153e16643c2db0a6225e21b83acd3c7"><td class="memItemLeft" align="right" valign="top">DESCENT_XML_EXPORT <a class="el" href="classifier_8h.html#a481f381235ec8d2f25d2336c12520f91">descent_xml_classifier_void_fn</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classifier_8h.html#a5153e16643c2db0a6225e21b83acd3c7">descent_xml_classifier_start</a> (wchar_t input)</td></tr>
+<tr class="separator:a5153e16643c2db0a6225e21b83acd3c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:af568a6096e04bc36de9d272c399b652d" id="r_af568a6096e04bc36de9d272c399b652d"><td class="memItemLeft" align="right" valign="top">XMLTREE_EXPORT <a class="el" href="classifier_8h.html#aed61c071fa3bc58b89555a7691b51d71">descent_xml_classifier_fn</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classifier_8h.html#af568a6096e04bc36de9d272c399b652d">descent_xml_classifier_unexpected</a></td></tr>
-<tr class="separator:af568a6096e04bc36de9d272c399b652d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6301bbb716e79d45ba3de27cac0acf4b" id="r_a6301bbb716e79d45ba3de27cac0acf4b"><td class="memItemLeft" align="right" valign="top">XMLTREE_EXPORT <a class="el" href="classifier_8h.html#aed61c071fa3bc58b89555a7691b51d71">descent_xml_classifier_fn</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classifier_8h.html#a6301bbb716e79d45ba3de27cac0acf4b">descent_xml_classifier_eof</a></td></tr>
-<tr class="separator:a6301bbb716e79d45ba3de27cac0acf4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8af3fd73b3346061537483295584c3a" id="r_aa8af3fd73b3346061537483295584c3a"><td class="memItemLeft" align="right" valign="top">DESCENT_XML_EXPORT <a class="el" href="classifier_8h.html#aed61c071fa3bc58b89555a7691b51d71">descent_xml_classifier_fn</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classifier_8h.html#aa8af3fd73b3346061537483295584c3a">descent_xml_classifier_unexpected</a></td></tr>
+<tr class="separator:aa8af3fd73b3346061537483295584c3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a722e504fd2be5779c3a9149d98c8820c" id="r_a722e504fd2be5779c3a9149d98c8820c"><td class="memItemLeft" align="right" valign="top">DESCENT_XML_EXPORT <a class="el" href="classifier_8h.html#aed61c071fa3bc58b89555a7691b51d71">descent_xml_classifier_fn</a> *const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classifier_8h.html#a722e504fd2be5779c3a9149d98c8820c">descent_xml_classifier_eof</a></td></tr>
+<tr class="separator:a722e504fd2be5779c3a9149d98c8820c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file defines a finite state machine, where each state is a function. The state takes an input character and returns a pointer to the next function in the state machine.</p>
@@ -167,14 +169,14 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a051ef95bfe0e74d796ee66cd9f84f28e" name="a051ef95bfe0e74d796ee66cd9f84f28e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a051ef95bfe0e74d796ee66cd9f84f28e">&#9670;&#160;</a></span>descent_xml_classifier_start()</h2>
+<a id="a5153e16643c2db0a6225e21b83acd3c7" name="a5153e16643c2db0a6225e21b83acd3c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5153e16643c2db0a6225e21b83acd3c7">&#9670;&#160;</a></span>descent_xml_classifier_start()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">XMLTREE_EXPORT <a class="el" href="classifier_8h.html#a481f381235ec8d2f25d2336c12520f91">descent_xml_classifier_void_fn</a> * descent_xml_classifier_start </td>
+          <td class="memname">DESCENT_XML_EXPORT <a class="el" href="classifier_8h.html#a481f381235ec8d2f25d2336c12520f91">descent_xml_classifier_void_fn</a> * descent_xml_classifier_start </td>
           <td>(</td>
           <td class="paramtype">wchar_t&#160;</td>
           <td class="paramname"><em>input</em></td><td>)</td>
@@ -188,8 +190,8 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="a6301bbb716e79d45ba3de27cac0acf4b" name="a6301bbb716e79d45ba3de27cac0acf4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6301bbb716e79d45ba3de27cac0acf4b">&#9670;&#160;</a></span>descent_xml_classifier_eof</h2>
+<a id="a722e504fd2be5779c3a9149d98c8820c" name="a722e504fd2be5779c3a9149d98c8820c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a722e504fd2be5779c3a9149d98c8820c">&#9670;&#160;</a></span>descent_xml_classifier_eof</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +200,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">XMLTREE_EXPORT <a class="el" href="classifier_8h.html#aed61c071fa3bc58b89555a7691b51d71">descent_xml_classifier_fn</a>* const descent_xml_classifier_eof</td>
+          <td class="memname">DESCENT_XML_EXPORT <a class="el" href="classifier_8h.html#aed61c071fa3bc58b89555a7691b51d71">descent_xml_classifier_fn</a>* const descent_xml_classifier_eof</td>
         </tr>
       </table>
   </td>
@@ -211,8 +213,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="af568a6096e04bc36de9d272c399b652d" name="af568a6096e04bc36de9d272c399b652d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af568a6096e04bc36de9d272c399b652d">&#9670;&#160;</a></span>descent_xml_classifier_unexpected</h2>
+<a id="aa8af3fd73b3346061537483295584c3a" name="aa8af3fd73b3346061537483295584c3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8af3fd73b3346061537483295584c3a">&#9670;&#160;</a></span>descent_xml_classifier_unexpected</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -221,7 +223,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">XMLTREE_EXPORT <a class="el" href="classifier_8h.html#aed61c071fa3bc58b89555a7691b51d71">descent_xml_classifier_fn</a>* const descent_xml_classifier_unexpected</td>
+          <td class="memname">DESCENT_XML_EXPORT <a class="el" href="classifier_8h.html#aed61c071fa3bc58b89555a7691b51d71">descent_xml_classifier_fn</a>* const descent_xml_classifier_unexpected</td>
         </tr>
       </table>
   </td>
