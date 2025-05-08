@@ -19,21 +19,21 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <string.h>
-#include "xmltree/parse.h"
+#include "descent_xml/parse.h"
 
-#include "xmltree/lex.h"
+#include "descent_xml/lex.h"
 
 #include <libadt/str.h>
 
-typedef struct xmltree_lex lex_t;
+typedef struct descent_xml_lex lex_t;
 typedef struct libadt_const_lptr lptr_t;
 
-#define lex xmltree_lex_init
+#define lex descent_xml_lex_init
 #define lit libadt_str_literal
 #define raw libadt_const_lptr_raw
 #define index libadt_const_lptr_index
-#define eof xmltree_classifier_eof
-#define err xmltree_classifier_unexpected
+#define eof descent_xml_classifier_eof
+#define err descent_xml_classifier_unexpected
 
 static bool stop_token(lex_t token)
 {
@@ -62,7 +62,7 @@ void test_empty_element_no_attributes(void)
 		lex_t xml = lex(lit("<empty/>"));
 		bool ran = false;
 		while (!stop_token(xml))
-			xml = xmltree_parse(xml, empty_callback, NULL, &ran);
+			xml = descent_xml_parse(xml, empty_callback, NULL, &ran);
 		assert(ran);
 		assert(xml.type != err);
 	}
@@ -71,7 +71,7 @@ void test_empty_element_no_attributes(void)
 		lex_t xml = lex(lit("<empty />"));
 		bool ran = false;
 		while (!stop_token(xml))
-			xml = xmltree_parse(xml, empty_callback, NULL, &ran);
+			xml = descent_xml_parse(xml, empty_callback, NULL, &ran);
 		assert(ran);
 		assert(xml.type != err);
 	}
@@ -137,7 +137,7 @@ void test_element_attributes(void)
 		lex_t xml = lex(lit("<?xml version=\"1.0\" ?>"));
 		bool ran = false;
 		while (!stop_token(xml))
-			xml = xmltree_parse(xml, prologue_callback, NULL, &ran);
+			xml = descent_xml_parse(xml, prologue_callback, NULL, &ran);
 		assert(ran);
 		assert(xml.type != err);
 	}
@@ -146,7 +146,7 @@ void test_element_attributes(void)
 		lex_t xml = lex(lit("<element first='firstval' second = \"secondval\" third=''></element>"));
 		int run_times = 0;
 		while (!stop_token(xml))
-			xml = xmltree_parse(xml, element_callback, NULL, &run_times);
+			xml = descent_xml_parse(xml, element_callback, NULL, &run_times);
 		assert(run_times == 1);
 		assert(xml.type != err);
 	}
@@ -169,7 +169,7 @@ void test_text_node(void)
 		lex_t xml = lex(lit("<text>Hello, world!</text>"));
 		bool ran = false;
 		while (!stop_token(xml))
-			xml = xmltree_parse(xml, NULL, text_callback, &ran);
+			xml = descent_xml_parse(xml, NULL, text_callback, &ran);
 		assert(ran);
 		assert(xml.type != err);
 	}
@@ -211,7 +211,7 @@ void test_attribute_entities(void)
 	lex_t xml = lex(lit("<element attr='this &amp; that' attr2='&amp; the other'/>"));
 	bool ran = false;
 	while (!stop_token(xml))
-		xml = xmltree_parse(xml, element_attribute_entity_callback, NULL, &ran);
+		xml = descent_xml_parse(xml, element_attribute_entity_callback, NULL, &ran);
 	assert(ran);
 	assert(xml.type != err);
 }
@@ -232,7 +232,7 @@ void test_text_entities(void)
 	lex_t xml = lex(lit("<element>this &amp; that</element>"));
 	bool ran = false;
 	while (!stop_token(xml))
-		xml = xmltree_parse(xml, NULL, text_entity_callback, &ran);
+		xml = descent_xml_parse(xml, NULL, text_entity_callback, &ran);
 	assert(ran);
 	assert(xml.type != err);
 }
@@ -257,7 +257,7 @@ void test_cstr_empty_element_no_attributes(void)
 	lex_t xml = lex(lit("<empty/>"));
 	bool ran = false;
 	while (!stop_token(xml))
-		xml = xmltree_parse_cstr(xml, cstr_empty_element_callback, NULL, &ran);
+		xml = descent_xml_parse_cstr(xml, cstr_empty_element_callback, NULL, &ran);
 	assert(ran);
 	assert(xml.type != err);
 }
@@ -289,7 +289,7 @@ void test_cstr_element_attributes(void)
 		lex_t xml = lex(lit("<element first='firstval' second = \"secondval\" third=''></element>"));
 		int run_times = 0;
 		while (!stop_token(xml))
-			xml = xmltree_parse_cstr(xml, cstr_element_attributes_callback, NULL, &run_times);
+			xml = descent_xml_parse_cstr(xml, cstr_element_attributes_callback, NULL, &run_times);
 		assert(run_times == 1);
 		assert(xml.type != err);
 	}
@@ -311,7 +311,7 @@ void test_cstr_text_entities(void)
 	lex_t xml = lex(lit("<element>this &amp; that</element>"));
 	bool ran = false;
 	while (!stop_token(xml))
-		xml = xmltree_parse_cstr(xml, NULL, cstr_text_entity_callback, &ran);
+		xml = descent_xml_parse_cstr(xml, NULL, cstr_text_entity_callback, &ran);
 	assert(ran);
 	assert(xml.type != err);
 }

@@ -1,15 +1,15 @@
 #include <libadt/str.h>
-#include <xmltree/parse.h>
+#include <descent_xml/parse.h>
 
-typedef struct xmltree_lex lex_t;
+typedef struct descent_xml_lex lex_t;
 
 #define str libadt_str_literal
 
-#define lex xmltree_lex_init
-#define eof xmltree_classifier_eof
-#define unexpected xmltree_classifier_unexpected
-#define error xmltree_parse_error
-#define parse xmltree_parse_cstr
+#define lex descent_xml_lex_init
+#define eof descent_xml_classifier_eof
+#define unexpected descent_xml_classifier_unexpected
+#define error descent_xml_parse_error
+#define parse descent_xml_parse_cstr
 
 static int is_end_type(lex_t token)
 {

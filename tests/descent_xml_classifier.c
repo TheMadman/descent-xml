@@ -21,503 +21,503 @@
 #include <stddef.h>
 #include <wchar.h>
 
-#include "xmltree/classifier.h"
+#include "descent_xml/classifier.h"
 
-typedef xmltree_classifier_void_fn vfn;
-typedef xmltree_classifier_fn cfn;
+typedef descent_xml_classifier_void_fn vfn;
+typedef descent_xml_classifier_fn cfn;
 
 static int expect(cfn *expected, cfn *state, wint_t input)
 {
 	return (cfn*)state((wchar_t)input) == expected;
 }
 
-void test_xmltree_classifier_start(void)
+void test_descent_xml_classifier_start(void)
 {
 	assert(expect(
-		xmltree_classifier_element,
-		xmltree_classifier_start,
+		descent_xml_classifier_element,
+		descent_xml_classifier_start,
 		'<'
 	));
 	assert(expect(
-		xmltree_classifier_start,
-		xmltree_classifier_start,
+		descent_xml_classifier_start,
+		descent_xml_classifier_start,
 		' '
 	));
 	assert(expect(
 		// expect the unexpected!
 		// OK, that's the only time I'm making that joke
-		xmltree_classifier_unexpected,
-		xmltree_classifier_start,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_start,
 		'a'
 	));
 }
 
-void test_xmltree_classifier_element(void)
+void test_descent_xml_classifier_element(void)
 {
 	assert(expect(
-		xmltree_classifier_element_name,
-		xmltree_classifier_element,
+		descent_xml_classifier_element_name,
+		descent_xml_classifier_element,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_element_close,
-		xmltree_classifier_element,
+		descent_xml_classifier_element_close,
+		descent_xml_classifier_element,
 		'/'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_element,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_element,
 		' '
 	));
 }
 
-void test_xmltree_classifier_element_close(void)
+void test_descent_xml_classifier_element_close(void)
 {
 	assert(expect(
-		xmltree_classifier_element_close_name,
-		xmltree_classifier_element_close,
+		descent_xml_classifier_element_close_name,
+		descent_xml_classifier_element_close,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_element_close,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_element_close,
 		' '
 	));
 }
 
-void test_xmltree_classifier_element_close_name(void)
+void test_descent_xml_classifier_element_close_name(void)
 {
 	assert(expect(
-		xmltree_classifier_element_close_name,
-		xmltree_classifier_element_close_name,
+		descent_xml_classifier_element_close_name,
+		descent_xml_classifier_element_close_name,
 		'b'
 	));
 	assert(expect(
-		xmltree_classifier_element_close_space,
-		xmltree_classifier_element_close_name,
+		descent_xml_classifier_element_close_space,
+		descent_xml_classifier_element_close_name,
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_element_end,
-		xmltree_classifier_element_close_name,
+		descent_xml_classifier_element_end,
+		descent_xml_classifier_element_close_name,
 		'>'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_element_close_name,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_element_close_name,
 		WEOF
 	));
 }
 
-void test_xmltree_classifier_element_close_space(void)
+void test_descent_xml_classifier_element_close_space(void)
 {
 	assert(expect(
-		xmltree_classifier_element_close_space,
-		xmltree_classifier_element_close_space,
+		descent_xml_classifier_element_close_space,
+		descent_xml_classifier_element_close_space,
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_element_end,
-		xmltree_classifier_element_close_space,
+		descent_xml_classifier_element_end,
+		descent_xml_classifier_element_close_space,
 		'>'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_element_close_space,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_element_close_space,
 		'a'
 	));
 }
 
-void test_xmltree_classifier_element_name(void)
+void test_descent_xml_classifier_element_name(void)
 {
 	assert(expect(
-		xmltree_classifier_element_name,
-		xmltree_classifier_element_name,
+		descent_xml_classifier_element_name,
+		descent_xml_classifier_element_name,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_element_space,
-		xmltree_classifier_element_name,
+		descent_xml_classifier_element_space,
+		descent_xml_classifier_element_name,
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_element_end,
-		xmltree_classifier_element_name,
+		descent_xml_classifier_element_end,
+		descent_xml_classifier_element_name,
 		'>'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_element_name,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_element_name,
 		'"'
 	));
 }
 
-void test_xmltree_classifier_element_space(void)
+void test_descent_xml_classifier_element_space(void)
 {
 	assert(expect(
-		xmltree_classifier_attribute_name,
-		xmltree_classifier_element_space,
+		descent_xml_classifier_attribute_name,
+		descent_xml_classifier_element_space,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_element_space,
-		xmltree_classifier_element_space,
+		descent_xml_classifier_element_space,
+		descent_xml_classifier_element_space,
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_element_end,
-		xmltree_classifier_element_space,
+		descent_xml_classifier_element_end,
+		descent_xml_classifier_element_space,
 		'>'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_element_space,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_element_space,
 		'"'
 	));
 }
 
-void test_xmltree_classifier_attribute_expect_assign(void)
+void test_descent_xml_classifier_attribute_expect_assign(void)
 {
 	assert(expect(
-		xmltree_classifier_attribute_assign,
-		xmltree_classifier_attribute_expect_assign,
+		descent_xml_classifier_attribute_assign,
+		descent_xml_classifier_attribute_expect_assign,
 		'='
 	));
 	assert(expect(
-		xmltree_classifier_attribute_expect_assign,
-		xmltree_classifier_attribute_expect_assign,
+		descent_xml_classifier_attribute_expect_assign,
+		descent_xml_classifier_attribute_expect_assign,
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_expect_assign,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_expect_assign,
 		'a'
 	));
 }
 
-void test_xmltree_classifier_attribute_assign(void)
+void test_descent_xml_classifier_attribute_assign(void)
 {
 	assert(expect(
-		xmltree_classifier_attribute_assign,
-		xmltree_classifier_attribute_assign,
+		descent_xml_classifier_attribute_assign,
+		descent_xml_classifier_attribute_assign,
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_single_quote_start,
-		xmltree_classifier_attribute_assign,
+		descent_xml_classifier_attribute_value_single_quote_start,
+		descent_xml_classifier_attribute_assign,
 		'\''
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_double_quote_start,
-		xmltree_classifier_attribute_assign,
+		descent_xml_classifier_attribute_value_double_quote_start,
+		descent_xml_classifier_attribute_assign,
 		'"'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_assign,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_assign,
 		'a'
 	));
 }
 
-void test_xmltree_classifier_attribute_value_single_quote(void)
+void test_descent_xml_classifier_attribute_value_single_quote(void)
 {
 	assert(expect(
-		xmltree_classifier_attribute_value_single_quote_end,
-		xmltree_classifier_attribute_value_single_quote,
+		descent_xml_classifier_attribute_value_single_quote_end,
+		descent_xml_classifier_attribute_value_single_quote,
 		'\''
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_single_quote_entity_start,
-		xmltree_classifier_attribute_value_single_quote,
+		descent_xml_classifier_attribute_value_single_quote_entity_start,
+		descent_xml_classifier_attribute_value_single_quote,
 		'%'
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_single_quote_entity_start,
-		xmltree_classifier_attribute_value_single_quote,
+		descent_xml_classifier_attribute_value_single_quote_entity_start,
+		descent_xml_classifier_attribute_value_single_quote,
 		'&'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_value_single_quote,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_value_single_quote,
 		'<'
 	));
 }
 
-void test_xmltree_classifier_attribute_value_single_quote_entity_start(void)
+void test_descent_xml_classifier_attribute_value_single_quote_entity_start(void)
 {
 	assert(expect(
-		xmltree_classifier_attribute_value_single_quote_entity,
-		xmltree_classifier_attribute_value_single_quote_entity_start,
+		descent_xml_classifier_attribute_value_single_quote_entity,
+		descent_xml_classifier_attribute_value_single_quote_entity_start,
 		'#'
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_single_quote_entity,
-		xmltree_classifier_attribute_value_single_quote_entity_start,
+		descent_xml_classifier_attribute_value_single_quote_entity,
+		descent_xml_classifier_attribute_value_single_quote_entity_start,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_value_single_quote_entity_start,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_value_single_quote_entity_start,
 		'>'
 	));
 }
 
-void test_xmltree_classifier_attribute_value_single_quote_entity(void)
+void test_descent_xml_classifier_attribute_value_single_quote_entity(void)
 {
 	assert(expect(
-		xmltree_classifier_attribute_value_single_quote_entity,
-		xmltree_classifier_attribute_value_single_quote_entity,
+		descent_xml_classifier_attribute_value_single_quote_entity,
+		descent_xml_classifier_attribute_value_single_quote_entity,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_single_quote,
-		xmltree_classifier_attribute_value_single_quote_entity,
+		descent_xml_classifier_attribute_value_single_quote,
+		descent_xml_classifier_attribute_value_single_quote_entity,
 		';'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_value_single_quote_entity,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_value_single_quote_entity,
 		' '
 	));
 }
 
-void test_xmltree_classifier_attribute_value_single_quote_end(void)
+void test_descent_xml_classifier_attribute_value_single_quote_end(void)
 {
 	assert(expect(
-		xmltree_classifier_element_end,
-		xmltree_classifier_attribute_value_single_quote_end,
+		descent_xml_classifier_element_end,
+		descent_xml_classifier_attribute_value_single_quote_end,
 		'>'
 	));
 	assert(expect(
-		xmltree_classifier_element_space,
-		xmltree_classifier_attribute_value_single_quote_end,
+		descent_xml_classifier_element_space,
+		descent_xml_classifier_attribute_value_single_quote_end,
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_value_single_quote_end,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_value_single_quote_end,
 		'a'
 	));
 }
 
-void test_xmltree_classifier_attribute_value_double_quote(void)
+void test_descent_xml_classifier_attribute_value_double_quote(void)
 {
 	assert(expect(
-		xmltree_classifier_attribute_value_double_quote_end,
-		xmltree_classifier_attribute_value_double_quote,
+		descent_xml_classifier_attribute_value_double_quote_end,
+		descent_xml_classifier_attribute_value_double_quote,
 		'"'
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_double_quote_entity_start,
-		xmltree_classifier_attribute_value_double_quote,
+		descent_xml_classifier_attribute_value_double_quote_entity_start,
+		descent_xml_classifier_attribute_value_double_quote,
 		'%'
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_double_quote_entity_start,
-		xmltree_classifier_attribute_value_double_quote,
+		descent_xml_classifier_attribute_value_double_quote_entity_start,
+		descent_xml_classifier_attribute_value_double_quote,
 		'&'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_value_double_quote,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_value_double_quote,
 		'<'
 	));
 }
 
-void test_xmltree_classifier_attribute_value_double_quote_entity_start(void)
+void test_descent_xml_classifier_attribute_value_double_quote_entity_start(void)
 {
 	assert(expect(
-		xmltree_classifier_attribute_value_double_quote_entity,
-		xmltree_classifier_attribute_value_double_quote_entity_start,
+		descent_xml_classifier_attribute_value_double_quote_entity,
+		descent_xml_classifier_attribute_value_double_quote_entity_start,
 		'#'
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_double_quote_entity,
-		xmltree_classifier_attribute_value_double_quote_entity_start,
+		descent_xml_classifier_attribute_value_double_quote_entity,
+		descent_xml_classifier_attribute_value_double_quote_entity_start,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_value_double_quote_entity_start,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_value_double_quote_entity_start,
 		'>'
 	));
 }
 
-void test_xmltree_classifier_attribute_value_double_quote_entity(void)
+void test_descent_xml_classifier_attribute_value_double_quote_entity(void)
 {
 	assert(expect(
-		xmltree_classifier_attribute_value_double_quote_entity,
-		xmltree_classifier_attribute_value_double_quote_entity,
+		descent_xml_classifier_attribute_value_double_quote_entity,
+		descent_xml_classifier_attribute_value_double_quote_entity,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_attribute_value_double_quote,
-		xmltree_classifier_attribute_value_double_quote_entity,
+		descent_xml_classifier_attribute_value_double_quote,
+		descent_xml_classifier_attribute_value_double_quote_entity,
 		';'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_value_double_quote_entity,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_value_double_quote_entity,
 		' '
 	));
 }
 
-void test_xmltree_classifier_attribute_value_double_quote_end(void)
+void test_descent_xml_classifier_attribute_value_double_quote_end(void)
 {
 	assert(expect(
-		xmltree_classifier_element_end,
-		xmltree_classifier_attribute_value_double_quote_end,
+		descent_xml_classifier_element_end,
+		descent_xml_classifier_attribute_value_double_quote_end,
 		'>'
 	));
 	assert(expect(
-		xmltree_classifier_element_space,
-		xmltree_classifier_attribute_value_double_quote_end,
+		descent_xml_classifier_element_space,
+		descent_xml_classifier_attribute_value_double_quote_end,
 		' '
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_attribute_value_double_quote_end,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_attribute_value_double_quote_end,
 		'a'
 	));
 }
 
-void test_xmltree_classifier_text(void)
+void test_descent_xml_classifier_text(void)
 {
 	assert(expect(
-		xmltree_classifier_text,
-		xmltree_classifier_text,
+		descent_xml_classifier_text,
+		descent_xml_classifier_text,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_element,
-		xmltree_classifier_text,
+		descent_xml_classifier_element,
+		descent_xml_classifier_text,
 		'<'
 	));
 	assert(expect(
-		xmltree_classifier_text_entity_start,
-		xmltree_classifier_text,
+		descent_xml_classifier_text_entity_start,
+		descent_xml_classifier_text,
 		'&'
 	));
 	assert(expect(
-		xmltree_classifier_text_entity_start,
-		xmltree_classifier_text,
+		descent_xml_classifier_text_entity_start,
+		descent_xml_classifier_text,
 		'%'
 	));
 	assert(expect(
-		xmltree_classifier_text_entity_start,
-		xmltree_classifier_text,
+		descent_xml_classifier_text_entity_start,
+		descent_xml_classifier_text,
 		'&'
 	));
 	assert(expect(
-		xmltree_classifier_eof,
-		xmltree_classifier_text,
+		descent_xml_classifier_eof,
+		descent_xml_classifier_text,
 		WEOF
 	));
 	assert(expect(
-		xmltree_classifier_eof,
-		xmltree_classifier_text,
+		descent_xml_classifier_eof,
+		descent_xml_classifier_text,
 		WEOF
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_text,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_text,
 		'>'
 	));
 }
 
-void test_xmltree_classifier_text_entity_start(void)
+void test_descent_xml_classifier_text_entity_start(void)
 {
 	assert(expect(
-		xmltree_classifier_text_entity,
-		xmltree_classifier_text_entity_start,
+		descent_xml_classifier_text_entity,
+		descent_xml_classifier_text_entity_start,
 		'#'
 	));
 	assert(expect(
-		xmltree_classifier_text_entity,
-		xmltree_classifier_text_entity_start,
+		descent_xml_classifier_text_entity,
+		descent_xml_classifier_text_entity_start,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_text_entity_start,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_text_entity_start,
 		'>'
 	));
 }
 
-void test_xmltree_classifier_text_entity(void)
+void test_descent_xml_classifier_text_entity(void)
 {
 	assert(expect(
-		xmltree_classifier_text_entity,
-		xmltree_classifier_text_entity,
+		descent_xml_classifier_text_entity,
+		descent_xml_classifier_text_entity,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_text,
-		xmltree_classifier_text_entity,
+		descent_xml_classifier_text,
+		descent_xml_classifier_text_entity,
 		';'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_text_entity,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_text_entity,
 		' '
 	));
 }
 
-void test_xmltree_classifier_element_end(void)
+void test_descent_xml_classifier_element_end(void)
 {
 	assert(expect(
-		xmltree_classifier_text,
-		xmltree_classifier_element_end,
+		descent_xml_classifier_text,
+		descent_xml_classifier_element_end,
 		'a'
 	));
 	assert(expect(
-		xmltree_classifier_unexpected,
-		xmltree_classifier_element_end,
+		descent_xml_classifier_unexpected,
+		descent_xml_classifier_element_end,
 		'>'
 	));
 	assert(expect(
-		xmltree_classifier_element,
-		xmltree_classifier_element_end,
+		descent_xml_classifier_element,
+		descent_xml_classifier_element_end,
 		'<'
 	));
 	assert(expect(
-		xmltree_classifier_eof,
-		xmltree_classifier_element_end,
+		descent_xml_classifier_eof,
+		descent_xml_classifier_element_end,
 		WEOF
 	));
 	assert(expect(
-		xmltree_classifier_text_entity_start,
-		xmltree_classifier_element_end,
+		descent_xml_classifier_text_entity_start,
+		descent_xml_classifier_element_end,
 		'%'
 	));
 	assert(expect(
-		xmltree_classifier_text_entity_start,
-		xmltree_classifier_element_end,
+		descent_xml_classifier_text_entity_start,
+		descent_xml_classifier_element_end,
 		'&'
 	));
 }
 
 int main()
 {
-	test_xmltree_classifier_start();
-	test_xmltree_classifier_element();
-	test_xmltree_classifier_element_close();
-	test_xmltree_classifier_element_close_name();
-	test_xmltree_classifier_element_close_space();
-	test_xmltree_classifier_element_name();
-	test_xmltree_classifier_element_space();
-	test_xmltree_classifier_element_end();
-	test_xmltree_classifier_attribute_expect_assign();
-	test_xmltree_classifier_attribute_assign();
-	test_xmltree_classifier_attribute_value_single_quote();
-	test_xmltree_classifier_attribute_value_single_quote_entity_start();
-	test_xmltree_classifier_attribute_value_single_quote_end();
-	test_xmltree_classifier_attribute_value_single_quote_entity();
-	test_xmltree_classifier_attribute_value_double_quote();
-	test_xmltree_classifier_attribute_value_double_quote_entity_start();
-	test_xmltree_classifier_attribute_value_double_quote_entity();
-	test_xmltree_classifier_attribute_value_double_quote_end();
-	test_xmltree_classifier_text();
-	test_xmltree_classifier_text_entity_start();
-	test_xmltree_classifier_text_entity();
+	test_descent_xml_classifier_start();
+	test_descent_xml_classifier_element();
+	test_descent_xml_classifier_element_close();
+	test_descent_xml_classifier_element_close_name();
+	test_descent_xml_classifier_element_close_space();
+	test_descent_xml_classifier_element_name();
+	test_descent_xml_classifier_element_space();
+	test_descent_xml_classifier_element_end();
+	test_descent_xml_classifier_attribute_expect_assign();
+	test_descent_xml_classifier_attribute_assign();
+	test_descent_xml_classifier_attribute_value_single_quote();
+	test_descent_xml_classifier_attribute_value_single_quote_entity_start();
+	test_descent_xml_classifier_attribute_value_single_quote_end();
+	test_descent_xml_classifier_attribute_value_single_quote_entity();
+	test_descent_xml_classifier_attribute_value_double_quote();
+	test_descent_xml_classifier_attribute_value_double_quote_entity_start();
+	test_descent_xml_classifier_attribute_value_double_quote_entity();
+	test_descent_xml_classifier_attribute_value_double_quote_end();
+	test_descent_xml_classifier_text();
+	test_descent_xml_classifier_text_entity_start();
+	test_descent_xml_classifier_text_entity();
 }

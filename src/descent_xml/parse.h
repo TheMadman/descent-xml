@@ -40,11 +40,11 @@ extern "C" {
 
 /**
  * \brief Type signature for a user-passed element parsing function.
- * 	Used by xmltree_parse().
+ * 	Used by descent_xml_parse().
  *
  * \param token The last token encountered by the parser. This can
- * 	be returned directly, iterated over with xmltree_lex_next_raw(),
- * 	or passed to a recursive call to xmltree_parse().
+ * 	be returned directly, iterated over with descent_xml_lex_next_raw(),
+ * 	or passed to a recursive call to descent_xml_parse().
  * \param element_name An libadt_const_lptr to the byte array of the
  * 	element name. element_name.length contains the number of
  * 	bytes for the name and the pointer can be retrieved with
@@ -58,14 +58,14 @@ extern "C" {
  * 	`<element-name />`. False if the element is terminated with a
  * 	closing tag. Note that elements with no content between an opening
  * 	and closing tag are _not_ considered empty elements.
- * \param context The pointer provided to xmltree_parse() by the user.
+ * \param context The pointer provided to descent_xml_parse() by the user.
  *
  * \returns The last token processed. This can be the token passed
  * 	in as an argument, or a token generated as a result of further
  * 	processing inside the function.
  */
-typedef struct xmltree_lex xmltree_parse_element_fn(
-	struct xmltree_lex token,
+typedef struct descent_xml_lex descent_xml_parse_element_fn(
+	struct descent_xml_lex token,
 	struct libadt_const_lptr element_name,
 	struct libadt_const_lptr attributes,
 	bool empty,
@@ -74,31 +74,31 @@ typedef struct xmltree_lex xmltree_parse_element_fn(
 
 /**
  * \brief Type signature for a user-passed text node parsing function.
- * 	Used by xmltree_parse().
+ * 	Used by descent_xml_parse().
  *
  * \param token The last token encountered by the parser. This can
- * 	be returned directly, iterated over with xmltree_lex_next_raw(),
- * 	or passed to a recursive call to xmltree_parse().
+ * 	be returned directly, iterated over with descent_xml_lex_next_raw(),
+ * 	or passed to a recursive call to descent_xml_parse().
  * \param text A length-pointer containing the text.
- * \param context The pointer provided to xmltree_parse() by the user.
+ * \param context The pointer provided to descent_xml_parse() by the user.
  *
  * \returns The last token processed. This can be the token passed
  * 	in as an argument, or a token generated as a result of further
  * 	processing inside the function.
  */
-typedef struct xmltree_lex xmltree_parse_text_fn(
-	struct xmltree_lex token,
+typedef struct descent_xml_lex descent_xml_parse_text_fn(
+	struct descent_xml_lex token,
 	struct libadt_const_lptr text,
 	void *context
 );
 
 /**
  * \brief Type signature for a user-passed element parsing function.
- * 	Used by xmltree_parse_cstr().
+ * 	Used by descent_xml_parse_cstr().
  *
  * \param token The last token encountered by the parser. This can
- * 	be returned directly, iterated over with xmltree_lex_next_raw(),
- * 	or passed to a recursive call to xmltree_parse().
+ * 	be returned directly, iterated over with descent_xml_lex_next_raw(),
+ * 	or passed to a recursive call to descent_xml_parse().
  * \param element_name A null-terminated string containing the element
  * 	name.
  * \param attributes A null-terminated array of null-terminated strings.
@@ -109,10 +109,10 @@ typedef struct xmltree_lex xmltree_parse_text_fn(
  * 	`<element-name />`. False if the element is terminated with a
  * 	closing tag. Note that elements with no content between an opening
  * 	and closing tag are _not_ considered empty elements.
- * \param context The pointer provided to xmltree_parse_cstr() by the user.
+ * \param context The pointer provided to descent_xml_parse_cstr() by the user.
  */
-typedef struct xmltree_lex xmltree_parse_element_cstr_fn(
-	struct xmltree_lex token,
+typedef struct descent_xml_lex descent_xml_parse_element_cstr_fn(
+	struct descent_xml_lex token,
 	char *element_name,
 	char **attributes,
 	bool empty,
@@ -121,117 +121,117 @@ typedef struct xmltree_lex xmltree_parse_element_cstr_fn(
 
 /**
  * \brief Type signature for a user-passed text node parsing function.
- * 	Used by xmltree_parse_cstr().
+ * 	Used by descent_xml_parse_cstr().
  *
  * \param token The last token encountered by the parser. This can
- * 	be returned directly, iterated over with xmltree_lex_next_raw(),
- * 	or passed to a recursive call to xmltree_parse_cstr().
+ * 	be returned directly, iterated over with descent_xml_lex_next_raw(),
+ * 	or passed to a recursive call to descent_xml_parse_cstr().
  * \param text A pointer to a null-terminated string containing the text.
- * \param context The pointer provided to xmltree_parse_cstr() by the user.
+ * \param context The pointer provided to descent_xml_parse_cstr() by the user.
  */
-typedef struct xmltree_lex xmltree_parse_text_cstr_fn(
-	struct xmltree_lex token,
+typedef struct descent_xml_lex descent_xml_parse_text_cstr_fn(
+	struct descent_xml_lex token,
 	char *text,
 	void *context
 );
 
-inline bool _xmltree_end_token(struct xmltree_lex token)
+inline bool _descent_xml_end_token(struct descent_xml_lex token)
 {
-	return token.type == xmltree_classifier_eof
-		|| token.type == xmltree_classifier_unexpected;
+	return token.type == descent_xml_classifier_eof
+		|| token.type == descent_xml_classifier_unexpected;
 }
 
-inline bool _xmltree_is_attribute_value_type(struct xmltree_lex token)
+inline bool _descent_xml_is_attribute_value_type(struct descent_xml_lex token)
 {
-	return token.type == xmltree_classifier_attribute_value_single_quote
-		|| token.type == xmltree_classifier_attribute_value_single_quote_entity_start
-		|| token.type == xmltree_classifier_attribute_value_single_quote_entity
-		|| token.type == xmltree_classifier_attribute_value_double_quote
-		|| token.type == xmltree_classifier_attribute_value_double_quote_entity_start
-		|| token.type == xmltree_classifier_attribute_value_double_quote_entity;
+	return token.type == descent_xml_classifier_attribute_value_single_quote
+		|| token.type == descent_xml_classifier_attribute_value_single_quote_entity_start
+		|| token.type == descent_xml_classifier_attribute_value_single_quote_entity
+		|| token.type == descent_xml_classifier_attribute_value_double_quote
+		|| token.type == descent_xml_classifier_attribute_value_double_quote_entity_start
+		|| token.type == descent_xml_classifier_attribute_value_double_quote_entity;
 
 }
 
 typedef struct {
 	struct libadt_const_lptr value;
-	struct xmltree_lex token;
-} _xmltree_value_t;
+	struct descent_xml_lex token;
+} _descent_xml_value_t;
 
-inline _xmltree_value_t _xmltree_attribute_value(
-	struct xmltree_lex token
+inline _descent_xml_value_t _descent_xml_attribute_value(
+	struct descent_xml_lex token
 )
 {
-	if (!_xmltree_is_attribute_value_type(token))
-		return (_xmltree_value_t) {
+	if (!_descent_xml_is_attribute_value_type(token))
+		return (_descent_xml_value_t) {
 			libadt_const_lptr_truncate(token.value, 0),
 			token
 		};
 
 	struct libadt_const_lptr result = token.value;
-	struct xmltree_lex next = xmltree_lex_next_raw(token);
-	while (_xmltree_is_attribute_value_type(next)) {
+	struct descent_xml_lex next = descent_xml_lex_next_raw(token);
+	while (_descent_xml_is_attribute_value_type(next)) {
 		result.length += next.value.length;
-		next = xmltree_lex_next_raw(next);
+		next = descent_xml_lex_next_raw(next);
 	}
-	return (_xmltree_value_t) { result, next };
+	return (_descent_xml_value_t) { result, next };
 }
 
-inline struct xmltree_lex _xmltree_handle_element(
-	struct xmltree_lex token,
-	xmltree_parse_element_fn *element_handler,
+inline struct descent_xml_lex _descent_xml_handle_element(
+	struct descent_xml_lex token,
+	descent_xml_parse_element_fn *element_handler,
 	void *context
 )
 {
 	// not keen on how long this function is getting
 	if (
-		token.type == xmltree_classifier_unexpected
-		|| token.type == xmltree_classifier_element_close
+		token.type == descent_xml_classifier_unexpected
+		|| token.type == descent_xml_classifier_element_close
 	)
 		return token;
 	const struct libadt_const_lptr name = token.value;
 
-	token = xmltree_lex_next_raw(token);
-	if (token.type == xmltree_classifier_unexpected)
+	token = descent_xml_lex_next_raw(token);
+	if (token.type == descent_xml_classifier_unexpected)
 		return token;
 
 	LIBADT_VECTOR_WITH(attributes, sizeof(struct libadt_const_lptr), 0) {
-		while (token.type == xmltree_classifier_element_space) {
-			token = xmltree_lex_next_raw(token);
+		while (token.type == descent_xml_classifier_element_space) {
+			token = descent_xml_lex_next_raw(token);
 
-			if (token.type == xmltree_classifier_attribute_name) {
+			if (token.type == descent_xml_classifier_attribute_name) {
 				attributes = libadt_vector_append(
 					attributes,
 					&token.value
 				);
-				token = xmltree_lex_next_raw(token);
-				if (token.type == xmltree_classifier_attribute_expect_assign)
-					token = xmltree_lex_next_raw(token);
-				if (token.type == xmltree_classifier_attribute_assign)
-					token = xmltree_lex_next_raw(token);
+				token = descent_xml_lex_next_raw(token);
+				if (token.type == descent_xml_classifier_attribute_expect_assign)
+					token = descent_xml_lex_next_raw(token);
+				if (token.type == descent_xml_classifier_attribute_assign)
+					token = descent_xml_lex_next_raw(token);
 				const bool quote =
-					token.type == xmltree_classifier_attribute_value_single_quote_start
-					|| token.type == xmltree_classifier_attribute_value_double_quote_start;
+					token.type == descent_xml_classifier_attribute_value_single_quote_start
+					|| token.type == descent_xml_classifier_attribute_value_double_quote_start;
 				if (quote)
-					token = xmltree_lex_next_raw(token);
+					token = descent_xml_lex_next_raw(token);
 
-				_xmltree_value_t attr
-					= _xmltree_attribute_value(token);
+				_descent_xml_value_t attr
+					= _descent_xml_attribute_value(token);
 				attributes = libadt_vector_append(
 					attributes,
 					&attr.value
 				);
 				token = attr.token;
-				token = xmltree_lex_next_raw(token);
+				token = descent_xml_lex_next_raw(token);
 			}
 		}
 
-		if (token.type == xmltree_classifier_unexpected)
+		if (token.type == descent_xml_classifier_unexpected)
 			continue;
 
 		const bool is_empty
-			= token.type == xmltree_classifier_element_empty;
+			= token.type == descent_xml_classifier_element_empty;
 
-		if (is_empty || token.type == xmltree_classifier_element_end) {
+		if (is_empty || token.type == descent_xml_classifier_element_end) {
 			struct libadt_const_lptr attribsptr = {
 				.buffer = attributes.buffer,
 				.size = sizeof(struct libadt_const_lptr),
@@ -250,41 +250,41 @@ inline struct xmltree_lex _xmltree_handle_element(
 	return token;
 }
 
-inline bool _xmltree_is_text_type(struct xmltree_lex token)
+inline bool _descent_xml_is_text_type(struct descent_xml_lex token)
 {
-	return token.type == xmltree_classifier_text
-		|| token.type == xmltree_classifier_text_entity_start
-		|| token.type == xmltree_classifier_text_entity;
+	return token.type == descent_xml_classifier_text
+		|| token.type == descent_xml_classifier_text_entity_start
+		|| token.type == descent_xml_classifier_text_entity;
 }
 
-inline _xmltree_value_t _xmltree_text_value(
-	struct xmltree_lex token
+inline _descent_xml_value_t _descent_xml_text_value(
+	struct descent_xml_lex token
 )
 {
 	struct libadt_const_lptr result = token.value;
-	struct xmltree_lex next = xmltree_lex_next_raw(token);
-	while (_xmltree_is_text_type(next)) {
+	struct descent_xml_lex next = descent_xml_lex_next_raw(token);
+	while (_descent_xml_is_text_type(next)) {
 		result.length += next.value.length;
 		token = next;
-		next = xmltree_lex_next_raw(next);
+		next = descent_xml_lex_next_raw(next);
 	}
-	return (_xmltree_value_t) { result, token };
+	return (_descent_xml_value_t) { result, token };
 }
 
-inline struct xmltree_lex _xmltree_handle_text(
-	struct xmltree_lex token,
-	xmltree_parse_text_fn *text_handler,
+inline struct descent_xml_lex _descent_xml_handle_text(
+	struct descent_xml_lex token,
+	descent_xml_parse_text_fn *text_handler,
 	void *context
 )
 {
-	_xmltree_value_t result = _xmltree_text_value(token);
+	_descent_xml_value_t result = _descent_xml_text_value(token);
 	return text_handler(result.token, result.value, context);
 }
 
 /**
  * \brief Function for parsing an XML document.
  *
- * xmltree_parse() is the version of the parser that does not allocate
+ * descent_xml_parse() is the version of the parser that does not allocate
  * new memory and does not copy strings. Instead, it uses the
  * length-pointer implementation from libadt to point into the original
  * XML file for the element names, attributes and text. This also means
@@ -299,7 +299,7 @@ inline struct xmltree_lex _xmltree_handle_text(
  * neither were called.
  *
  * \param xml A token into an XML document. Can be created on a
- * 	full XML document using xmltree_lex_init().
+ * 	full XML document using descent_xml_lex_init().
  * \param element_handler A callback to call when encountering an
  * 	opening element tag. Pass a NULL pointer to disable.
  * \param text_handler A callback to call when encountering a
@@ -308,30 +308,30 @@ inline struct xmltree_lex _xmltree_handle_text(
  * 	to the callbacks.
  *
  * \returns The last token encountered while parsing. If the
- * 	return value's `type` property is `xmltree_classifier_unexpected`,
+ * 	return value's `type` property is `descent_xml_classifier_unexpected`,
  * 	an error was encountered. If the `type` property is
- * 	`xmltree_classifier_eof`, then the end of the XML was encountered
+ * 	`descent_xml_classifier_eof`, then the end of the XML was encountered
  * 	in an expected way.
  *
- * \sa xmltree_parse_cstr() An interface for C-style strings.
+ * \sa descent_xml_parse_cstr() An interface for C-style strings.
  */
-XMLTREE_EXPORT inline struct xmltree_lex xmltree_parse(
-	struct xmltree_lex xml,
-	xmltree_parse_element_fn *element_handler,
-	xmltree_parse_text_fn *text_handler,
+XMLTREE_EXPORT inline struct descent_xml_lex descent_xml_parse(
+	struct descent_xml_lex xml,
+	descent_xml_parse_element_fn *element_handler,
+	descent_xml_parse_text_fn *text_handler,
 	void *context
 )
 {
-	xml = xmltree_lex_next_raw(xml);
+	xml = descent_xml_lex_next_raw(xml);
 
-	if (xml.type == xmltree_classifier_element && element_handler) {
-		xml = _xmltree_handle_element(
-			xmltree_lex_next_raw(xml),
+	if (xml.type == descent_xml_classifier_element && element_handler) {
+		xml = _descent_xml_handle_element(
+			descent_xml_lex_next_raw(xml),
 			element_handler,
 			context
 		);
-	} else if (_xmltree_is_text_type(xml) && text_handler) {
-		xml = _xmltree_handle_text(
+	} else if (_descent_xml_is_text_type(xml) && text_handler) {
+		xml = _descent_xml_handle_text(
 			xml,
 			text_handler,
 			context
@@ -342,15 +342,15 @@ XMLTREE_EXPORT inline struct xmltree_lex xmltree_parse(
 }
 
 typedef struct {
-	xmltree_parse_element_cstr_fn *element_handler;
-	xmltree_parse_text_cstr_fn *text_handler;
+	descent_xml_parse_element_cstr_fn *element_handler;
+	descent_xml_parse_text_cstr_fn *text_handler;
 	void *context;
-} _xmltree_parse_cstr_context;
+} _descent_xml_parse_cstr_context;
 
-XMLTREE_EXPORT extern xmltree_classifier_void_fn *xmltree_parse_error(wchar_t);
+XMLTREE_EXPORT extern descent_xml_classifier_void_fn *descent_xml_parse_error(wchar_t);
 
-inline struct xmltree_lex _cstr_element_handler(
-	struct xmltree_lex xml,
+inline struct descent_xml_lex _cstr_element_handler(
+	struct descent_xml_lex xml,
 	struct libadt_const_lptr element_name,
 	struct libadt_const_lptr attributes,
 	bool empty,
@@ -358,7 +358,7 @@ inline struct xmltree_lex _cstr_element_handler(
 )
 {
 	// this function is why I hate c-strings
-	const _xmltree_parse_cstr_context *const cstr_context = context;
+	const _descent_xml_parse_cstr_context *const cstr_context = context;
 	if (!cstr_context->element_handler)
 		return xml;
 
@@ -402,23 +402,23 @@ error_free_cattr:
 error_free_cname:
 	free(cname);
 error_return_xml:
-	xml.type = xmltree_parse_error;
+	xml.type = descent_xml_parse_error;
 	return xml;
 }
 
-inline struct xmltree_lex _cstr_text_handler(
-	struct xmltree_lex xml,
+inline struct descent_xml_lex _cstr_text_handler(
+	struct descent_xml_lex xml,
 	struct libadt_const_lptr text,
 	void *context
 )
 {
-	const _xmltree_parse_cstr_context *const cstr_context = context;
+	const _descent_xml_parse_cstr_context *const cstr_context = context;
 	if (!cstr_context->text_handler)
 		return xml;
 
 	char *const ctext = strndup(text.buffer, (size_t)text.length);
 	if (!ctext) {
-		xml.type = xmltree_parse_error;
+		xml.type = descent_xml_parse_error;
 		return xml;
 	}
 
@@ -435,7 +435,7 @@ inline struct xmltree_lex _cstr_text_handler(
 /**
  * \brief Function for parsing an XML document.
  *
- * xmltree_parse_cstr() is the version of the parser that allocates
+ * descent_xml_parse_cstr() is the version of the parser that allocates
  * memory to copy values into. The strings are null-terminated
  * char arrays, and are freed by the parser after the relevant callback
  * is finished running.
@@ -450,7 +450,7 @@ inline struct xmltree_lex _cstr_text_handler(
  * called.
  *
  * \param xml A token into an XML document. Can be created on a full
- * 	XML document using xmltree_lex_init().
+ * 	XML document using descent_xml_lex_init().
  * \param element_handler A callback to call when encountering an opening
  * 	element tag. Pass a NULL pointer to disable.
  * \param text_handler A callback to call when encountering a text node.
@@ -459,28 +459,28 @@ inline struct xmltree_lex _cstr_text_handler(
  * 	the callbacks.
  *
  * \returns The last token encountered while parsing. If the return value's
- * 	`type` property is `xmltree_classifier_unexpected`, a lex error
+ * 	`type` property is `descent_xml_classifier_unexpected`, a lex error
  * 	occurred. If the `type` property is
- * 	`xmltree_parse_error`, there was an error allocating memory for
- * 	a value. If the `type` property is `xmltree_classifier_eof`, the
+ * 	`descent_xml_parse_error`, there was an error allocating memory for
+ * 	a value. If the `type` property is `descent_xml_classifier_eof`, the
  * 	end of the XML was encountered in an expected way.
  *
- * \sa xmltree_parse() An interface using pointer-length structs,
+ * \sa descent_xml_parse() An interface using pointer-length structs,
  * 	using no allocation or copying logic.
  */
-XMLTREE_EXPORT inline struct xmltree_lex xmltree_parse_cstr(
-	struct xmltree_lex xml,
-	xmltree_parse_element_cstr_fn *element_handler,
-	xmltree_parse_text_cstr_fn *text_handler,
+XMLTREE_EXPORT inline struct descent_xml_lex descent_xml_parse_cstr(
+	struct descent_xml_lex xml,
+	descent_xml_parse_element_cstr_fn *element_handler,
+	descent_xml_parse_text_cstr_fn *text_handler,
 	void *context
 )
 {
-	_xmltree_parse_cstr_context cstr_context = {
+	_descent_xml_parse_cstr_context cstr_context = {
 		.element_handler = element_handler,
 		.text_handler = text_handler,
 		.context = context,
 	};
-	return xmltree_parse(
+	return descent_xml_parse(
 		xml,
 		_cstr_element_handler,
 		_cstr_text_handler,

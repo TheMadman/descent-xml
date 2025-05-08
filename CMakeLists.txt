@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.29.0)
-project(XMLTree)
+project(DescentXML)
 
 add_subdirectory(src)
 

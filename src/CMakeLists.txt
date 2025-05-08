@@ -1,26 +1,26 @@
 set(SOURCES classifier.c lex.c parse.c)
 
-add_library(xmltreeobj OBJECT ${SOURCES})
+add_library(descent_xmlobj OBJECT ${SOURCES})
 
-set_property(TARGET xmltreeobj PROPERTY POSITION_INDEPENDENT_CODE 1)
+set_property(TARGET descent_xmlobj PROPERTY POSITION_INDEPENDENT_CODE 1)
 
-add_library(xmltree SHARED)
-target_link_libraries(xmltree xmltreeobj)
+add_library(descent_xml SHARED)
+target_link_libraries(descent_xml descent_xmlobj)
 
-add_library(xmltreestatic STATIC)
-target_link_libraries(xmltreestatic xmltreeobj adtstatic)
+add_library(descent_xmlstatic STATIC)
+target_link_libraries(descent_xmlstatic descent_xmlobj adtstatic)
 
 # hate
-target_include_directories(xmltree
+target_include_directories(descent_xml
 	PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 	$<INSTALL_INTERFACE:include>)
-target_include_directories(xmltreestatic
+target_include_directories(descent_xmlstatic
 	PUBLIC
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
 	$<INSTALL_INTERFACE:include>)
 
-install(TARGETS xmltree xmltreestatic
+install(TARGETS descent_xml descent_xmlstatic
 	DESTINATION lib)
-install(DIRECTORY xmltree
+install(DIRECTORY descent_xml
 	DESTINATION include)

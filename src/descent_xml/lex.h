@@ -38,11 +38,11 @@ extern "C" {
 /**
  * \brief Represents a single token.
  */
-struct xmltree_lex {
+struct descent_xml_lex {
 	/**
 	 * \brief Represents the type of token classifiered.
 	 */
-	xmltree_classifier_fn *type;
+	descent_xml_classifier_fn *type;
 
 	/**
 	 * \brief A pointer to the full script.
@@ -57,7 +57,7 @@ struct xmltree_lex {
 	struct libadt_const_lptr value;
 };
 
-inline size_t _xmltree_mbrtowc(
+inline size_t _descent_xml_mbrtowc(
 	wchar_t *result,
 	struct libadt_const_lptr string,
 	mbstate_t *_mbstate
@@ -78,48 +78,48 @@ inline size_t _xmltree_mbrtowc(
 
 typedef struct {
 	size_t amount;
-	xmltree_classifier_fn *type;
+	descent_xml_classifier_fn *type;
 	struct libadt_const_lptr script;
-} _xmltree_read_t;
+} _descent_xml_read_t;
 
-inline bool _xmltree_read_error(_xmltree_read_t read)
+inline bool _descent_xml_read_error(_descent_xml_read_t read)
 {
 	return read.amount == (size_t)-1
 		|| read.amount == (size_t)-2
-		|| read.type == xmltree_classifier_unexpected;
+		|| read.type == descent_xml_classifier_unexpected;
 }
 
-inline _xmltree_read_t _xmltree_read(
+inline _descent_xml_read_t _descent_xml_read(
 	struct libadt_const_lptr script,
-	xmltree_classifier_fn *const previous
+	descent_xml_classifier_fn *const previous
 )
 {
 	wchar_t c = 0;
 	mbstate_t mbs = { 0 };
-	_xmltree_read_t result = { 0 };
-	result.amount = _xmltree_mbrtowc(&c, script, &mbs);
-	if (_xmltree_read_error(result))
-		result.type = (xmltree_classifier_fn*)xmltree_classifier_unexpected;
+	_descent_xml_read_t result = { 0 };
+	result.amount = _descent_xml_mbrtowc(&c, script, &mbs);
+	if (_descent_xml_read_error(result))
+		result.type = (descent_xml_classifier_fn*)descent_xml_classifier_unexpected;
 	else
-		result.type = (xmltree_classifier_fn*)previous(c);
+		result.type = (descent_xml_classifier_fn*)previous(c);
 
 	result.script = libadt_const_lptr_index(script, (ssize_t)result.amount);
 	return result;
 }
 
 /**
- * \brief Initializes a token object for use in xmltree_lex_next().
+ * \brief Initializes a token object for use in descent_xml_lex_next().
  *
  * \param script The script to create a token from.
  *
- * \returns A token, valid for passing to xmltree_lex_next().
+ * \returns A token, valid for passing to descent_xml_lex_next().
  */
-XMLTREE_EXPORT inline struct xmltree_lex xmltree_lex_init(
+XMLTREE_EXPORT inline struct descent_xml_lex descent_xml_lex_init(
 	struct libadt_const_lptr script
 )
 {
-	return (struct xmltree_lex) {
-		.type = (xmltree_classifier_fn*)xmltree_classifier_start,
+	return (struct descent_xml_lex) {
+		.type = (descent_xml_classifier_fn*)descent_xml_classifier_start,
 		.script = script,
 		.value = libadt_const_lptr_truncate(script, 0),
 	};
@@ -133,8 +133,8 @@ XMLTREE_EXPORT inline struct xmltree_lex xmltree_lex_init(
  *
  * \returns The next token.
  */
-XMLTREE_EXPORT inline struct xmltree_lex xmltree_lex_next_raw(
-	struct xmltree_lex previous
+XMLTREE_EXPORT inline struct descent_xml_lex descent_xml_lex_next_raw(
+	struct descent_xml_lex previous
 )
 {
 	const ssize_t value_offset = (char *)previous.value.buffer
@@ -144,19 +144,19 @@ XMLTREE_EXPORT inline struct xmltree_lex xmltree_lex_next_raw(
 		value_offset + previous.value.length
 	);
 
-	_xmltree_read_t
-		read = _xmltree_read(next, previous.type),
+	_descent_xml_read_t
+		read = _descent_xml_read(next, previous.type),
 		previous_read = read;
 
-	if (_xmltree_read_error(read))
-		return (struct xmltree_lex) {
+	if (_descent_xml_read_error(read))
+		return (struct descent_xml_lex) {
 			.script = previous.script,
-			.type = xmltree_classifier_unexpected,
+			.type = descent_xml_classifier_unexpected,
 			.value = libadt_const_lptr_truncate(next, 0),
 		};
 
-	if (read.type == xmltree_classifier_eof) {
-		return (struct xmltree_lex) {
+	if (read.type == descent_xml_classifier_eof) {
+		return (struct descent_xml_lex) {
 			.script = previous.script,
 			.type = read.type,
 			.value = libadt_const_lptr_truncate(next, read.amount)
@@ -165,9 +165,9 @@ XMLTREE_EXPORT inline struct xmltree_lex xmltree_lex_next_raw(
 
 	size_t value_length = read.amount;
 	for (
-		read = _xmltree_read(read.script, read.type);
-		!_xmltree_read_error(read);
-		read = _xmltree_read(read.script, read.type)
+		read = _descent_xml_read(read.script, read.type);
+		!_descent_xml_read_error(read);
+		read = _descent_xml_read(read.script, read.type)
 	) {
 		if (read.type != previous_read.type)
 			break;
@@ -176,7 +176,7 @@ XMLTREE_EXPORT inline struct xmltree_lex xmltree_lex_next_raw(
 		value_length += read.amount;
 	}
 
-	return (struct xmltree_lex) {
+	return (struct descent_xml_lex) {
 		.script = previous.script,
 		.type = previous_read.type,
 		.value = libadt_const_lptr_truncate(next, value_length),
