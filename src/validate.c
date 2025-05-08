@@ -1,0 +1,17 @@
+#include "descent_xml/validate.h"
+
+struct descent_xml_lex _descent_xml_validate_element_handler(
+	struct descent_xml_lex token,
+	struct libadt_const_lptr element_name,
+	struct libadt_const_lptr attributes,
+	bool empty,
+	void *context
+);
+bool descent_xml_validate_element(struct descent_xml_lex token);
+struct descent_xml_lex _descent_xml_validate_document(
+	struct descent_xml_lex token,
+	struct libadt_const_lptr element_name,
+	struct libadt_const_lptr attributes,
+	bool empty,
+	void *context
+);
