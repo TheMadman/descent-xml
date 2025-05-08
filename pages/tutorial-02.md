@@ -29,10 +29,10 @@ text node:
 ```
 
 This example reveals a few things:
-- \ref descent_xml_parse_cstr doesn't do intelligent parsing: in XML, spaces between elements _are_ Text nodes containing whitespace, and this is reflected in XMLTree. Similarly, XMLTree doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.
+- \ref descent_xml_parse_cstr doesn't do intelligent parsing: in XML, spaces between elements _are_ Text nodes containing whitespace, and this is reflected in Descent XML. Similarly, Descent XML doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.
 - The `attributes` array will always be a multiple of two, for each attribute=value pair, plus a null terminator. An attribute with an empty value will have an empty-string value.
-- XMLTree does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.
+- Descent XML does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.
 
-XMLTree also doesn't perform structure validation: it is up to the `element_handler`s to validate structure, if at all.
+Descent XML also doesn't perform structure validation: it is up to the `element_handler`s to validate structure, if at all.
 
 Proceed to the next tutorial, \ref tutorial-03.
