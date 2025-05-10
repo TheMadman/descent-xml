@@ -497,6 +497,25 @@ void test_descent_xml_classifier_element_end(void)
 	));
 }
 
+void test_descent_xml_classifier_text_space(void)
+{
+	assert(expect(
+		descent_xml_classifier_text_space,
+		descent_xml_classifier_text_space,
+		' '
+	));
+	assert(expect(
+		descent_xml_classifier_text_space,
+		descent_xml_classifier_text_space,
+		'\n'
+	));
+	assert(expect(
+		descent_xml_classifier_text_space,
+		descent_xml_classifier_text_space,
+		'\t'
+	));
+}
+
 int main()
 {
 	test_descent_xml_classifier_start();
@@ -520,4 +539,5 @@ int main()
 	test_descent_xml_classifier_text();
 	test_descent_xml_classifier_text_entity_start();
 	test_descent_xml_classifier_text_entity();
+	test_descent_xml_classifier_text_space();
 }

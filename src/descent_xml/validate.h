@@ -114,6 +114,9 @@ inline struct descent_xml_lex _descent_xml_validate_doctype(
 	void *context
 )
 {
+	// I wrote this function before I realized just how fucked
+	// the doctypedecl really is, I should probably just delete
+	// it but I want to fix it at some point
 	bool *still_valid = context;
 	const struct libadt_const_lptr
 		doctypedecl = libadt_str_literal("!DOCTYPE");
@@ -131,6 +134,7 @@ inline struct descent_xml_lex _descent_xml_validate_doctype(
 			if (
 				token.type == descent_xml_classifier_eof
 				|| token.type == descent_xml_classifier_element_close
+				|| token.type == descent_xml_classifier_text
 			) {
 				*still_valid = false;
 				return token;
@@ -176,6 +180,7 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 			if (
 				token.type == descent_xml_classifier_unexpected
 				|| token.type == descent_xml_classifier_eof
+				|| token.type == descent_xml_classifier_text
 			) {
 				*still_valid = false;
 				return token;
@@ -227,6 +232,8 @@ DESCENT_XML_EXPORT inline bool descent_xml_validate_document(struct descent_xml_
 		if (token.type == descent_xml_classifier_eof)
 			return true;
 		if (token.type == descent_xml_classifier_unexpected)
+			return false;
+		if (token.type == descent_xml_classifier_text)
 			return false;
 		token = descent_xml_lex_next_raw(token);
 	}

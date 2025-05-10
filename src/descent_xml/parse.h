@@ -246,7 +246,8 @@ inline struct descent_xml_lex _descent_xml_handle_element(
 
 inline bool _descent_xml_is_text_type(struct descent_xml_lex token)
 {
-	return token.type == descent_xml_classifier_text
+	return token.type == descent_xml_classifier_text_space
+		|| token.type == descent_xml_classifier_text
 		|| token.type == descent_xml_classifier_text_entity_start
 		|| token.type == descent_xml_classifier_text_entity;
 }

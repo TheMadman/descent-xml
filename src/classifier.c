@@ -205,6 +205,8 @@ DESCENT_XML_EXPORT vfn *descent_xml_classifier_element_end(wchar_t input)
 		case CCLASS_REF_START:
 		case CCLASS_ENTITY_START:
 			return (vfn*)descent_xml_classifier_text_entity_start;
+		case CCLASS_SPACE:
+			return (vfn*)descent_xml_classifier_text_space;
 		default:
 			return (vfn*)descent_xml_classifier_text;
 	}
@@ -483,5 +485,15 @@ DESCENT_XML_EXPORT vfn *descent_xml_classifier_text_entity(wchar_t input)
 		descent_xml_classifier_text_entity,
 		descent_xml_classifier_text
 	);
+}
+
+DESCENT_XML_EXPORT vfn *descent_xml_classifier_text_space(wchar_t input)
+{
+	switch (get_cclass(input)) {
+		case CCLASS_SPACE:
+			return (vfn*)descent_xml_classifier_text_space;
+		default:
+			return descent_xml_classifier_text(input);
+	}
 }
 

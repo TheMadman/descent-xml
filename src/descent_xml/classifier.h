@@ -91,6 +91,8 @@ DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_start(
 
 DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_text(wchar_t input);
 
+DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_text_space(wchar_t input);
+
 DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element(wchar_t input);
 
 DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element_name(wchar_t input);
