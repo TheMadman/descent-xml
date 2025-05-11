@@ -106,6 +106,13 @@ DESCENT_XML_EXPORT inline bool descent_xml_validate_element(struct descent_xml_l
 		&& token.type != descent_xml_classifier_eof;
 }
 
+inline bool _descent_xml_non_space_text(struct descent_xml_lex token)
+{
+	return token.type == descent_xml_classifier_text
+		|| token.type == descent_xml_classifier_text_entity_start
+		|| token.type == descent_xml_classifier_text_entity;
+}
+
 inline struct descent_xml_lex _descent_xml_validate_doctype(
 	struct descent_xml_lex token,
 	struct libadt_const_lptr element_name,
@@ -134,7 +141,7 @@ inline struct descent_xml_lex _descent_xml_validate_doctype(
 			if (
 				token.type == descent_xml_classifier_eof
 				|| token.type == descent_xml_classifier_element_close
-				|| token.type == descent_xml_classifier_text
+				|| _descent_xml_non_space_text(token)
 			) {
 				*still_valid = false;
 				return token;
@@ -180,7 +187,7 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 			if (
 				token.type == descent_xml_classifier_unexpected
 				|| token.type == descent_xml_classifier_eof
-				|| token.type == descent_xml_classifier_text
+				|| _descent_xml_non_space_text(token)
 			) {
 				*still_valid = false;
 				return token;

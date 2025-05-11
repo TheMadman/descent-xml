@@ -89,6 +89,11 @@ void test_invalid(void)
 		lex_t invalid = lex(lit("<?xml?><root></root>foo"));
 		assert(!descent_xml_validate_document(invalid));
 	}
+
+	{
+		lex_t invalid = lex(lit("<?xml?><root></root>&gt;"));
+		assert(!descent_xml_validate_document(invalid));
+	}
 }
 
 int main()
