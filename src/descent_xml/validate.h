@@ -39,15 +39,24 @@ inline struct descent_xml_lex _descent_xml_validate_element_handler(
 	struct libadt_const_lptr element_name,
 	struct libadt_const_lptr attributes,
 	bool empty,
-	void *context
+	void *context_p
 )
 {
 	(void)attributes;
-	bool *still_valid = context;
+	struct {
+		bool valid;
+		int depth;
+	} *context = context_p;
+	if (context->depth == 0) {
+		context->valid = false;
+		return token;
+	}
+	context->depth--;
+
 	const struct libadt_const_lptr xmldecl = libadt_str_literal("?xml");
 
 	if (libadt_const_lptr_equal(element_name, xmldecl)) {
-		*still_valid = false;
+		context->valid = false;
 		return token;
 	}
 
@@ -59,30 +68,36 @@ inline struct descent_xml_lex _descent_xml_validate_element_handler(
 			token,
 			_descent_xml_validate_element_handler,
 			NULL,
-			still_valid
+			context
 		);
 		if (
 			token.type == descent_xml_classifier_unexpected
 			|| token.type == descent_xml_classifier_eof
+			|| !context->valid
 		) {
-			*still_valid = false;
+			context->valid = false;
 			return token;
 		}
-		if (!*still_valid)
-			break;
 	}
 
-	*still_valid = *still_valid && libadt_const_lptr_equal(
+	context->valid = libadt_const_lptr_equal(
 		token.value,
 		element_name
 	);
+	context->depth++;
 	token = descent_xml_parse(token, NULL, NULL, NULL);
 	return token;
 }
 
-DESCENT_XML_EXPORT inline bool descent_xml_validate_element(struct descent_xml_lex token)
+DESCENT_XML_EXPORT inline bool descent_xml_validate_element_depth(
+	struct descent_xml_lex token,
+	int depth
+)
 {
-	bool valid = true;
+	struct {
+		bool valid;
+		int depth;
+	} context = { true, depth };
 	while (token.type != descent_xml_classifier_element) {
 		if (
 			token.type == descent_xml_classifier_unexpected
@@ -95,15 +110,20 @@ DESCENT_XML_EXPORT inline bool descent_xml_validate_element(struct descent_xml_l
 		token,
 		_descent_xml_validate_element_handler,
 		NULL,
-		&valid
+		&context
 	);
 
 	// We have to check for unexpected/eof here in case the
 	// element handler never runs
 	return
-		valid
+		context.valid
 		&& token.type != descent_xml_classifier_unexpected
 		&& token.type != descent_xml_classifier_eof;
+}
+
+DESCENT_XML_EXPORT inline bool descent_xml_validate_element(struct descent_xml_lex token)
+{
+	return descent_xml_validate_element_depth(token, 10000);
 }
 
 inline bool _descent_xml_non_space_text(struct descent_xml_lex token)
@@ -118,22 +138,27 @@ inline struct descent_xml_lex _descent_xml_validate_doctype(
 	struct libadt_const_lptr element_name,
 	struct libadt_const_lptr attributes,
 	bool empty,
-	void *context
+	void *context_p
 )
 {
 	// I wrote this function before I realized just how fucked
 	// the doctypedecl really is, I should probably just delete
 	// it but I want to fix it at some point
-	bool *still_valid = context;
 	const struct libadt_const_lptr
 		doctypedecl = libadt_str_literal("!DOCTYPE");
+
+	struct {
+		bool valid;
+		int depth;
+	} *context = context_p;
+
 
 	if (libadt_const_lptr_equal(element_name, doctypedecl)) {
 		// the doctypedecl doesn't have an empty-element
 		// end marker like /> or ?>, but it doesn't have a
 		// close tag either because XML is stupid
 		if (empty) {
-			*still_valid = false;
+			context->valid = false;
 			return token;
 		}
 
@@ -143,7 +168,7 @@ inline struct descent_xml_lex _descent_xml_validate_doctype(
 				|| token.type == descent_xml_classifier_element_close
 				|| _descent_xml_non_space_text(token)
 			) {
-				*still_valid = false;
+				context->valid = false;
 				return token;
 			}
 			token = descent_xml_lex_next_raw(token);
@@ -171,15 +196,18 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 	struct libadt_const_lptr element_name,
 	struct libadt_const_lptr attributes,
 	bool empty,
-	void *context
+	void *context_p
 )
 {
-	bool *still_valid = context;
+	struct {
+		bool valid;
+		int depth;
+	} *context = context_p;
 	const struct libadt_const_lptr xmldecl = libadt_str_literal("?xml");
 
 	if (libadt_const_lptr_equal(element_name, xmldecl)) {
 		if (!empty) {
-			*still_valid = false;
+			context->valid = false;
 			return token;
 		}
 
@@ -189,7 +217,7 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 				|| token.type == descent_xml_classifier_eof
 				|| _descent_xml_non_space_text(token)
 			) {
-				*still_valid = false;
+				context->valid = false;
 				return token;
 			}
 			token = descent_xml_lex_next_raw(token);
@@ -212,9 +240,15 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 	);
 }
 
-DESCENT_XML_EXPORT inline bool descent_xml_validate_document(struct descent_xml_lex token)
+DESCENT_XML_EXPORT inline bool descent_xml_validate_document_depth(
+	struct descent_xml_lex token,
+	int depth
+)
 {
-	bool valid = true;
+	struct {
+		bool valid;
+		int depth;
+	} context = {true, depth};
 	while (token.type != descent_xml_classifier_element) {
 		if (
 			token.type == descent_xml_classifier_unexpected
@@ -228,13 +262,13 @@ DESCENT_XML_EXPORT inline bool descent_xml_validate_document(struct descent_xml_
 		token,
 		_descent_xml_validate_xmldecl,
 		NULL,
-		&valid
+		&context
 	);
 
-	if (!valid)
-		return valid;
+	if (!context.valid)
+		return false;
 
-	// check that there's only one element in the root
+	// check that there's only one element node in the root
 	while (token.type != descent_xml_classifier_element) {
 		if (token.type == descent_xml_classifier_eof)
 			return true;
@@ -246,6 +280,13 @@ DESCENT_XML_EXPORT inline bool descent_xml_validate_document(struct descent_xml_
 	}
 
 	return false;
+}
+
+DESCENT_XML_EXPORT inline bool descent_xml_validate_document(
+	struct descent_xml_lex token
+)
+{
+	return descent_xml_validate_document_depth(token, 1000);
 }
 
 #ifdef __cplusplus
