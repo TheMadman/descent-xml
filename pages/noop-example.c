@@ -1,5 +1,5 @@
 #include <libadt/str.h>
-#include <descent_xml/parse.h>
+#include <descent_xml.h>
 
 typedef struct descent_xml_lex lex_t;
 
@@ -10,6 +10,7 @@ typedef struct descent_xml_lex lex_t;
 #define unexpected descent_xml_classifier_unexpected
 #define error descent_xml_parse_error
 #define parse descent_xml_parse_cstr
+#define valid descent_xml_validate_document
 
 static int is_end_type(lex_t token)
 {
@@ -25,6 +26,9 @@ static int is_error_type(lex_t token)
 int main()
 {
 	lex_t token = lex(str("<element>Hello, world!</element>"));
+	if (!valid(token))
+		return 1;
+
 	while (!is_end_type(token)) {
 		if (is_error_type(token)) {
 			// Handle error

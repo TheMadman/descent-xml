@@ -33,6 +33,6 @@ This example reveals a few things:
 - The `attributes` array will always be a multiple of two, for each attribute=value pair, plus a null terminator. An attribute with an empty value will have an empty-string value.
 - Descent XML does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.
 
-Descent XML also doesn't perform structure validation: it is up to the `element_handler`s to validate structure, if at all.
+You may have noticed that we call descent_xml_validate_document() before running our custom parser. The parser interface itself doesn't do nested-structure validation, though the lexer does perform some validation that some characters do not appear in certain contexts.
 
 Proceed to the next tutorial, \ref tutorial-03.
