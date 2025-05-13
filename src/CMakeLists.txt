@@ -22,5 +22,7 @@ target_include_directories(descent_xmlstatic
 
 install(TARGETS descent_xml descent_xmlstatic
 	DESTINATION lib)
+install(FILES descent_xml.h
+	DESTINATION include)
 install(DIRECTORY descent_xml
 	DESTINATION include)
