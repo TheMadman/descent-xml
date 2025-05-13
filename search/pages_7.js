@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['recursion_0',['Tutorial 3: Recursion',['../tutorial-03.html',1,'']]],
-  ['run_1',['First Tutorial: Make it Run',['../tutorial-01.html',1,'']]]
+  ['second_20tutorial_3a_20a_20simple_20printer_0',['Second Tutorial: A Simple Printer',['../tutorial-02.html',1,'']]],
+  ['simple_20printer_1',['Second Tutorial: A Simple Printer',['../tutorial-02.html',1,'']]]
 ];
