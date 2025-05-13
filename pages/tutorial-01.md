@@ -7,6 +7,7 @@ This program will be the basis for future tutorials.
 It will:
 
 - initialize a token from an XML string
+- tests that the XML is a valid XML document
 - iterate the token from the beginning of the XML to the end
 - exit the program
 

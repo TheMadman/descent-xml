@@ -16,7 +16,3 @@ Author: Anthony Horowitz
 ```
 
 In this example, each `element_handler` is responsible for its own closing tag. You will notice that the `element_handler`s each loop until they find a closing tag, then iterate the token once more with an empty call to descent_xml_parse_cstr(). If the element handler didn't iterate again, it would return _a_ closing tag token to the parent, which would then terminate the loop.
-
-This parser still doesn't do structure validation: each element handler just assumes that the next closing tag, _any_ closing tag, is correct. You can test this by modifying one of the `</author>`s to an invalid value, such as `</date>`.
-
-This is fine if you know the XML you're parsing will always be valid, but if the XML comes from a system you don't control, validation must be performed. The easiest way to validate a full document is with descent_xml_validate_document().
