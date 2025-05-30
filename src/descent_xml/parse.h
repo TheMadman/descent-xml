@@ -27,7 +27,7 @@ extern "C" {
 #include <string.h>
 #include <stdbool.h>
 
-#include "init.h"
+#include "descent_xml_export.h"
 #include "lex.h"
 
 #include <libadt/lptr.h>

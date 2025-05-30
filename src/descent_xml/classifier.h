@@ -23,7 +23,7 @@
 extern "C" {
 #endif
 
-#include "init.h"
+#include "descent_xml_export.h"
 
 /**
  * \file
