@@ -23,7 +23,6 @@
 extern "C" {
 #endif
 
-#include "descent_xml/descent_xml_export.h"
 #include "descent_xml/classifier.h"
 #include "descent_xml/lex.h"
 #include "descent_xml/parse.h"
