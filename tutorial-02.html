@@ -74,7 +74,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>The previous program worked, but wasn't very interesting. In this tutorial, we're going to use the C-string interface to write a parser that prints what it encounters.</p>
-<p>This involves using <a class="el" href="parse_8h.html#ad3dda7713406fabaeb9b80c5f150e5bb">descent_xml_parse_cstr</a>, passing it an <code>element_handler</code> and a <code>text_handler</code>.</p>
+<p>This involves using <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7">descent_xml_parse_cstr</a>, passing it an <code>element_handler</code> and a <code>text_handler</code>.</p>
 <p>The signature of an element handler function is given in <a class="el" href="parse_8h.html#a2d3cee13b69930bad8e1b2f14d7b2320">descent_xml_parse_element_cstr_fn</a>, and the signature of a text handler is given in <a class="el" href="parse_8h.html#aee374acca9dd8c3432186f8b800ef080">descent_xml_parse_text_cstr_fn</a>. We're going to write an element handler that prints the element name and its attributes, and a text handler that prints the text content encountered.</p>
 <p>Save the following file as <code>print-example.c</code> and compile it with <code>cc -o print-example print-example.c -ldescent_xmlstatic</code>.</p>
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;libadt/str.h&gt;</span></div>
@@ -168,7 +168,7 @@ $(function() {
 <div class="line">text node:</div>
 <div class="line">        Hello, world!</div>
 </div><!-- fragment --><p>This example reveals a few things:</p><ul>
-<li><a class="el" href="parse_8h.html#ad3dda7713406fabaeb9b80c5f150e5bb">descent_xml_parse_cstr</a> doesn't do intelligent parsing: in XML, spaces between elements <em>are</em> Text nodes containing whitespace, and this is reflected in Descent XML. Similarly, Descent XML doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.</li>
+<li><a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7">descent_xml_parse_cstr</a> doesn't do intelligent parsing: in XML, spaces between elements <em>are</em> Text nodes containing whitespace, and this is reflected in Descent XML. Similarly, Descent XML doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.</li>
 <li>The <code>attributes</code> array will always be a multiple of two, for each attribute=value pair, plus a null terminator. An attribute with an empty value will have an empty-string value.</li>
 <li>Descent XML does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.</li>
 </ul>

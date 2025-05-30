@@ -1,7 +1,5 @@
 <map id="src/descent_xml/classifier.h" name="src/descent_xml/classifier.h">
-<area shape="rect" id="Node000001" title=" " alt="" coords="60,5,261,31"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,79,172,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,33,112,71,108,67,147,29"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="197,79,271,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="175,29,214,67,210,71,171,33"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,207,31"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="69,79,143,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,31,109,65,103,65,103,31"/>
 </map>
