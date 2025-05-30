@@ -3,7 +3,20 @@
 Descent XML provides a tokenizer and helper functions
 for writing an XML parser.
 
-## Building
+## Quickstart: Nix
+
+This repo (as well as `libadt`) use Nix files to provide
+quick dependency management and a simple-to-use build environment.
+
+- Install the Nix package manager: https://nixos.org/download/
+- Use `nix-build` to compile the project for production
+  - The compiled results will be placed in `result`
+- Use `nix-shell` to enter a shell with build dependencies installed
+  - This environment will have `libadt`, `cmake`, `gcc`, `gdb` and `doxygen` available, and set up `CFLAGS` with many useful debugging flags
+
+From there, you can use the build steps described in the Configuration and Documentation sections below.
+
+## Manual Building
 
 ### Dependencies
 
@@ -11,9 +24,7 @@ for writing an XML parser.
 
 ### Configuration
 
-Descent XML and libadt will both build with default compiler options, but they tag external functions with `DESCENT_XML_EXPORT` and `EXPORT` macros, respectively.
-
-For debugging, defaults are fine:
+Building uses CMake, providing a couple of custom flags for tests and examples in the documentation:
 
 ```bash
 mkdir build
@@ -24,18 +35,7 @@ cmake ..
 make install
 ```
 
-For production shared objects, it is expected you configure your compiler to omit symbols not explicitly tagged with `DESCENT_XML_EXPORT` (and `EXPORT` for libadt):
-
-```bash
-# Example for GCC
-CFLAGS+="-fvisibility=hidden -fvisibility-inline-hidden -DDESCENT_XML_EXPORT='"'__attribute__((visibility("default")))'"' -DEXPORT=DESCENT_XML_EXPORT"
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
-make install
-```
-
-Link with `-lxmltree -ladt`. For static linking, use `-lxmltreestatic -ladtstatic`.
+Link with `-ldescent_xml -ladt`. For static linking, use `-ldescent_xmlstatic`.
 
 # Documentation
 
