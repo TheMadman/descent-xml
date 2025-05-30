@@ -89,7 +89,7 @@ inline struct descent_xml_lex _descent_xml_validate_element_handler(
 	return token;
 }
 
-DESCENT_XML_EXPORT inline bool descent_xml_validate_element_depth(
+inline bool descent_xml_validate_element_depth(
 	struct descent_xml_lex token,
 	int depth
 )
@@ -121,7 +121,7 @@ DESCENT_XML_EXPORT inline bool descent_xml_validate_element_depth(
 		&& token.type != descent_xml_classifier_eof;
 }
 
-DESCENT_XML_EXPORT inline bool descent_xml_validate_element(struct descent_xml_lex token)
+inline bool descent_xml_validate_element(struct descent_xml_lex token)
 {
 	return descent_xml_validate_element_depth(token, 10000);
 }
@@ -240,7 +240,7 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 	);
 }
 
-DESCENT_XML_EXPORT inline bool descent_xml_validate_document_depth(
+inline bool descent_xml_validate_document_depth(
 	struct descent_xml_lex token,
 	int depth
 )
@@ -282,7 +282,7 @@ DESCENT_XML_EXPORT inline bool descent_xml_validate_document_depth(
 	return false;
 }
 
-DESCENT_XML_EXPORT inline bool descent_xml_validate_document(
+inline bool descent_xml_validate_document(
 	struct descent_xml_lex token
 )
 {

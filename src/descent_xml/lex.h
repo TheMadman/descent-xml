@@ -23,7 +23,7 @@
 extern "C" {
 #endif
 
-#include "descent_xml_export.h"
+
 
 #include <wchar.h>
 
@@ -114,7 +114,7 @@ inline _descent_xml_read_t _descent_xml_read(
  *
  * \returns A token, valid for passing to descent_xml_lex_next().
  */
-DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_lex_init(
+inline struct descent_xml_lex descent_xml_lex_init(
 	struct libadt_const_lptr script
 )
 {
@@ -133,7 +133,7 @@ DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_lex_init(
  *
  * \returns The next token.
  */
-DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_lex_next_raw(
+inline struct descent_xml_lex descent_xml_lex_next_raw(
 	struct descent_xml_lex previous
 )
 {

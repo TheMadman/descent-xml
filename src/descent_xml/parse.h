@@ -27,7 +27,7 @@ extern "C" {
 #include <string.h>
 #include <stdbool.h>
 
-#include "descent_xml_export.h"
+
 #include "lex.h"
 
 #include <libadt/lptr.h>
@@ -310,7 +310,7 @@ inline struct descent_xml_lex _descent_xml_handle_text(
  *
  * \sa descent_xml_parse_cstr() An interface for C-style strings.
  */
-DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_parse(
+inline struct descent_xml_lex descent_xml_parse(
 	struct descent_xml_lex xml,
 	descent_xml_parse_element_fn *element_handler,
 	descent_xml_parse_text_fn *text_handler,
@@ -342,7 +342,7 @@ typedef struct {
 	void *context;
 } _descent_xml_parse_cstr_context;
 
-DESCENT_XML_EXPORT extern descent_xml_classifier_void_fn *descent_xml_parse_error(wchar_t);
+extern descent_xml_classifier_void_fn *descent_xml_parse_error(wchar_t);
 
 inline struct descent_xml_lex _cstr_element_handler(
 	struct descent_xml_lex xml,
@@ -463,7 +463,7 @@ inline struct descent_xml_lex _cstr_text_handler(
  * \sa descent_xml_parse() An interface using pointer-length structs,
  * 	using no allocation or copying logic.
  */
-DESCENT_XML_EXPORT inline struct descent_xml_lex descent_xml_parse_cstr(
+inline struct descent_xml_lex descent_xml_parse_cstr(
 	struct descent_xml_lex xml,
 	descent_xml_parse_element_cstr_fn *element_handler,
 	descent_xml_parse_text_cstr_fn *text_handler,

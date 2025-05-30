@@ -23,7 +23,7 @@
 extern "C" {
 #endif
 
-#include "descent_xml_export.h"
+
 
 /**
  * \file
@@ -70,13 +70,13 @@ typedef descent_xml_classifier_void_fn *descent_xml_classifier_fn(wchar_t input)
  * Error value, indicating the classifier function
  * encountered an unexpected input.
  */
-DESCENT_XML_EXPORT extern descent_xml_classifier_fn *const descent_xml_classifier_unexpected;
+extern descent_xml_classifier_fn *const descent_xml_classifier_unexpected;
 
 /**
  * Return value indicating the classifier function
  * received an end-of-file (legitimately).
  */
-DESCENT_XML_EXPORT extern descent_xml_classifier_fn *const descent_xml_classifier_eof;
+extern descent_xml_classifier_fn *const descent_xml_classifier_eof;
 
 /**
  * Entry point for a script.
@@ -87,59 +87,59 @@ DESCENT_XML_EXPORT extern descent_xml_classifier_fn *const descent_xml_classifie
  * encountered. If any other character is encountered,
  * it returns descent_xml_classifier_unexpected.
  */
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_start(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_start(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_text(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_text(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_text_space(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_text_space(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_element(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element_name(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_element_name(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element_space(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_element_space(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element_empty_end(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_element_empty_end(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_name(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_name(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_assign(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_assign(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote_start(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote_start(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote_end(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote_end(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote_entity_start(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote_entity_start(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote_entity(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_single_quote_entity(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote_start(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote_start(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote_end(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote_end(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote_entity_start(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote_entity_start(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote_entity(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_value_double_quote_entity(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element_empty(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_element_empty(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element_close(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_element_close(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element_close_name(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_element_close_name(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element_close_space(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_element_close_space(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_element_end(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_element_end(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_text_entity_start(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_text_entity_start(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_text_entity(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_text_entity(wchar_t input);
 
-DESCENT_XML_EXPORT descent_xml_classifier_void_fn *descent_xml_classifier_attribute_expect_assign(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_classifier_attribute_expect_assign(wchar_t input);
 
 #ifdef __cplusplus
 } // extern "C"

@@ -29,9 +29,9 @@
 // the compiler defaults.
 //
 // For example: for GCC, set
-// CFLAGS+="-fvisibility=hidden -fvisibility-inline-hidden -DDESCENT_XML_EXPORT='"'__attribute__((visibility("default")))'"'"
-#ifndef DESCENT_XML_EXPORT
-#define DESCENT_XML_EXPORT
+// CFLAGS+="-fvisibility=hidden -fvisibility-inline-hidden -D='"'__attribute__((visibility("default")))'"'"
+#ifndef
+#define
 #endif
 
 #endif // DESCENT_XML_INIT
