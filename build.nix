@@ -5,8 +5,8 @@
 	libadt ? import (fetchFromGitHub {
 		owner = "TheMadman";
 		repo = "libadt";
-		rev = "3ab87a6a9f02f9a1fed35e6c5c4449729b8cc795";
-		hash = "sha256-5nL1ktDEG2LNTl+0fgoIt8l+PSSDssM30Cnu382uJjs=";
+		rev = "6ab226d4f0b5fb91d00d81810b60e82a88f1fd99";
+		hash = "sha256-87YhgCmCBvJaZ2w+I1BKILUOSuF8/Isip3FWAPDYZIQ=";
 	}),
 }:
 
