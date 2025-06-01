@@ -46,6 +46,15 @@ void test_valid(void)
 		lex_t valid = lex(lit("<?xml version=\"1.0\"?>\n<foo></foo>"));
 		assert(descent_xml_validate_document(valid));
 	}
+
+	{
+		lex_t valid = lex(lit(
+			"<?xml version=\"1.0\"?>\n"
+			"<!DOCTYPE html>\n"
+			"<html></html>"
+		));
+		assert(descent_xml_validate_document(valid));
+	}
 }
 
 void test_invalid(void)
