@@ -1,7 +1,6 @@
 set(SOURCES classifier.c lex.c parse.c validate.c)
 
 add_library(descent_xmlobj OBJECT ${SOURCES})
-
 add_library(descent_xml SHARED)
 target_link_libraries(descent_xml descent_xmlobj)
 add_library(descent_xmlstatic STATIC)

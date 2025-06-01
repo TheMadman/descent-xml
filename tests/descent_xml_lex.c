@@ -110,8 +110,23 @@ void test_descent_xml_lex_next_raw(void)
 	assert(token.value.length == 0);
 }
 
+void test_doctype(void)
+{
+	struct descent_xml_lex token = descent_xml_lex_init(lit("<!DOCTYPE html>"));
+	struct libadt_const_lptr expected_value = libadt_str_literal("!DOCTYPE html");
+	token = descent_xml_lex_next_raw(token);
+	assert(token.type == descent_xml_classifier_element);
+
+	token = descent_xml_lex_next_raw(token);
+	assert(token.type == descent_xml_lex_doctype);
+
+	token = descent_xml_lex_next_raw(token);
+	assert(token.type == descent_xml_classifier_element_end);
+}
+
 int main()
 {
 	test_descent_xml_lex();
 	test_descent_xml_lex_next_raw();
+	test_doctype();
 }
