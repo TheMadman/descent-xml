@@ -169,6 +169,7 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 		struct descent_xml_lex next = descent_xml_lex_next_raw(token);
 
 		if (next.type == descent_xml_lex_doctype) {
+			token = next;
 			while (token.type != descent_xml_classifier_element) {
 				if (
 					token.type == descent_xml_classifier_unexpected
