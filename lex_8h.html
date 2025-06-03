@@ -81,22 +81,25 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;wchar.h&gt;</code><br />
-<code>#include &lt;libadt/lptr.h&gt;</code><br />
+<code>#include &lt;wctype.h&gt;</code><br />
+<code>#include &lt;libadt.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="classifier_8h_source.html">classifier.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for lex.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="lex_8h__incl.png" border="0" usemap="#asrc_2descent__xml_2lex_8h" alt=""/></div>
 <map name="asrc_2descent__xml_2lex_8h" id="asrc_2descent__xml_2lex_8h">
-<area shape="rect" title=" " alt="" coords="67,5,231,31"/>
+<area shape="rect" title=" " alt="" coords="110,5,274,31"/>
 <area shape="rect" title=" " alt="" coords="5,79,77,104"/>
-<area shape="poly" title=" " alt="" coords="133,33,72,73,69,69,131,28"/>
-<area shape="rect" title=" " alt="" coords="101,79,197,104"/>
-<area shape="poly" title=" " alt="" coords="152,31,152,65,147,65,147,31"/>
-<area shape="rect" href="classifier_8h.html" title=" " alt="" coords="221,79,312,104"/>
-<area shape="poly" title=" " alt="" coords="170,28,237,69,234,74,167,33"/>
-<area shape="rect" title=" " alt="" coords="229,152,304,177"/>
-<area shape="poly" title=" " alt="" coords="269,104,269,138,264,138,264,104"/>
+<area shape="poly" title=" " alt="" coords="169,33,80,75,77,70,167,28"/>
+<area shape="rect" title=" " alt="" coords="102,79,183,104"/>
+<area shape="poly" title=" " alt="" coords="186,33,161,69,156,66,182,29"/>
+<area shape="rect" title=" " alt="" coords="207,79,278,104"/>
+<area shape="poly" title=" " alt="" coords="203,29,229,66,224,69,198,33"/>
+<area shape="rect" href="classifier_8h.html" title=" " alt="" coords="303,79,393,104"/>
+<area shape="poly" title=" " alt="" coords="218,28,311,70,309,75,216,33"/>
+<area shape="rect" title=" " alt="" coords="311,152,385,177"/>
+<area shape="poly" title=" " alt="" coords="351,104,351,138,345,138,345,104"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -125,9 +128,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ae5a55626f590b0870465bfc8070291e5" id="r_ae5a55626f590b0870465bfc8070291e5"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lex_8h.html#ae5a55626f590b0870465bfc8070291e5">descent_xml_lex_init</a> (struct libadt_const_lptr script)</td></tr>
 <tr class="memdesc:ae5a55626f590b0870465bfc8070291e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a token object for use in descent_xml_lex_next().  <br /></td></tr>
 <tr class="separator:ae5a55626f590b0870465bfc8070291e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88215034698af71393a056cd5fa2294b" id="r_a88215034698af71393a056cd5fa2294b"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lex_8h.html#a88215034698af71393a056cd5fa2294b">descent_xml_lex_next_raw</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> previous)</td></tr>
-<tr class="memdesc:a88215034698af71393a056cd5fa2294b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the next, raw token in the script referred to by previous.  <br /></td></tr>
-<tr class="separator:a88215034698af71393a056cd5fa2294b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37bde90fb0da3f0651740a95e6d170c3" id="r_a37bde90fb0da3f0651740a95e6d170c3"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lex_8h.html#a37bde90fb0da3f0651740a95e6d170c3">descent_xml_lex_next_raw</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> token)</td></tr>
+<tr class="memdesc:a37bde90fb0da3f0651740a95e6d170c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the next, raw token in the script referred to by previous.  <br /></td></tr>
+<tr class="separator:a37bde90fb0da3f0651740a95e6d170c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ae5a55626f590b0870465bfc8070291e5" name="ae5a55626f590b0870465bfc8070291e5"></a>
@@ -165,8 +168,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a88215034698af71393a056cd5fa2294b" name="a88215034698af71393a056cd5fa2294b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88215034698af71393a056cd5fa2294b">&#9670;&#160;</a></span>descent_xml_lex_next_raw()</h2>
+<a id="a37bde90fb0da3f0651740a95e6d170c3" name="a37bde90fb0da3f0651740a95e6d170c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37bde90fb0da3f0651740a95e6d170c3">&#9670;&#160;</a></span>descent_xml_lex_next_raw()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -178,7 +181,7 @@ Functions</h2></td></tr>
           <td class="memname">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> descent_xml_lex_next_raw </td>
           <td>(</td>
           <td class="paramtype">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td>
-          <td class="paramname"><em>previous</em></td><td>)</td>
+          <td class="paramname"><em>token</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
