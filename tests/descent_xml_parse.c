@@ -77,21 +77,6 @@ void test_empty_element_no_attributes(void)
 	}
 }
 
-lex_t prologue_callback(
-	lex_t token,
-	lptr_t name,
-	lptr_t attributes,
-	bool empty,
-	void *context
-)
-{
-	(void)attributes;
-	assert(empty);
-	assert(strncmp(name.buffer, "?xml", (size_t)name.length) == 0);
-	*(bool*)context = true;
-	return token;
-}
-
 lex_t element_callback(
 	lex_t token,
 	lptr_t name,
@@ -133,15 +118,6 @@ lex_t element_callback(
 
 void test_element_attributes(void)
 {
-	{
-		lex_t xml = lex(lit("<?xml version=\"1.0\" ?>"));
-		bool ran = false;
-		while (!stop_token(xml))
-			xml = descent_xml_parse(xml, prologue_callback, NULL, &ran);
-		assert(ran);
-		assert(xml.type != err);
-	}
-
 	{
 		lex_t xml = lex(lit("<element first='firstval' second = \"secondval\" third=''></element>"));
 		int run_times = 0;

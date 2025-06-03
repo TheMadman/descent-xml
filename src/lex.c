@@ -27,7 +27,7 @@ bool _descent_xml_lex_startswith(
 	struct libadt_const_lptr string,
 	struct libadt_const_lptr start
 );
-struct descent_xml_lex _descent_xml_lex_handle_doctype(
+struct descent_xml_lex descent_xml_lex_handle_doctype(
 	struct descent_xml_lex token
 );
 ssize_t _descent_xml_lex_count_spaces(
@@ -36,7 +36,7 @@ ssize_t _descent_xml_lex_count_spaces(
 struct libadt_const_lptr _descent_xml_lex_remainder(
 	struct descent_xml_lex token
 );
-struct descent_xml_lex _descent_xml_lex_then(
+struct descent_xml_lex descent_xml_lex_then(
 	struct descent_xml_lex token,
 	_descent_xml_lex_section *section
 );
@@ -44,7 +44,7 @@ struct descent_xml_lex _descent_xml_lex_else(
 	struct descent_xml_lex token,
 	_descent_xml_lex_section *section
 );
-struct descent_xml_lex _descent_xml_lex_optional(
+struct descent_xml_lex descent_xml_lex_optional(
 	struct descent_xml_lex token,
 	_descent_xml_lex_section *section
 );
@@ -69,7 +69,7 @@ struct descent_xml_lex _descent_xml_lex_doctype_public(
 struct descent_xml_lex _descent_xml_lex_doctype_extrawurst(
 	struct descent_xml_lex token
 );
-struct descent_xml_lex _descent_xml_lex_handle_xmldecl(
+struct descent_xml_lex descent_xml_lex_handle_xmldecl(
 	struct descent_xml_lex token
 );
 struct descent_xml_lex _descent_xml_lex_xmldecl_str(
@@ -81,10 +81,13 @@ struct descent_xml_lex _descent_xml_lex_attribute_value(
 struct descent_xml_lex _descent_xml_lex_assign(
 	struct descent_xml_lex token
 );
-struct descent_xml_lex _descent_xml_lex_or(
+struct descent_xml_lex descent_xml_lex_or(
 	struct descent_xml_lex token,
 	_descent_xml_lex_section *left,
 	_descent_xml_lex_section *right
+);
+struct descent_xml_lex descent_xml_lex_prolog(
+	struct descent_xml_lex token
 );
 
 // These functions are special, in that they're not

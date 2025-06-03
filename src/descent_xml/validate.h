@@ -73,6 +73,8 @@ inline struct descent_xml_lex _descent_xml_validate_element_handler(
 		if (
 			token.type == descent_xml_classifier_unexpected
 			|| token.type == descent_xml_classifier_eof
+			|| token.type == descent_xml_lex_xmldecl
+			|| token.type == descent_xml_lex_doctype
 			|| !context->valid
 		) {
 			context->valid = false;
@@ -200,6 +202,49 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 	);
 }
 
+inline struct descent_xml_lex _descent_xml_validate_parse_prolog(
+	struct descent_xml_lex token
+)
+{
+	while (token.type != descent_xml_classifier_element) {
+		if (
+			token.type == descent_xml_classifier_unexpected
+			|| token.type == descent_xml_classifier_eof
+		)
+			return token;
+		token = descent_xml_lex_next_raw(token);
+	}
+
+	struct descent_xml_lex next = descent_xml_lex_next_raw(token);
+
+	if (next.type == descent_xml_lex_xmldecl) {
+		token = next;
+		while (token.type != descent_xml_classifier_element) {
+			if (
+				token.type == descent_xml_classifier_unexpected
+				|| token.type == descent_xml_classifier_eof
+			)
+				return token;
+			token = descent_xml_lex_next_raw(token);
+		}
+		next = descent_xml_lex_next_raw(token);
+	}
+
+	if (next.type == descent_xml_lex_doctype) {
+		token = next;
+		while (token.type != descent_xml_classifier_element) {
+			if (
+				token.type == descent_xml_classifier_unexpected
+				|| token.type == descent_xml_classifier_eof
+			)
+				return token;
+			token = descent_xml_lex_next_raw(token);
+		}
+	}
+
+	return token;
+}
+
 inline bool descent_xml_validate_document_depth(
 	struct descent_xml_lex token,
 	int depth
@@ -209,18 +254,17 @@ inline bool descent_xml_validate_document_depth(
 		bool valid;
 		int depth;
 	} context = {true, depth};
-	while (token.type != descent_xml_classifier_element) {
-		if (
-			token.type == descent_xml_classifier_unexpected
-			|| token.type == descent_xml_classifier_eof
-		)
-			return false;
-		token = descent_xml_lex_next_raw(token);
-	}
+
+	token = _descent_xml_validate_parse_prolog(token);
+	if (
+		token.type == descent_xml_classifier_unexpected
+		|| token.type == descent_xml_classifier_eof
+	)
+		return false;
 
 	token = descent_xml_parse(
 		token,
-		_descent_xml_validate_xmldecl,
+		_descent_xml_validate_element_handler,
 		NULL,
 		&context
 	);

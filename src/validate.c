@@ -29,3 +29,6 @@ bool descent_xml_validate_document_depth(
 );
 bool descent_xml_validate_document(struct descent_xml_lex token);
 bool _descent_xml_non_space_text(struct descent_xml_lex token);
+struct descent_xml_lex _descent_xml_validate_parse_prolog(
+	struct descent_xml_lex token
+);
