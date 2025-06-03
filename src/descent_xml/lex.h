@@ -107,6 +107,7 @@ inline _descent_xml_lex_read_t _descent_xml_lex_read(
 }
 
 descent_xml_classifier_void_fn *descent_xml_lex_doctype(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_lex_xmldecl(wchar_t input);
 descent_xml_classifier_void_fn *descent_xml_lex_cdata(wchar_t input);
 descent_xml_classifier_void_fn *descent_xml_lex_cdata_text(wchar_t input);
 descent_xml_classifier_void_fn *descent_xml_lex_cdata_end(wchar_t input);
@@ -129,15 +130,15 @@ inline struct descent_xml_lex descent_xml_lex_init(
 	};
 }
 
-inline int _descent_xml_lex_startswith(
+inline bool _descent_xml_lex_startswith(
 	struct libadt_const_lptr string,
 	struct libadt_const_lptr start
 )
 {
 	if (string.size != start.size)
-		return 0;
+		return false;
 	if (string.length < start.length)
-		return 0;
+		return false;
 
 	return libadt_const_lptr_equal(
 		libadt_const_lptr_truncate(string, (size_t)start.length),
@@ -185,17 +186,31 @@ inline struct descent_xml_lex _descent_xml_lex_then(
 {
 	if (token.type == descent_xml_classifier_unexpected)
 		return token;
-	return section(token);
+
+	struct descent_xml_lex result = section(token);
+
+	if (result.type == descent_xml_classifier_unexpected) {
+		token.type = result.type;
+		return token;
+	}
+	return result;
 }
 
-inline struct descent_xml_lex _descent_xml_lex_else(
+inline struct descent_xml_lex _descent_xml_lex_or(
 	struct descent_xml_lex token,
-	_descent_xml_lex_section *section
+	_descent_xml_lex_section *left,
+	_descent_xml_lex_section *right
 )
 {
-	if (token.type == descent_xml_classifier_unexpected)
-		return section(token);
-	return token;
+	struct descent_xml_lex result = _descent_xml_lex_then(token, left);
+	if (result.type == descent_xml_classifier_unexpected)
+		result = _descent_xml_lex_then(token, right);
+
+	if (result.type == descent_xml_classifier_unexpected) {
+		token.type = result.type;
+		return token;
+	}
+	return result;
 }
 
 inline struct descent_xml_lex _descent_xml_lex_optional(
@@ -251,6 +266,19 @@ inline struct descent_xml_lex _descent_xml_lex_name(
 	}
 
 	token.value.length += total;
+	return token;
+}
+
+inline struct descent_xml_lex _descent_xml_lex_assign(
+	struct descent_xml_lex token
+)
+{
+	// TODO: do this properly
+	if (*(char*)token.value.buffer != '=') {
+		token.type = descent_xml_classifier_unexpected;
+	} else {
+		token.value.length++;
+	}
 	return token;
 }
 
@@ -313,6 +341,25 @@ inline struct descent_xml_lex _descent_xml_lex_doctype_str(
 	return token;
 }
 
+inline struct descent_xml_lex _descent_xml_lex_xmldecl_str(
+	struct descent_xml_lex token
+)
+{
+	struct libadt_const_lptr remainder
+		= _descent_xml_lex_remainder(token);
+	const struct libadt_const_lptr
+		doctypedecl = libadt_str_literal("?xml");
+
+	if (!_descent_xml_lex_startswith(remainder, doctypedecl)) {
+		token.type = descent_xml_classifier_unexpected;
+		return token;
+	}
+
+	token.value.length += doctypedecl.length;
+	return token;
+}
+
+
 inline struct descent_xml_lex _descent_xml_lex_doctype_system(
 	struct descent_xml_lex token
 )
@@ -366,12 +413,9 @@ inline struct descent_xml_lex _descent_xml_lex_doctype_extrawurst(
 	if (token.type == descent_xml_classifier_unexpected)
 		return token;
 
-	token = _descent_xml_lex_then(
+	token = _descent_xml_lex_or(
 		token,
-		_descent_xml_lex_doctype_system
-	);
-	token = _descent_xml_lex_else(
-		token,
+		_descent_xml_lex_doctype_system,
 		_descent_xml_lex_doctype_public
 	);
 	return token;
@@ -393,11 +437,62 @@ inline struct descent_xml_lex _descent_xml_lex_handle_doctype(
 		_descent_xml_lex_space
 	);
 
-	if (token.type != descent_xml_classifier_unexpected) {
-		token.value = libadt_const_lptr_index(token.value, 1);
-		token.type = descent_xml_lex_doctype;
-	}
+	if (token.type == descent_xml_classifier_unexpected)
+		return token;
+
+	token.value = libadt_const_lptr_index(token.value, 1);
+	token.type = descent_xml_lex_doctype;
 	return token;
+}
+
+inline struct descent_xml_lex _descent_xml_lex_attribute_value(
+	struct descent_xml_lex token
+)
+{
+	token = _descent_xml_lex_then(token, _descent_xml_lex_space);
+	token = _descent_xml_lex_then(token, _descent_xml_lex_name);
+	token = _descent_xml_lex_optional(token, _descent_xml_lex_space);
+	token = _descent_xml_lex_then(token, _descent_xml_lex_assign);
+	token = _descent_xml_lex_optional(token, _descent_xml_lex_space);
+	token = _descent_xml_lex_then(token, _descent_xml_lex_quote_string);
+	return token;
+}
+
+inline struct descent_xml_lex _descent_xml_lex_handle_xmldecl(
+	struct descent_xml_lex token
+)
+{
+	token = _descent_xml_lex_then(token, _descent_xml_lex_xmldecl_str);
+	token = _descent_xml_lex_then(token, _descent_xml_lex_attribute_value);
+
+	struct descent_xml_lex next = token;
+	while (
+		(next = _descent_xml_lex_then(
+			next,
+			_descent_xml_lex_attribute_value
+		)).type != descent_xml_classifier_unexpected
+	) {
+		token = next;
+	}
+	token = _descent_xml_lex_optional(token, _descent_xml_lex_space);
+
+	if (token.type == descent_xml_classifier_unexpected)
+		return token;
+
+	token.value = libadt_const_lptr_index(token.value, 1);
+	token.type = descent_xml_lex_xmldecl;
+	return token;
+}
+
+inline struct descent_xml_lex _descent_xml_lex_handle_prolog(
+	struct descent_xml_lex token
+)
+{
+	return _descent_xml_lex_or(
+		token,
+		_descent_xml_lex_handle_xmldecl,
+		_descent_xml_lex_handle_doctype
+	);
 }
 
 /**
@@ -412,16 +507,30 @@ inline struct descent_xml_lex descent_xml_lex_next_raw(
 	struct descent_xml_lex token
 )
 {
-	const struct libadt_const_lptr
-		doctypedecl = libadt_str_literal("!DOCTYPE"),
-		cdata = libadt_str_literal("![CDATA[");
 	struct libadt_const_lptr next = _descent_xml_lex_remainder(token);
 
-	if (
-		token.type == descent_xml_classifier_element
-		&& _descent_xml_lex_startswith(next, doctypedecl)
-	)
-		return _descent_xml_lex_handle_doctype(token);
+	if (token.type == descent_xml_classifier_element) {
+		// all this bizarre XML syntax pisses me off so
+		// I'm just beating it into submission
+		struct descent_xml_lex test = _descent_xml_lex_or(
+			token,
+			_descent_xml_lex_handle_xmldecl,
+			_descent_xml_lex_handle_doctype
+		);
+		if (test.type != descent_xml_classifier_unexpected)
+			return test;
+
+		const struct libadt_const_lptr cdata
+			= libadt_str_literal("![CDATA[");
+		if (_descent_xml_lex_startswith(next, cdata)) {
+			token.type = descent_xml_lex_cdata;
+			token.value = libadt_const_lptr_truncate(
+				next,
+				cdata.length
+			);
+			return token;
+		}
+	}
 
 	_descent_xml_lex_read_t
 		read = _descent_xml_lex_read(next, token.type),

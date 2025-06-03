@@ -23,7 +23,7 @@ struct descent_xml_lex descent_xml_lex_init(
 struct descent_xml_lex descent_xml_lex_next_raw(
 	struct descent_xml_lex previous
 );
-int _descent_xml_lex_startswith(
+bool _descent_xml_lex_startswith(
 	struct libadt_const_lptr string,
 	struct libadt_const_lptr start
 );
@@ -69,6 +69,23 @@ struct descent_xml_lex _descent_xml_lex_doctype_public(
 struct descent_xml_lex _descent_xml_lex_doctype_extrawurst(
 	struct descent_xml_lex token
 );
+struct descent_xml_lex _descent_xml_lex_handle_xmldecl(
+	struct descent_xml_lex token
+);
+struct descent_xml_lex _descent_xml_lex_xmldecl_str(
+	struct descent_xml_lex token
+);
+struct descent_xml_lex _descent_xml_lex_attribute_value(
+	struct descent_xml_lex token
+);
+struct descent_xml_lex _descent_xml_lex_assign(
+	struct descent_xml_lex token
+);
+struct descent_xml_lex _descent_xml_lex_or(
+	struct descent_xml_lex token,
+	_descent_xml_lex_section *left,
+	_descent_xml_lex_section *right
+);
 
 // These functions are special, in that they're not
 // really doing all the processing, that's up to lex_next_raw
@@ -80,6 +97,11 @@ vfn *descent_xml_lex_doctype(wchar_t input)
 		default:
 			return (vfn*)descent_xml_classifier_unexpected;
 	}
+}
+
+vfn *descent_xml_lex_xmldecl(wchar_t input)
+{
+	return descent_xml_lex_doctype(input);
 }
 
 vfn *descent_xml_lex_cdata(wchar_t input)

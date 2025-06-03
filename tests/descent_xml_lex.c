@@ -119,6 +119,7 @@ void test_doctype(void)
 
 	token = descent_xml_lex_next_raw(token);
 	assert(token.type == descent_xml_lex_doctype);
+	assert(libadt_const_lptr_equal(expected_value, token.value));
 
 	token = descent_xml_lex_next_raw(token);
 	assert(token.type == descent_xml_classifier_element_end);
