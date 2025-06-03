@@ -133,64 +133,6 @@ inline bool _descent_xml_non_space_text(struct descent_xml_lex token)
 		|| token.type == descent_xml_classifier_text_entity;
 }
 
-inline struct descent_xml_lex _descent_xml_validate_doctype(
-	struct descent_xml_lex token,
-	struct libadt_const_lptr element_name,
-	struct libadt_const_lptr attributes,
-	bool empty,
-	void *context_p
-)
-{
-	// I wrote this function before I realized just how fucked
-	// the doctypedecl really is, I should probably just delete
-	// it but I want to fix it at some point
-	const struct libadt_const_lptr
-		doctypedecl = libadt_str_literal("!DOCTYPE");
-
-	struct {
-		bool valid;
-		int depth;
-	} *context = context_p;
-
-
-	if (libadt_const_lptr_equal(element_name, doctypedecl)) {
-		// the doctypedecl doesn't have an empty-element
-		// end marker like /> or ?>, but it doesn't have a
-		// close tag either because XML is stupid
-		if (empty) {
-			context->valid = false;
-			return token;
-		}
-
-		while (token.type != descent_xml_classifier_element) {
-			if (
-				token.type == descent_xml_classifier_eof
-				|| token.type == descent_xml_classifier_element_close
-				|| _descent_xml_non_space_text(token)
-			) {
-				context->valid = false;
-				return token;
-			}
-			token = descent_xml_lex_next_raw(token);
-		}
-
-		return descent_xml_parse(
-			token,
-			_descent_xml_validate_element_handler,
-			NULL,
-			context
-		);
-	}
-
-	return _descent_xml_validate_element_handler(
-		token,
-		element_name,
-		attributes,
-		empty,
-		context
-	);
-}
-
 inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 	struct descent_xml_lex token,
 	struct libadt_const_lptr element_name,
@@ -203,6 +145,7 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 		bool valid;
 		int depth;
 	} *context = context_p;
+
 	const struct libadt_const_lptr xmldecl = libadt_str_literal("?xml");
 
 	if (libadt_const_lptr_equal(element_name, xmldecl)) {
@@ -223,15 +166,31 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 			token = descent_xml_lex_next_raw(token);
 		}
 
+		struct descent_xml_lex next = descent_xml_lex_next_raw(token);
+
+		if (next.type == descent_xml_lex_doctype) {
+			while (token.type != descent_xml_classifier_element) {
+				if (
+					token.type == descent_xml_classifier_unexpected
+					|| token.type == descent_xml_classifier_eof
+					|| _descent_xml_non_space_text(token)
+				) {
+					context->valid = false;
+					return token;
+				}
+				token = descent_xml_lex_next_raw(token);
+			}
+		}
+
 		return descent_xml_parse(
 			token,
-			_descent_xml_validate_doctype,
+			_descent_xml_validate_element_handler,
 			NULL,
 			context
 		);
 	}
 
-	return _descent_xml_validate_doctype(
+	return _descent_xml_validate_element_handler(
 		token,
 		element_name,
 		attributes,
