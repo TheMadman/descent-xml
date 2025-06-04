@@ -132,77 +132,11 @@ inline bool _descent_xml_non_space_text(struct descent_xml_lex token)
 {
 	return token.type == descent_xml_classifier_text
 		|| token.type == descent_xml_classifier_text_entity_start
-		|| token.type == descent_xml_classifier_text_entity;
+		|| token.type == descent_xml_classifier_text_entity
+		|| token.type == descent_xml_lex_cdata;
 }
 
-inline struct descent_xml_lex _descent_xml_validate_xmldecl(
-	struct descent_xml_lex token,
-	struct libadt_const_lptr element_name,
-	struct libadt_const_lptr attributes,
-	bool empty,
-	void *context_p
-)
-{
-	struct {
-		bool valid;
-		int depth;
-	} *context = context_p;
-
-	const struct libadt_const_lptr xmldecl = libadt_str_literal("?xml");
-
-	if (libadt_const_lptr_equal(element_name, xmldecl)) {
-		if (!empty) {
-			context->valid = false;
-			return token;
-		}
-
-		while (token.type != descent_xml_classifier_element) {
-			if (
-				token.type == descent_xml_classifier_unexpected
-				|| token.type == descent_xml_classifier_eof
-				|| _descent_xml_non_space_text(token)
-			) {
-				context->valid = false;
-				return token;
-			}
-			token = descent_xml_lex_next_raw(token);
-		}
-
-		struct descent_xml_lex next = descent_xml_lex_next_raw(token);
-
-		if (next.type == descent_xml_lex_doctype) {
-			token = next;
-			while (token.type != descent_xml_classifier_element) {
-				if (
-					token.type == descent_xml_classifier_unexpected
-					|| token.type == descent_xml_classifier_eof
-					|| _descent_xml_non_space_text(token)
-				) {
-					context->valid = false;
-					return token;
-				}
-				token = descent_xml_lex_next_raw(token);
-			}
-		}
-
-		return descent_xml_parse(
-			token,
-			_descent_xml_validate_element_handler,
-			NULL,
-			context
-		);
-	}
-
-	return _descent_xml_validate_element_handler(
-		token,
-		element_name,
-		attributes,
-		empty,
-		context
-	);
-}
-
-inline struct descent_xml_lex _descent_xml_validate_parse_prolog(
+inline struct descent_xml_lex _descent_xml_validate_prolog_goto_element(
 	struct descent_xml_lex token
 )
 {
@@ -210,38 +144,93 @@ inline struct descent_xml_lex _descent_xml_validate_parse_prolog(
 		if (
 			token.type == descent_xml_classifier_unexpected
 			|| token.type == descent_xml_classifier_eof
+			|| _descent_xml_non_space_text(token)
 		)
 			return token;
 		token = descent_xml_lex_next_raw(token);
 	}
+	return token;
+}
 
+inline struct descent_xml_lex _descent_xml_validate_prolog_comments(
+	struct descent_xml_lex token
+)
+{
+	if (token.type != descent_xml_classifier_element) {
+		token.type = descent_xml_classifier_unexpected;
+		return token;
+	}
+
+	struct descent_xml_lex next = descent_xml_lex_next_raw(token);
+	if (next.type == descent_xml_lex_comment) {
+		token = descent_xml_lex_then(
+			next,
+			_descent_xml_validate_prolog_goto_element
+		);
+		token = descent_xml_lex_optional(
+			token,
+			_descent_xml_validate_prolog_comments
+		);
+	}
+	return token;
+}
+
+inline struct descent_xml_lex _descent_xml_validate_xmldecl(
+	struct descent_xml_lex token
+)
+{
 	struct descent_xml_lex next = descent_xml_lex_next_raw(token);
 
 	if (next.type == descent_xml_lex_xmldecl) {
-		token = next;
-		while (token.type != descent_xml_classifier_element) {
-			if (
-				token.type == descent_xml_classifier_unexpected
-				|| token.type == descent_xml_classifier_eof
-			)
-				return token;
-			token = descent_xml_lex_next_raw(token);
-		}
-		next = descent_xml_lex_next_raw(token);
+		token = descent_xml_lex_then(
+			next,
+			_descent_xml_validate_prolog_goto_element
+		);
+		token = descent_xml_lex_optional(
+			token,
+			_descent_xml_validate_prolog_comments
+		);
 	}
+
+	return token;
+}
+
+inline struct descent_xml_lex _descent_xml_validate_doctype(
+	struct descent_xml_lex token
+)
+{
+	struct descent_xml_lex next = descent_xml_lex_next_raw(token);
 
 	if (next.type == descent_xml_lex_doctype) {
-		token = next;
-		while (token.type != descent_xml_classifier_element) {
-			if (
-				token.type == descent_xml_classifier_unexpected
-				|| token.type == descent_xml_classifier_eof
-			)
-				return token;
-			token = descent_xml_lex_next_raw(token);
-		}
+		token = descent_xml_lex_then(
+			next,
+			_descent_xml_validate_prolog_goto_element
+		);
+		token = descent_xml_lex_optional(
+			token,
+			_descent_xml_validate_prolog_comments
+		);
 	}
 
+	return token;
+}
+
+inline struct descent_xml_lex _descent_xml_validate_parse_prolog(
+	struct descent_xml_lex token
+)
+{
+	token = descent_xml_lex_then(
+		token,
+		_descent_xml_validate_prolog_goto_element
+	);
+	token = descent_xml_lex_optional(
+		token,
+		_descent_xml_validate_xmldecl
+	);
+	token = descent_xml_lex_optional(
+		token,
+		_descent_xml_validate_doctype
+	);
 	return token;
 }
 

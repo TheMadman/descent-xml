@@ -63,6 +63,18 @@ void test_valid(void)
 		));
 		assert(descent_xml_validate_document(valid));
 	}
+
+	{
+		lex_t valid = lex(lit(
+			"<?xml version=\"1.0\"?>\n"
+			"<!-- This is a comment -->\n"
+			"<!-- Another comment -->\n"
+			"<!DOCTYPE html>\n"
+			"<!-- A third, for good measure -->\n"
+			"<html></html>"
+		));
+		assert(descent_xml_validate_document(valid));
+	}
 }
 
 void test_invalid(void)
@@ -83,6 +95,11 @@ void test_invalid(void)
 	}
 
 	{
+		lex_t invalid = lex(lit("<root></root>foo"));
+		assert(!descent_xml_validate_document(invalid));
+	}
+
+	{
 		lex_t invalid = lex(lit("<?xml version=\"1.0\"?>"));
 		assert(!descent_xml_validate_document(invalid));
 	}
@@ -98,17 +115,23 @@ void test_invalid(void)
 	}
 
 	{
-		lex_t invalid = lex(lit("<?xml?>foo<root></root>"));
+		lex_t invalid = lex(lit("<?xml version=\"1.0\" ?>foo<root></root>"));
 		assert(!descent_xml_validate_document(invalid));
 	}
 
 	{
-		lex_t invalid = lex(lit("<?xml?><root></root>foo"));
+		lex_t invalid = lex(lit("<?xml version=\"1.0\" ?><root></root>foo"));
 		assert(!descent_xml_validate_document(invalid));
 	}
 
 	{
-		lex_t invalid = lex(lit("<?xml?><root></root>&gt;"));
+		lex_t invalid = lex(lit("<?xml version=\"1.0\" ?><root></root>&gt;"));
+		assert(!descent_xml_validate_document(invalid));
+	}
+
+	{
+		lex_t invalid = lex(lit("<!DOCTYPE html>text<html></html>"));
+
 		assert(!descent_xml_validate_document(invalid));
 	}
 }

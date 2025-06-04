@@ -183,7 +183,10 @@ inline struct descent_xml_lex descent_xml_lex_then(
 	_descent_xml_lex_section *section
 )
 {
-	if (token.type == descent_xml_classifier_unexpected)
+	if (
+		token.type == descent_xml_classifier_unexpected
+		|| token.type == descent_xml_classifier_eof
+	)
 		return token;
 
 	struct descent_xml_lex result = section(token);
@@ -204,11 +207,6 @@ inline struct descent_xml_lex descent_xml_lex_or(
 	struct descent_xml_lex result = descent_xml_lex_then(token, left);
 	if (result.type == descent_xml_classifier_unexpected)
 		result = descent_xml_lex_then(token, right);
-
-	if (result.type == descent_xml_classifier_unexpected) {
-		token.type = result.type;
-		return token;
-	}
 	return result;
 }
 

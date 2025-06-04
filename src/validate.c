@@ -9,19 +9,17 @@ struct descent_xml_lex _descent_xml_validate_element_handler(
 );
 bool descent_xml_validate_element_depth(struct descent_xml_lex token, int depth);
 bool descent_xml_validate_element(struct descent_xml_lex token);
+struct descent_xml_lex _descent_xml_validate_prolog_goto_element(
+	struct descent_xml_lex token
+);
+struct descent_xml_lex _descent_xml_validate_prolog_comments(
+	struct descent_xml_lex token
+);
 struct descent_xml_lex _descent_xml_validate_xmldecl(
-	struct descent_xml_lex token,
-	struct libadt_const_lptr element_name,
-	struct libadt_const_lptr attributes,
-	bool empty,
-	void *context
+	struct descent_xml_lex token
 );
 struct descent_xml_lex _descent_xml_validate_doctype(
-	struct descent_xml_lex token,
-	struct libadt_const_lptr element_name,
-	struct libadt_const_lptr attributes,
-	bool empty,
-	void *context
+	struct descent_xml_lex token
 );
 bool descent_xml_validate_document_depth(
 	struct descent_xml_lex token,
