@@ -186,10 +186,6 @@ inline struct descent_xml_lex _descent_xml_validate_xmldecl(
 			next,
 			_descent_xml_validate_prolog_goto_element
 		);
-		token = descent_xml_lex_optional(
-			token,
-			_descent_xml_validate_prolog_comments
-		);
 	}
 
 	return token;
@@ -205,10 +201,6 @@ inline struct descent_xml_lex _descent_xml_validate_doctype(
 		token = descent_xml_lex_then(
 			next,
 			_descent_xml_validate_prolog_goto_element
-		);
-		token = descent_xml_lex_optional(
-			token,
-			_descent_xml_validate_prolog_comments
 		);
 	}
 
@@ -226,6 +218,10 @@ inline struct descent_xml_lex _descent_xml_validate_parse_prolog(
 	token = descent_xml_lex_optional(
 		token,
 		_descent_xml_validate_xmldecl
+	);
+	token = descent_xml_lex_optional(
+		token,
+		_descent_xml_validate_prolog_comments
 	);
 	token = descent_xml_lex_optional(
 		token,
