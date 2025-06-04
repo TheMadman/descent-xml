@@ -231,6 +231,10 @@ inline struct descent_xml_lex _descent_xml_validate_parse_prolog(
 		token,
 		_descent_xml_validate_doctype
 	);
+	token = descent_xml_lex_optional(
+		token,
+		_descent_xml_validate_prolog_comments
+	);
 	return token;
 }
 

@@ -75,6 +75,14 @@ void test_valid(void)
 		));
 		assert(descent_xml_validate_document(valid));
 	}
+
+	{
+		lex_t valid = lex(lit(
+			"<!-- A Valid Comment -->\n"
+			"<root></root>"
+		));
+		assert(descent_xml_validate_document(valid));
+	}
 }
 
 void test_invalid(void)
