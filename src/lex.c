@@ -89,9 +89,10 @@ struct descent_xml_lex descent_xml_lex_or(
 struct descent_xml_lex descent_xml_lex_prolog(
 	struct descent_xml_lex token
 );
+struct descent_xml_lex descent_xml_lex_handle_cdata(
+	struct descent_xml_lex token
+);
 
-// These functions are special, in that they're not
-// really doing all the processing, that's up to lex_next_raw
 vfn *descent_xml_lex_doctype(wchar_t input)
 {
 	switch (input) {
@@ -109,14 +110,7 @@ vfn *descent_xml_lex_xmldecl(wchar_t input)
 
 vfn *descent_xml_lex_cdata(wchar_t input)
 {
-	switch (input) {
-		case L'\0':
-			return (vfn*)descent_xml_classifier_unexpected;
-		case ']':
-			return (vfn*)descent_xml_lex_cdata_end;
-		default:
-			return (vfn*)descent_xml_lex_cdata_text;
-	}
+	return descent_xml_lex_doctype(input);
 }
 
 vfn *descent_xml_lex_cdata_text(wchar_t input)

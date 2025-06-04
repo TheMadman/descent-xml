@@ -113,7 +113,7 @@ void test_descent_xml_lex_next_raw(void)
 void test_doctype(void)
 {
 	struct descent_xml_lex token = descent_xml_lex_init(lit("<!DOCTYPE html>"));
-	struct libadt_const_lptr expected_value = libadt_str_literal("!DOCTYPE html");
+	struct libadt_const_lptr expected_value = lit("!DOCTYPE html");
 	token = descent_xml_lex_next_raw(token);
 	assert(token.type == descent_xml_classifier_element);
 
@@ -125,9 +125,26 @@ void test_doctype(void)
 	assert(token.type == descent_xml_classifier_element_end);
 }
 
+void test_cdata(void)
+{
+	struct descent_xml_lex token = descent_xml_lex_init(lit("<![CDATA[Hello, world!]]>"));
+
+	struct libadt_const_lptr expected_value = lit("![CDATA[Hello, world!]]");
+	token = descent_xml_lex_next_raw(token);
+	assert(token.type == descent_xml_classifier_element);
+
+	token = descent_xml_lex_next_raw(token);
+	assert(token.type == descent_xml_lex_cdata);
+	assert(libadt_const_lptr_equal(expected_value, token.value));
+
+	token = descent_xml_lex_next_raw(token);
+	assert(token.type == descent_xml_classifier_element_end);
+}
+
 int main()
 {
 	test_descent_xml_lex();
 	test_descent_xml_lex_next_raw();
 	test_doctype();
+	test_cdata();
 }

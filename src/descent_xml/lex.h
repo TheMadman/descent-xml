@@ -109,8 +109,6 @@ inline _descent_xml_lex_read_t _descent_xml_lex_read(
 descent_xml_classifier_void_fn *descent_xml_lex_doctype(wchar_t input);
 descent_xml_classifier_void_fn *descent_xml_lex_xmldecl(wchar_t input);
 descent_xml_classifier_void_fn *descent_xml_lex_cdata(wchar_t input);
-descent_xml_classifier_void_fn *descent_xml_lex_cdata_text(wchar_t input);
-descent_xml_classifier_void_fn *descent_xml_lex_cdata_end(wchar_t input);
 
 /**
  * \brief Initializes a token object for use in descent_xml_lex_next().
@@ -325,7 +323,7 @@ inline struct descent_xml_lex _descent_xml_lex_quote_string(
 		end_quote
 			= read.type == descent_xml_classifier_attribute_value_single_quote_end
 			|| read.type == descent_xml_classifier_attribute_value_double_quote_end;
-		bool error
+		error
 			= read.type == descent_xml_classifier_unexpected
 			|| read.type == descent_xml_classifier_eof;
 	}
@@ -506,6 +504,42 @@ inline struct descent_xml_lex descent_xml_lex_handle_xmldecl(
 	return token;
 }
 
+inline struct descent_xml_lex descent_xml_lex_handle_cdata(
+	struct descent_xml_lex token
+)
+{
+	struct libadt_const_lptr remainder
+		= _descent_xml_lex_remainder(token);
+	const struct libadt_const_lptr cdata
+		= libadt_str_literal("![CDATA[");
+	ssize_t total = 0;
+	if (!_descent_xml_lex_startswith(remainder, cdata)) {
+		token.type = descent_xml_classifier_unexpected;
+		return token;
+	}
+
+	total += cdata.length;
+	remainder = libadt_const_lptr_index(remainder, cdata.length);
+
+	const struct libadt_const_lptr cdata_end
+		= libadt_str_literal("]]");
+
+	while (!_descent_xml_lex_startswith(remainder, cdata_end)) {
+		if (remainder.length <= 0) {
+			token.type = descent_xml_classifier_unexpected;
+			return token;
+		}
+		total++;
+		remainder = libadt_const_lptr_index(remainder, 1);
+	}
+
+	total += cdata_end.length;
+	token.type = descent_xml_lex_cdata;
+	token.value = libadt_const_lptr_index(token.value, 1);
+	token.value.length += total;
+	return token;
+}
+
 /**
  * \brief Returns the next, raw token in the script referred to by
  * 	previous.
@@ -530,17 +564,9 @@ inline struct descent_xml_lex descent_xml_lex_next_raw(
 		);
 		if (test.type != descent_xml_classifier_unexpected)
 			return test;
-
-		const struct libadt_const_lptr cdata
-			= libadt_str_literal("![CDATA[");
-		if (_descent_xml_lex_startswith(next, cdata)) {
-			token.type = descent_xml_lex_cdata;
-			token.value = libadt_const_lptr_truncate(
-				next,
-				cdata.length
-			);
-			return token;
-		}
+		test = descent_xml_lex_then(token, descent_xml_lex_handle_cdata);
+		if (test.type != descent_xml_classifier_unexpected)
+			return test;
 	}
 
 	_descent_xml_lex_read_t
