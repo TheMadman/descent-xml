@@ -92,6 +92,15 @@ struct descent_xml_lex descent_xml_lex_prolog(
 struct descent_xml_lex descent_xml_lex_handle_cdata(
 	struct descent_xml_lex token
 );
+struct descent_xml_lex descent_xml_lex_handle_comment(
+	struct descent_xml_lex token
+);
+struct descent_xml_lex _descent_xml_lex_handle_prolog(
+	struct descent_xml_lex token
+);
+struct descent_xml_lex _descent_xml_lex_handle_unmarkdown(
+	struct descent_xml_lex token
+);
 
 vfn *descent_xml_lex_doctype(wchar_t input)
 {
@@ -113,13 +122,8 @@ vfn *descent_xml_lex_cdata(wchar_t input)
 	return descent_xml_lex_doctype(input);
 }
 
-vfn *descent_xml_lex_cdata_text(wchar_t input)
+vfn *descent_xml_lex_comment(wchar_t input)
 {
-	return descent_xml_lex_cdata(input);
-}
-
-vfn *descent_xml_lex_cdata_end(wchar_t input)
-{
-	return descent_xml_classifier_element_end(input);
+	return descent_xml_lex_doctype(input);
 }
 

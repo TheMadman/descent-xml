@@ -141,10 +141,27 @@ void test_cdata(void)
 	assert(token.type == descent_xml_classifier_element_end);
 }
 
+void test_comment(void)
+{
+	struct descent_xml_lex token = descent_xml_lex_init(lit("<!-- Hello, world! -->"));
+
+	struct libadt_const_lptr expected_value = lit("!-- Hello, world! --");
+	token = descent_xml_lex_next_raw(token);
+	assert(token.type == descent_xml_classifier_element);
+
+	token = descent_xml_lex_next_raw(token);
+	assert(token.type == descent_xml_lex_comment);
+	assert(libadt_const_lptr_equal(expected_value, token.value));
+
+	token = descent_xml_lex_next_raw(token);
+	assert(token.type == descent_xml_classifier_element_end);
+}
+
 int main()
 {
 	test_descent_xml_lex();
 	test_descent_xml_lex_next_raw();
 	test_doctype();
 	test_cdata();
+	test_comment();
 }

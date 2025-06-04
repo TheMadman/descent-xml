@@ -109,6 +109,7 @@ inline _descent_xml_lex_read_t _descent_xml_lex_read(
 descent_xml_classifier_void_fn *descent_xml_lex_doctype(wchar_t input);
 descent_xml_classifier_void_fn *descent_xml_lex_xmldecl(wchar_t input);
 descent_xml_classifier_void_fn *descent_xml_lex_cdata(wchar_t input);
+descent_xml_classifier_void_fn *descent_xml_lex_comment(wchar_t input);
 
 /**
  * \brief Initializes a token object for use in descent_xml_lex_next().
@@ -504,6 +505,17 @@ inline struct descent_xml_lex descent_xml_lex_handle_xmldecl(
 	return token;
 }
 
+inline struct descent_xml_lex _descent_xml_lex_handle_prolog(
+	struct descent_xml_lex token
+)
+{
+	return descent_xml_lex_or(
+		token,
+		descent_xml_lex_handle_xmldecl,
+		descent_xml_lex_handle_doctype
+	);
+}
+
 inline struct descent_xml_lex descent_xml_lex_handle_cdata(
 	struct descent_xml_lex token
 )
@@ -540,6 +552,53 @@ inline struct descent_xml_lex descent_xml_lex_handle_cdata(
 	return token;
 }
 
+inline struct descent_xml_lex descent_xml_lex_handle_comment(
+	struct descent_xml_lex token
+)
+{
+	struct libadt_const_lptr remainder
+		= _descent_xml_lex_remainder(token);
+	const struct libadt_const_lptr comment
+		= libadt_str_literal("!--");
+	ssize_t total = 0;
+	if (!_descent_xml_lex_startswith(remainder, comment)) {
+		token.type = descent_xml_classifier_unexpected;
+		return token;
+	}
+
+	total += comment.length;
+	remainder = libadt_const_lptr_index(remainder, comment.length);
+
+	const struct libadt_const_lptr comment_end
+		= libadt_str_literal("--");
+
+	while (!_descent_xml_lex_startswith(remainder, comment_end)) {
+		if (remainder.length <= 0) {
+			token.type = descent_xml_classifier_unexpected;
+			return token;
+		}
+		total++;
+		remainder = libadt_const_lptr_index(remainder, 1);
+	}
+
+	total += comment_end.length;
+	token.type = descent_xml_lex_comment;
+	token.value = libadt_const_lptr_index(token.value, 1);
+	token.value.length += total;
+	return token;
+}
+
+inline struct descent_xml_lex _descent_xml_lex_handle_unmarkdown(
+	struct descent_xml_lex token
+)
+{
+	return descent_xml_lex_or(
+		token,
+		descent_xml_lex_handle_comment,
+		descent_xml_lex_handle_cdata
+	);
+}
+
 /**
  * \brief Returns the next, raw token in the script referred to by
  * 	previous.
@@ -559,12 +618,9 @@ inline struct descent_xml_lex descent_xml_lex_next_raw(
 		// I'm just beating it into submission
 		struct descent_xml_lex test = descent_xml_lex_or(
 			token,
-			descent_xml_lex_handle_xmldecl,
-			descent_xml_lex_handle_doctype
+			_descent_xml_lex_handle_prolog,
+			_descent_xml_lex_handle_unmarkdown
 		);
-		if (test.type != descent_xml_classifier_unexpected)
-			return test;
-		test = descent_xml_lex_then(token, descent_xml_lex_handle_cdata);
 		if (test.type != descent_xml_classifier_unexpected)
 			return test;
 	}
