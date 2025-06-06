@@ -46,7 +46,9 @@ Tutorials and reference documentation can be found at https://themadman.github.i
 - Currently, Descent XML just uses the application's encoding. It doesn't support reading the encoding provided in the XML and parsing it, separately from the application's `CTYPE` locale setting. This should be fixed in `lex.h`.
 - There isn't an easy interface to parse partial XML, for example from a partially-filled buffer.
 - Only simple `!DOCTYPE`s are supported. The `!DOCTYPE` name is not validated against the root node.
-- `!CDATA` is validated, but is discarded without being passed to the text handler callback.
+- The library works by passing around pointers into the original script, meaning:
+  - entities are passed as-is, without being processed; and
+  - text nodes with embedded `![CDATA[]]` sections will call the text callback separately.
 - Processing Instructions are not implemented.
 - Schema validation is not implemented.
 - Probably more issues, idk. I'm sick of looking at this stupid standard.

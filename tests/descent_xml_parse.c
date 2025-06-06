@@ -128,15 +128,15 @@ void test_element_attributes(void)
 	}
 }
 
-lex_t text_callback(
-	lex_t token,
+void text_callback(
 	lptr_t text,
+	bool is_cdata,
 	void *context
 )
 {
 	*(bool*)context = true;
 	assert(strncmp(text.buffer, "Hello, world!", (size_t)text.length) == 0);
-	return token;
+	assert(!is_cdata);
 }
 
 void test_text_node(void)
@@ -192,15 +192,15 @@ void test_attribute_entities(void)
 	assert(xml.type != err);
 }
 
-lex_t text_entity_callback(
-	lex_t token,
+void text_entity_callback(
 	lptr_t value,
+	bool is_cdata,
 	void *context
 )
 {
 	assert(strncmp(value.buffer, "this &amp; that", (size_t)value.length) == 0);
+	assert(!is_cdata);
 	*(bool*)context = true;
-	return token;
 }
 
 void test_text_entities(void)
@@ -209,6 +209,27 @@ void test_text_entities(void)
 	bool ran = false;
 	while (!stop_token(xml))
 		xml = descent_xml_parse(xml, NULL, text_entity_callback, &ran);
+	assert(ran);
+	assert(xml.type != err);
+}
+
+void cdata_callback(
+	lptr_t value,
+	bool is_cdata,
+	void *context
+)
+{
+	assert(strncmp(value.buffer, "<element-like thing=\"asdf\"/>", (size_t)value.length) == 0);
+	assert(is_cdata);
+	*(bool*)context = true;
+}
+
+void test_cdata(void)
+{
+	lex_t xml = lex(lit("<![CDATA[<element-like thing=\"asdf\"/>]]>"));
+	bool ran = false;
+	while (!stop_token(xml))
+		xml = descent_xml_parse(xml, NULL, cdata_callback, &ran);
 	assert(ran);
 	assert(xml.type != err);
 }
@@ -271,15 +292,15 @@ void test_cstr_element_attributes(void)
 	}
 }
 
-lex_t cstr_text_entity_callback(
-	lex_t xml,
+void cstr_text_entity_callback(
 	char *text,
+	bool is_cdata,
 	void *context
 )
 {
 	*(bool*)context = true;
 	assert(strcmp(text, "this &amp; that") == 0);
-	return xml;
+	assert(!is_cdata);
 }
 
 void test_cstr_text_entities(void)

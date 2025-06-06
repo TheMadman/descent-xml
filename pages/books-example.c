@@ -54,15 +54,15 @@ static int equal(const char *a, const char *b)
 	return strcmp(a, b) == 0;
 }
 
-lex_t text_printer(
-	lex_t token,
+void text_printer(
 	char *text,
+	bool is_cdata,
 	void *context
 )
 {
 	(void)context;
+	(void)is_cdata;
 	printf("%s", text);
-	return token;
 }
 
 lex_t author_handler(

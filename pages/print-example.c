@@ -42,15 +42,15 @@ lex_t element_handler(
 	return token;
 }
 
-lex_t text_handler(
-	lex_t token,
+void text_handler(
 	char *text,
+	bool is_cdata,
 	void *context
 )
 {
 	(void)context;
+	(void)is_cdata;
 	printf("text node: %s\n", text);
-	return token;
 }
 
 int main()

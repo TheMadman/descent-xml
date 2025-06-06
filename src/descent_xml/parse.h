@@ -86,9 +86,9 @@ typedef struct descent_xml_lex descent_xml_parse_element_fn(
  * 	in as an argument, or a token generated as a result of further
  * 	processing inside the function.
  */
-typedef struct descent_xml_lex descent_xml_parse_text_fn(
-	struct descent_xml_lex token,
+typedef void descent_xml_parse_text_fn(
 	struct libadt_const_lptr text,
+	bool is_cdata,
 	void *context
 );
 
@@ -129,9 +129,9 @@ typedef struct descent_xml_lex descent_xml_parse_element_cstr_fn(
  * \param text A pointer to a null-terminated string containing the text.
  * \param context The pointer provided to descent_xml_parse_cstr() by the user.
  */
-typedef struct descent_xml_lex descent_xml_parse_text_cstr_fn(
-	struct descent_xml_lex token,
+typedef void descent_xml_parse_text_cstr_fn(
 	char *text,
+	bool is_cdata,
 	void *context
 );
 
@@ -273,7 +273,8 @@ inline struct descent_xml_lex _descent_xml_handle_text(
 )
 {
 	_descent_xml_value_t result = _descent_xml_text_value(token);
-	return text_handler(result.token, result.value, context);
+	text_handler(result.value, false, context);
+	return result.token;
 }
 
 /**
@@ -331,15 +332,28 @@ inline struct descent_xml_lex descent_xml_parse(
 			text_handler,
 			context
 		);
+	} else if (xml.type == descent_xml_lex_cdata && text_handler) {
+		// TODO: clean this up
+		struct libadt_const_lptr arg
+			= libadt_const_lptr_index(
+				xml.value,
+				sizeof("![CDATA[") - 1
+			);
+		arg = libadt_const_lptr_truncate(
+			arg,
+			arg.length - 2 /* ]] */
+		);
+		text_handler(arg, true, context);
 	}
 
 	return xml;
 }
 
 typedef struct {
-	descent_xml_parse_element_cstr_fn *element_handler;
-	descent_xml_parse_text_cstr_fn *text_handler;
-	void *context;
+	descent_xml_parse_element_cstr_fn *const element_handler;
+	descent_xml_parse_text_cstr_fn *const text_handler;
+	void *const context;
+	int error;
 } _descent_xml_parse_cstr_context;
 
 extern descent_xml_classifier_void_fn *descent_xml_parse_error(wchar_t);
@@ -401,30 +415,29 @@ error_return_xml:
 	return xml;
 }
 
-inline struct descent_xml_lex _cstr_text_handler(
-	struct descent_xml_lex xml,
+inline void _cstr_text_handler(
 	struct libadt_const_lptr text,
+	bool is_cdata,
 	void *context
 )
 {
-	const _descent_xml_parse_cstr_context *const cstr_context = context;
+	_descent_xml_parse_cstr_context *const cstr_context = context;
 	if (!cstr_context->text_handler)
-		return xml;
+		return;
 
 	char *const ctext = strndup(text.buffer, (size_t)text.length);
 	if (!ctext) {
-		xml.type = descent_xml_parse_error;
-		return xml;
+		cstr_context->error = 1;
+		return;
 	}
 
-	xml = cstr_context->text_handler(
-		xml,
+	cstr_context->text_handler(
 		ctext,
+		is_cdata,
 		cstr_context->context
 	);
 
 	free(ctext);
-	return xml;
 }
 
 /**

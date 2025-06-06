@@ -41,9 +41,9 @@ struct descent_xml_lex _cstr_element_handler(
 	bool empty,
 	void *context
 );
-struct descent_xml_lex _cstr_text_handler(
-	struct descent_xml_lex xml,
+void _cstr_text_handler(
 	struct libadt_const_lptr text,
+	bool is_cdata,
 	void *context
 );
 struct descent_xml_lex descent_xml_parse_cstr(
