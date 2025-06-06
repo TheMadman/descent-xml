@@ -14,9 +14,6 @@ Running this program will produce the following output:
 
 ```
 $ ./print-example
-element_name: ?xml
-attribute: version=1.0
-empty element (ends with /> or ?>): true
 text node:
 
 element_name: element
@@ -26,10 +23,14 @@ empty element (ends with /> or ?>): false
 text node:
         Hello, world!
 
+text node: Hello, CDATA!
+text node:
+        Hello, after CDATA!
 ```
 
 This example reveals a few things:
 - \ref descent_xml_parse_cstr doesn't do intelligent parsing: in XML, spaces between elements _are_ Text nodes containing whitespace, and this is reflected in Descent XML. Similarly, Descent XML doesn't convert entities for you, and it doesn't trim whitespace around Text nodes that also include non-whitespace content.
+  - `![CDATA[]]` sections are passed separately, even when embedded in text nodes.
 - The `attributes` array will always be a multiple of two, for each attribute=value pair, plus a null terminator. An attribute with an empty value will have an empty-string value.
 - Descent XML does not provide a callback for closing tags, and doesn't call the element handler for closing tags. The next tutorial will cover checking for correctly-nested elements and closing tags.
 

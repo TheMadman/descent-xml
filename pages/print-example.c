@@ -59,6 +59,8 @@ int main()
 		"<?xml version=\"1.0\"?>\n"
 		"<element attr=\"val\" attr2=\"\">\n"
 		"	Hello, world!\n"
+		"	<![CDATA[Hello, CDATA!]]>\n"
+		"	Hello, after CDATA!\n"
 		"</element>"
 	));
 	if (!valid(token))
