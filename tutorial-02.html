@@ -75,7 +75,7 @@ $(function() {
 <div class="contents">
 <div class="textblock"><p>The previous program worked, but wasn't very interesting. In this tutorial, we're going to use the C-string interface to write a parser that prints what it encounters.</p>
 <p>This involves using <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7">descent_xml_parse_cstr</a>, passing it an <code>element_handler</code> and a <code>text_handler</code>.</p>
-<p>The signature of an element handler function is given in <a class="el" href="parse_8h.html#a2d3cee13b69930bad8e1b2f14d7b2320">descent_xml_parse_element_cstr_fn</a>, and the signature of a text handler is given in <a class="el" href="parse_8h.html#aee374acca9dd8c3432186f8b800ef080">descent_xml_parse_text_cstr_fn</a>. We're going to write an element handler that prints the element name and its attributes, and a text handler that prints the text content encountered.</p>
+<p>The signature of an element handler function is given in <a class="el" href="parse_8h.html#a2d3cee13b69930bad8e1b2f14d7b2320">descent_xml_parse_element_cstr_fn</a>, and the signature of a text handler is given in <a class="el" href="parse_8h.html#a030854089ec825a77701b22897ed8b16">descent_xml_parse_text_cstr_fn</a>. We're going to write an element handler that prints the element name and its attributes, and a text handler that prints the text content encountered.</p>
 <p>Save the following file as <code>print-example.c</code> and compile it with <code>cc -o print-example print-example.c -ldescent_xmlstatic</code>.</p>
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &lt;libadt/str.h&gt;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;descent_xml.h&gt;</span></div>
@@ -121,15 +121,15 @@ $(function() {
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">return</span> token;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> text_handler(</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> token,</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">char</span> *text,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keywordtype">void</span> text_handler(</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordtype">char</span> *text,</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordtype">bool</span> is_cdata,</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">void</span> *context</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>)</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>{</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    (void)context;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    printf(<span class="stringliteral">&quot;text node: %s\n&quot;</span>, text);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordflow">return</span> token;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    (void)is_cdata;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    printf(<span class="stringliteral">&quot;text node: %s\n&quot;</span>, text);</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keywordtype">int</span> main()</div>

@@ -75,6 +75,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">parse.h File Reference</div></div>
 </div><!--header-->
@@ -128,27 +129,80 @@ This graph shows which files directly or indirectly include this file:</div>
 </div>
 <p><a href="parse_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a729aa01f85f6b75bed4c85e2abf917f3" id="r_a729aa01f85f6b75bed4c85e2abf917f3"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#a729aa01f85f6b75bed4c85e2abf917f3">descent_xml_parse_text_fn</a>(struct libadt_const_lptr text, bool is_cdata, void *context)</td></tr>
+<tr class="memdesc:a729aa01f85f6b75bed4c85e2abf917f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type signature for a user-passed text node parsing function. Used by <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a>.  <br /></td></tr>
+<tr class="separator:a729aa01f85f6b75bed4c85e2abf917f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a030854089ec825a77701b22897ed8b16" id="r_a030854089ec825a77701b22897ed8b16"><td class="memItemLeft" align="right" valign="top">typedef void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#a030854089ec825a77701b22897ed8b16">descent_xml_parse_text_cstr_fn</a>(char *text, bool is_cdata, void *context)</td></tr>
+<tr class="memdesc:a030854089ec825a77701b22897ed8b16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type signature for a user-passed text node parsing function. Used by <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a>.  <br /></td></tr>
+<tr class="separator:a030854089ec825a77701b22897ed8b16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a1226c5f49860387e5ea5811f019eea2c" id="r_a1226c5f49860387e5ea5811f019eea2c"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#a1226c5f49860387e5ea5811f019eea2c">descent_xml_parse_element_fn</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> token, struct libadt_const_lptr element_name, struct libadt_const_lptr attributes, bool empty, void *context)</td></tr>
 <tr class="memdesc:a1226c5f49860387e5ea5811f019eea2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type signature for a user-passed element parsing function. Used by <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a>.  <br /></td></tr>
 <tr class="separator:a1226c5f49860387e5ea5811f019eea2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f2792ac4a09bdbaba8c6f9942e28e13" id="r_a3f2792ac4a09bdbaba8c6f9942e28e13"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#a3f2792ac4a09bdbaba8c6f9942e28e13">descent_xml_parse_text_fn</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> token, struct libadt_const_lptr text, void *context)</td></tr>
-<tr class="memdesc:a3f2792ac4a09bdbaba8c6f9942e28e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type signature for a user-passed text node parsing function. Used by <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a>.  <br /></td></tr>
-<tr class="separator:a3f2792ac4a09bdbaba8c6f9942e28e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d3cee13b69930bad8e1b2f14d7b2320" id="r_a2d3cee13b69930bad8e1b2f14d7b2320"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#a2d3cee13b69930bad8e1b2f14d7b2320">descent_xml_parse_element_cstr_fn</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> token, char *element_name, char **attributes, bool empty, void *context)</td></tr>
 <tr class="memdesc:a2d3cee13b69930bad8e1b2f14d7b2320"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type signature for a user-passed element parsing function. Used by <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a>.  <br /></td></tr>
 <tr class="separator:a2d3cee13b69930bad8e1b2f14d7b2320"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee374acca9dd8c3432186f8b800ef080" id="r_aee374acca9dd8c3432186f8b800ef080"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#aee374acca9dd8c3432186f8b800ef080">descent_xml_parse_text_cstr_fn</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> token, char *text, void *context)</td></tr>
-<tr class="memdesc:aee374acca9dd8c3432186f8b800ef080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type signature for a user-passed text node parsing function. Used by <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a>.  <br /></td></tr>
-<tr class="separator:aee374acca9dd8c3432186f8b800ef080"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe607c1f19de284390ca68d2ed914a50" id="r_afe607c1f19de284390ca68d2ed914a50"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50">descent_xml_parse</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> xml, <a class="el" href="parse_8h.html#a1226c5f49860387e5ea5811f019eea2c">descent_xml_parse_element_fn</a> *element_handler, <a class="el" href="parse_8h.html#a3f2792ac4a09bdbaba8c6f9942e28e13">descent_xml_parse_text_fn</a> *text_handler, void *context)</td></tr>
+<tr class="memitem:afe607c1f19de284390ca68d2ed914a50" id="r_afe607c1f19de284390ca68d2ed914a50"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50">descent_xml_parse</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> xml, <a class="el" href="parse_8h.html#a1226c5f49860387e5ea5811f019eea2c">descent_xml_parse_element_fn</a> *element_handler, <a class="el" href="parse_8h.html#a729aa01f85f6b75bed4c85e2abf917f3">descent_xml_parse_text_fn</a> *text_handler, void *context)</td></tr>
 <tr class="memdesc:afe607c1f19de284390ca68d2ed914a50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for parsing an XML document.  <br /></td></tr>
 <tr class="separator:afe607c1f19de284390ca68d2ed914a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a551067dc1fc5cde3a94e5f7444f9d7e7" id="r_a551067dc1fc5cde3a94e5f7444f9d7e7"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7">descent_xml_parse_cstr</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> xml, <a class="el" href="parse_8h.html#a2d3cee13b69930bad8e1b2f14d7b2320">descent_xml_parse_element_cstr_fn</a> *element_handler, <a class="el" href="parse_8h.html#aee374acca9dd8c3432186f8b800ef080">descent_xml_parse_text_cstr_fn</a> *text_handler, void *context)</td></tr>
+<tr class="memitem:a551067dc1fc5cde3a94e5f7444f9d7e7" id="r_a551067dc1fc5cde3a94e5f7444f9d7e7"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7">descent_xml_parse_cstr</a> (struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> xml, <a class="el" href="parse_8h.html#a2d3cee13b69930bad8e1b2f14d7b2320">descent_xml_parse_element_cstr_fn</a> *element_handler, <a class="el" href="parse_8h.html#a030854089ec825a77701b22897ed8b16">descent_xml_parse_text_cstr_fn</a> *text_handler, void *context)</td></tr>
 <tr class="memdesc:a551067dc1fc5cde3a94e5f7444f9d7e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for parsing an XML document.  <br /></td></tr>
 <tr class="separator:a551067dc1fc5cde3a94e5f7444f9d7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a030854089ec825a77701b22897ed8b16" name="a030854089ec825a77701b22897ed8b16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a030854089ec825a77701b22897ed8b16">&#9670;&#160;</a></span>descent_xml_parse_text_cstr_fn</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void descent_xml_parse_text_cstr_fn(char *text, bool is_cdata, void *context)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type signature for a user-passed text node parsing function. Used by <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>The last token encountered by the parser. This can be returned directly, iterated over with <a class="el" href="lex_8h.html#a37bde90fb0da3f0651740a95e6d170c3" title="Returns the next, raw token in the script referred to by previous.">descent_xml_lex_next_raw()</a>, or passed to a recursive call to <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a>. </td></tr>
+    <tr><td class="paramname">text</td><td>A pointer to a null-terminated string containing the text. </td></tr>
+    <tr><td class="paramname">context</td><td>The pointer provided to <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a> by the user. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a729aa01f85f6b75bed4c85e2abf917f3" name="a729aa01f85f6b75bed4c85e2abf917f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a729aa01f85f6b75bed4c85e2abf917f3">&#9670;&#160;</a></span>descent_xml_parse_text_fn</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void descent_xml_parse_text_fn(struct libadt_const_lptr text, bool is_cdata, void *context)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Type signature for a user-passed text node parsing function. Used by <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>The last token encountered by the parser. This can be returned directly, iterated over with <a class="el" href="lex_8h.html#a37bde90fb0da3f0651740a95e6d170c3" title="Returns the next, raw token in the script referred to by previous.">descent_xml_lex_next_raw()</a>, or passed to a recursive call to <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a>. </td></tr>
+    <tr><td class="paramname">text</td><td>A length-pointer containing the text. </td></tr>
+    <tr><td class="paramname">context</td><td>The pointer provided to <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a> by the user.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The last token processed. This can be the token passed in as an argument, or a token generated as a result of further processing inside the function. </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="afe607c1f19de284390ca68d2ed914a50" name="afe607c1f19de284390ca68d2ed914a50"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afe607c1f19de284390ca68d2ed914a50">&#9670;&#160;</a></span>descent_xml_parse()</h2>
@@ -174,7 +228,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="parse_8h.html#a3f2792ac4a09bdbaba8c6f9942e28e13">descent_xml_parse_text_fn</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="parse_8h.html#a729aa01f85f6b75bed4c85e2abf917f3">descent_xml_parse_text_fn</a> *&#160;</td>
           <td class="paramname"><em>text_handler</em>, </td>
         </tr>
         <tr>
@@ -237,7 +291,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="parse_8h.html#aee374acca9dd8c3432186f8b800ef080">descent_xml_parse_text_cstr_fn</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="parse_8h.html#a030854089ec825a77701b22897ed8b16">descent_xml_parse_text_cstr_fn</a> *&#160;</td>
           <td class="paramname"><em>text_handler</em>, </td>
         </tr>
         <tr>
@@ -386,95 +440,6 @@ Functions</h2></td></tr>
     <tr><td class="paramname">element_name</td><td>An libadt_const_lptr to the byte array of the element name. element_name.length contains the number of bytes for the name and the pointer can be retrieved with libadt_const_lptr_raw(element_name). </td></tr>
     <tr><td class="paramname">attributes</td><td>An libadt_const_lptr of libadt_const_lptrs to attribute strings. attributes.length contains the number of strings. The zeroth string will be the zeroth attribute name, the first string will be its value; the second string will be the first attribute name, the third its value, and so on. </td></tr>
     <tr><td class="paramname">empty</td><td>True if the element is an empty element, of the format <code>&lt;element-name /&gt;</code>. False if the element is terminated with a closing tag. Note that elements with no content between an opening and closing tag are <em>not</em> considered empty elements. </td></tr>
-    <tr><td class="paramname">context</td><td>The pointer provided to <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a> by the user.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The last token processed. This can be the token passed in as an argument, or a token generated as a result of further processing inside the function. </dd></dl>
-
-</div>
-</div>
-<a id="aee374acca9dd8c3432186f8b800ef080" name="aee374acca9dd8c3432186f8b800ef080"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee374acca9dd8c3432186f8b800ef080">&#9670;&#160;</a></span>descent_xml_parse_text_cstr_fn()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> descent_xml_parse_text_cstr_fn </td>
-          <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td>
-          <td class="paramname"><em>token</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>text</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>context</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Type signature for a user-passed text node parsing function. Used by <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">token</td><td>The last token encountered by the parser. This can be returned directly, iterated over with <a class="el" href="lex_8h.html#a37bde90fb0da3f0651740a95e6d170c3" title="Returns the next, raw token in the script referred to by previous.">descent_xml_lex_next_raw()</a>, or passed to a recursive call to <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a>. </td></tr>
-    <tr><td class="paramname">text</td><td>A pointer to a null-terminated string containing the text. </td></tr>
-    <tr><td class="paramname">context</td><td>The pointer provided to <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a> by the user. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a3f2792ac4a09bdbaba8c6f9942e28e13" name="a3f2792ac4a09bdbaba8c6f9942e28e13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f2792ac4a09bdbaba8c6f9942e28e13">&#9670;&#160;</a></span>descent_xml_parse_text_fn()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a> descent_xml_parse_text_fn </td>
-          <td>(</td>
-          <td class="paramtype">struct <a class="el" href="structdescent__xml__lex.html">descent_xml_lex</a>&#160;</td>
-          <td class="paramname"><em>token</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">struct libadt_const_lptr&#160;</td>
-          <td class="paramname"><em>text</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">void *&#160;</td>
-          <td class="paramname"><em>context</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Type signature for a user-passed text node parsing function. Used by <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">token</td><td>The last token encountered by the parser. This can be returned directly, iterated over with <a class="el" href="lex_8h.html#a37bde90fb0da3f0651740a95e6d170c3" title="Returns the next, raw token in the script referred to by previous.">descent_xml_lex_next_raw()</a>, or passed to a recursive call to <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a>. </td></tr>
-    <tr><td class="paramname">text</td><td>A length-pointer containing the text. </td></tr>
     <tr><td class="paramname">context</td><td>The pointer provided to <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a> by the user.</td></tr>
   </table>
   </dd>

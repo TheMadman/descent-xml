@@ -133,15 +133,15 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line">    <span class="keywordflow">return</span> strcmp(a, b) == 0;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> text_printer(</div>
-<div class="line">    <a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> token,</div>
+<div class="line"><span class="keywordtype">void</span> text_printer(</div>
 <div class="line">    <span class="keywordtype">char</span> *text,</div>
+<div class="line">    <span class="keywordtype">bool</span> is_cdata,</div>
 <div class="line">    <span class="keywordtype">void</span> *context</div>
 <div class="line">)</div>
 <div class="line">{</div>
 <div class="line">    (void)context;</div>
+<div class="line">    (void)is_cdata;</div>
 <div class="line">    printf(<span class="stringliteral">&quot;%s&quot;</span>, text);</div>
-<div class="line">    <span class="keywordflow">return</span> token;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> author_handler(</div>
