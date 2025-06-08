@@ -73,16 +73,16 @@ $(function() {
   <div class="headertitle"><div class="title">Third Tutorial: Recursion</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>One approach to handling nested elements is using recursive calls to <a class="el" href="parse_8h.html#afe607c1f19de284390ca68d2ed914a50" title="Function for parsing an XML document.">descent_xml_parse()</a> or <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a>. For example, you can write an <code>element_handler</code> function for a parent element, and an <code>element_handler</code> for child elements, and have the parent <code>element_handler</code> call <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a> with the child <code>element_handler</code>. Alternatively, if you need to perform the same operation on every element, you can write one <code>element_handler</code> which calls <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a> on child elements, passing itself.</p>
+<div class="textblock"><p>One approach to handling nested elements is using recursive calls to descent_xml_parse() or descent_xml_parse_cstr(). For example, you can write an <code>element_handler</code> function for a parent element, and an <code>element_handler</code> for child elements, and have the parent <code>element_handler</code> call descent_xml_parse_cstr() with the child <code>element_handler</code>. Alternatively, if you need to perform the same operation on every element, you can write one <code>element_handler</code> which calls descent_xml_parse_cstr() on child elements, passing itself.</p>
 <h1><a class="anchor" id="autotoc_md0"></a>
 Parent/Child Example - Print Authors of Fictional Works</h1>
-<p>The following example demonstrates a program which goes through an XML document, containing a <code>library</code> of <code>book</code>s, some of which are fiction and some of which are non-fiction. If the <code>book</code> has <code>type="fiction"</code>, it calls <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a> on a child handler, which then looks for an <code>author</code> element and prints its contents.</p>
+<p>The following example demonstrates a program which goes through an XML document, containing a <code>library</code> of <code>book</code>s, some of which are fiction and some of which are non-fiction. If the <code>book</code> has <code>type="fiction"</code>, it calls descent_xml_parse_cstr() on a child handler, which then looks for an <code>author</code> element and prints its contents.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;libadt/str.h&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;descent_xml.h&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;descent-xml.h&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code hl_struct" href="structdescent__xml__lex.html">descent_xml_lex</a> <a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a>;</div>
+<div class="line"><span class="keyword">typedef</span> <span class="keyword">struct </span>descent_xml_lex lex_t;</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#define str libadt_str_literal</span></div>
 <div class="line"> </div>
@@ -117,15 +117,15 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line"><span class="preprocessor">&quot;   &lt;/book&gt;\n&quot; \</span></div>
 <div class="line"><span class="preprocessor">&quot;&lt;/library&gt;&quot;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> is_end_type(<a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> token)</div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> is_end_type(lex_t token)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keywordflow">return</span> token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> == eof;</div>
+<div class="line">    <span class="keywordflow">return</span> token.type == eof;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> is_error_type(<a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> token)</div>
+<div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> is_error_type(lex_t token)</div>
 <div class="line">{</div>
-<div class="line">    <span class="keywordflow">return</span> token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> == unexpected</div>
-<div class="line">        || token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> == error;</div>
+<div class="line">    <span class="keywordflow">return</span> token.type == unexpected</div>
+<div class="line">        || token.type == error;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> equal(<span class="keyword">const</span> <span class="keywordtype">char</span> *a, <span class="keyword">const</span> <span class="keywordtype">char</span> *b)</div>
@@ -144,8 +144,8 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line">    printf(<span class="stringliteral">&quot;%s&quot;</span>, text);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> author_handler(</div>
-<div class="line">    <a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> token,</div>
+<div class="line">lex_t author_handler(</div>
+<div class="line">    lex_t token,</div>
 <div class="line">    <span class="keywordtype">char</span> *element_name,</div>
 <div class="line">    <span class="keywordtype">char</span> **attributes,</div>
 <div class="line">    <span class="keywordtype">bool</span> empty,</div>
@@ -162,7 +162,7 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line">        <span class="comment">//</span></div>
 <div class="line">        <span class="comment">// This will stop this function from parsing</span></div>
 <div class="line">        <span class="comment">// and pass parsing back up to the caller.</span></div>
-<div class="line">        <span class="keywordflow">while</span> (token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> != close) {</div>
+<div class="line">        <span class="keywordflow">while</span> (token.type != close) {</div>
 <div class="line">            <span class="keywordflow">if</span> (is_end_type(token) || is_error_type(token))</div>
 <div class="line">                <span class="keywordflow">return</span> token;</div>
 <div class="line">            token = parse(token, NULL, text_printer, NULL);</div>
@@ -173,7 +173,7 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line">        <span class="comment">// to the next closing element, so that the caller</span></div>
 <div class="line">        <span class="comment">// doesn&#39;t end early on the closing tag of a child</span></div>
 <div class="line">        <span class="comment">// element.</span></div>
-<div class="line">        <span class="keywordflow">while</span> (token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> != close) {</div>
+<div class="line">        <span class="keywordflow">while</span> (token.type != close) {</div>
 <div class="line">            <span class="keywordflow">if</span> (is_end_type(token) || is_error_type(token))</div>
 <div class="line">                <span class="keywordflow">return</span> token;</div>
 <div class="line">            token = parse(token, NULL, NULL, NULL);</div>
@@ -185,8 +185,8 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line">    <span class="keywordflow">return</span> token;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> book_handler(</div>
-<div class="line">    <a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> token,</div>
+<div class="line">lex_t book_handler(</div>
+<div class="line">    lex_t token,</div>
 <div class="line">    <span class="keywordtype">char</span> *element_name,</div>
 <div class="line">    <span class="keywordtype">char</span> **attributes,</div>
 <div class="line">    <span class="keywordtype">bool</span> empty,</div>
@@ -214,7 +214,7 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line">            <span class="comment">//</span></div>
 <div class="line">            <span class="comment">// This is a pattern for processing nested</span></div>
 <div class="line">            <span class="comment">// elements in this fashion.</span></div>
-<div class="line">            <span class="keywordflow">while</span> (token.<a class="code hl_variable" href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">type</a> != close) {</div>
+<div class="line">            <span class="keywordflow">while</span> (token.type != close) {</div>
 <div class="line">                <span class="keywordflow">if</span> (is_end_type(token) || is_error_type(token))</div>
 <div class="line">                    <span class="keywordflow">return</span> token;</div>
 <div class="line">                token = parse(token, author_handler, NULL, NULL);</div>
@@ -227,7 +227,7 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
-<div class="line">    <a class="code hl_struct" href="structdescent__xml__lex.html">lex_t</a> token = lex(str(XML));</div>
+<div class="line">    lex_t token = lex(str(XML));</div>
 <div class="line">    <span class="keywordflow">if</span> (!valid(token))</div>
 <div class="line">        <span class="keywordflow">return</span> 1;</div>
 <div class="line"> </div>
@@ -240,12 +240,10 @@ Parent/Child Example - Print Authors of Fictional Works</h1>
 <div class="line">        token = parse(token, book_handler, NULL, NULL);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-<div class="ttc" id="astructdescent__xml__lex_html"><div class="ttname"><a href="structdescent__xml__lex.html">descent_xml_lex</a></div><div class="ttdoc">Represents a single token.</div><div class="ttdef"><b>Definition</b> lex.h:42</div></div>
-<div class="ttc" id="astructdescent__xml__lex_html_aac7609faf113b198584aab3a6fe503dd"><div class="ttname"><a href="structdescent__xml__lex.html#aac7609faf113b198584aab3a6fe503dd">descent_xml_lex::type</a></div><div class="ttdeci">descent_xml_classifier_fn * type</div><div class="ttdoc">Represents the type of token classifiered.</div><div class="ttdef"><b>Definition</b> lex.h:46</div></div>
 </div><!-- fragment --><p>This example should print the result:</p>
 <div class="fragment"><div class="line">Author: Raymond E. Feist</div>
 <div class="line">Author: Anthony Horowitz</div>
-</div><!-- fragment --><p>In this example, each <code>element_handler</code> is responsible for its own closing tag. You will notice that the <code>element_handler</code>s each loop until they find a closing tag, then iterate the token once more with an empty call to <a class="el" href="parse_8h.html#a551067dc1fc5cde3a94e5f7444f9d7e7" title="Function for parsing an XML document.">descent_xml_parse_cstr()</a>. If the element handler didn't iterate again, it would return <em>a</em> closing tag token to the parent, which would then terminate the loop. </p>
+</div><!-- fragment --><p>In this example, each <code>element_handler</code> is responsible for its own closing tag. You will notice that the <code>element_handler</code>s each loop until they find a closing tag, then iterate the token once more with an empty call to descent_xml_parse_cstr(). If the element handler didn't iterate again, it would return <em>a</em> closing tag token to the parent, which would then terminate the loop. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
