@@ -1,4 +1,4 @@
-#include "descent_xml/classifier.h"
+#include "descent-xml/classifier.h"
 
 #include <wctype.h>
 #include <stdbool.h>

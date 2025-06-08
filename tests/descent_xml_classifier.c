@@ -21,7 +21,7 @@
 #include <stddef.h>
 #include <wchar.h>
 
-#include "descent_xml/classifier.h"
+#include "descent-xml/classifier.h"
 
 typedef descent_xml_classifier_void_fn vfn;
 typedef descent_xml_classifier_fn cfn;

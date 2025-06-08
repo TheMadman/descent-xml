@@ -23,10 +23,10 @@
 extern "C" {
 #endif
 
-#include "descent_xml/classifier.h"
-#include "descent_xml/lex.h"
-#include "descent_xml/parse.h"
-#include "descent_xml/validate.h"
+#include "descent-xml/classifier.h"
+#include "descent-xml/lex.h"
+#include "descent-xml/parse.h"
+#include "descent-xml/validate.h"
 
 #ifdef __cplusplus
 } // extern "C"

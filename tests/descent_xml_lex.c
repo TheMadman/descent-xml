@@ -18,7 +18,7 @@
 
 #include <assert.h>
 #include <stdbool.h>
-#include "descent_xml/lex.h"
+#include "descent-xml/lex.h"
 
 #include <libadt/str.h>
 

@@ -1,6 +1,6 @@
-#include "descent_xml/lex.h"
+#include "descent-xml/lex.h"
 
-#include "descent_xml/classifier.h"
+#include "descent-xml/classifier.h"
 
 #include <wchar.h>
 #include <wctype.h>

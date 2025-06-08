@@ -18,7 +18,7 @@
 
 #include <assert.h>
 #include <stdbool.h>
-#include "descent_xml/validate.h"
+#include "descent-xml/validate.h"
 
 #include <libadt/str.h>
 

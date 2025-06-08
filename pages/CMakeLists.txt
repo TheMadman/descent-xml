@@ -1,6 +1,6 @@
 function(add_example name)
 	add_executable(${name} ${name}.c)
-	target_link_libraries(${name} descent_xmlstatic)
+	target_link_libraries(${name} descent-xmlstatic)
 endfunction()
 
 add_example(noop-example)

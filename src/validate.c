@@ -1,4 +1,4 @@
-#include "descent_xml/validate.h"
+#include "descent-xml/validate.h"
 
 struct descent_xml_lex _descent_xml_validate_element_handler(
 	struct descent_xml_lex token,

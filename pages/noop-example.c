@@ -1,5 +1,5 @@
 #include <libadt/str.h>
-#include <descent_xml.h>
+#include <descent-xml.h>
 
 typedef struct descent_xml_lex lex_t;
 

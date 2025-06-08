@@ -19,9 +19,9 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <string.h>
-#include "descent_xml/parse.h"
+#include "descent-xml/parse.h"
 
-#include "descent_xml/lex.h"
+#include "descent-xml/lex.h"
 
 #include <libadt/str.h>
 
