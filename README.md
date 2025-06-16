@@ -35,11 +35,11 @@ cmake ..
 make install
 ```
 
-Link with `-ldescent_xml -ladt`. For static linking, use `-ldescent_xmlstatic`.
+Link with `-ldescent-xml -ladt`. For static linking, use `-ldescent-xmlstatic`.
 
 # Documentation
 
-Tutorials and reference documentation can be found at https://themadman.github.io/descent_xml/. Documentation can be built using `doxygen`, which will generate a `html/index.html` that can be opened.
+Tutorials and reference documentation can be found at https://themadman.github.io/descent-xml/. Documentation can be built using `doxygen`, which will generate a `html/index.html` that can be opened.
 
 # Bugs/Shortcomings
 
