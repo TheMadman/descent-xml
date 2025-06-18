@@ -6,6 +6,9 @@ target_link_libraries(descent-xml descent-xmlobj)
 add_library(descent-xmlstatic STATIC)
 target_link_libraries(descent-xmlstatic descent-xmlobj adtstatic)
 
+add_executable(descent-xml-validator validator.c)
+target_link_libraries(descent-xml-validator descent-xmlstatic)
+
 target_include_directories(descent-xmlobj
 	PUBLIC
 	${CMAKE_CURRENT_SOURCE_DIR}

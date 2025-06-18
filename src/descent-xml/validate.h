@@ -64,12 +64,6 @@ inline struct descent_xml_lex _descent_xml_validate_element_handler(
 		return token;
 
 	while (token.type != descent_xml_classifier_element_close_name) {
-		token = descent_xml_parse(
-			token,
-			_descent_xml_validate_element_handler,
-			NULL,
-			context
-		);
 		if (
 			token.type == descent_xml_classifier_unexpected
 			|| token.type == descent_xml_classifier_eof
@@ -80,6 +74,12 @@ inline struct descent_xml_lex _descent_xml_validate_element_handler(
 			context->valid = false;
 			return token;
 		}
+		token = descent_xml_parse(
+			token,
+			_descent_xml_validate_element_handler,
+			NULL,
+			context
+		);
 	}
 
 	context->valid = libadt_const_lptr_equal(

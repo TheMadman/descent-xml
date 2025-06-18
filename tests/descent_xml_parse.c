@@ -92,7 +92,7 @@ lex_t element_callback(
 		const lptr_t *attribute_name = raw(index(attributes, 0));
 		const lptr_t *attribute_value = raw(index(attributes, 1));
 
-		assert(strncmp(attribute_name->buffer, "first", (size_t)attribute_name->length) == 0);
+		assert(strncmp(attribute_name->buffer, "first-attr", (size_t)attribute_name->length) == 0);
 		assert(strncmp(attribute_value->buffer, "firstval", (size_t)attribute_value->length) == 0);
 	}
 
@@ -119,7 +119,7 @@ lex_t element_callback(
 void test_element_attributes(void)
 {
 	{
-		lex_t xml = lex(lit("<element first='firstval' second = \"secondval\" third=''></element>"));
+		lex_t xml = lex(lit("<element first-attr='firstval' second = \"secondval\" third=''></element>"));
 		int run_times = 0;
 		while (!stop_token(xml))
 			xml = descent_xml_parse(xml, element_callback, NULL, &run_times);

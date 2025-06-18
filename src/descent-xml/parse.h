@@ -192,12 +192,17 @@ inline struct descent_xml_lex _descent_xml_handle_element(
 		while (token.type == descent_xml_classifier_element_space) {
 			token = descent_xml_lex_next_raw(token);
 
+			if (token.type == descent_xml_classifier_unexpected)
+				break;
+
 			if (token.type == descent_xml_classifier_attribute_name) {
 				attributes = libadt_vector_append(
 					attributes,
 					&token.value
 				);
 				token = descent_xml_lex_next_raw(token);
+				if (token.type == descent_xml_classifier_unexpected)
+					break;
 				if (token.type == descent_xml_classifier_attribute_expect_assign)
 					token = descent_xml_lex_next_raw(token);
 				if (token.type == descent_xml_classifier_attribute_assign)
