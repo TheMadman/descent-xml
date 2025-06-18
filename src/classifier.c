@@ -290,6 +290,7 @@ vfn *descent_xml_classifier_attribute_name(wchar_t input)
 	switch (get_cclass(input)) {
 		case CCLASS_NAME_START:
 		case CCLASS_NAME:
+		case CCLASS_DASH:
 			return (vfn*)descent_xml_classifier_attribute_name;
 		case CCLASS_EQUALS:
 			return (vfn*)descent_xml_classifier_attribute_assign;
