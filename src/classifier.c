@@ -464,8 +464,6 @@ vfn *descent_xml_classifier_text(wchar_t input)
 			return (vfn*)descent_xml_classifier_text_entity_start;
 		case CCLASS_EOF:
 			return (vfn*)descent_xml_classifier_eof;
-		case CCLASS_CBRACKET:
-			return (vfn*)descent_xml_classifier_unexpected;
 		default:
 			return (vfn*)descent_xml_classifier_text;
 	}

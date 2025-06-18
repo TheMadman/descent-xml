@@ -418,11 +418,6 @@ void test_descent_xml_classifier_text(void)
 		descent_xml_classifier_text,
 		WEOF
 	));
-	assert(expect(
-		descent_xml_classifier_unexpected,
-		descent_xml_classifier_text,
-		'>'
-	));
 }
 
 void test_descent_xml_classifier_text_entity_start(void)
