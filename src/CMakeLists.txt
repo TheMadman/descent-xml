@@ -14,6 +14,8 @@ target_include_directories(descent-xmlobj
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR})
 
+install(TARGETS descent-xml-validator
+	DESTINATION bin)
 install(TARGETS descent-xml descent-xmlstatic
 	DESTINATION lib)
 install(FILES descent-xml.h
